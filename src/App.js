@@ -12,6 +12,7 @@ import Start from './components/Start';
 import Forecast from './components/Forecast';
 import About from './components/About';
 import Advice from './components/Advice';
+import { ItemMeta } from 'semantic-ui-react';
 
 
 export class App extends Component {
@@ -22,6 +23,7 @@ export class App extends Component {
     setPostCode: '',
     useId: true,
     regionIndex: [{id: 0, name: 'test'}],
+    currentLevel: {region: '', text: '', value: 0},
     forecastA: {},
     forecastB: {},
     forecastC: {}
@@ -92,20 +94,23 @@ getForecastC = () => {
 
 
 
-
-
   compileRegionIndex = () => {
     API.getCurrentRegionalData().then(info => info.data[0].regions.map(item => {
           this.setState({
               regionIndex: 
                 [...this.state.regionIndex,
                 {id: item.regionid,
-                name: item.shortname}]
+                name: item.shortname}],
                 }
           )
+          if (item.regionid === this.state.setRegion){
+            this.setState({
+              currentLevel: {region: item.regionid, text: item.intensity.index, value: item.intensity.forecast}
+            })
+          }
        }
       )
-    )
+    ).then(datainfo => console.log(datainfo))
 }
   
   
@@ -124,10 +129,10 @@ getForecastC = () => {
 
 
     <Route exact path="/">
-          <Start />
+          <Start intensityData={this.state.currentLevel}/>
     </Route>
-    <Route path="/start">
-          <Start />
+    <Route path="/start" >
+          <Start intensityData={this.state.currentLevel}/>
     </Route>
     <Route path="/forecast">
           <Forecast />

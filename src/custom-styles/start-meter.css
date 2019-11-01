@@ -1,0 +1,102 @@
+@import url(http://fonts.googleapis.com/css?family=Arimo);
+@import url(http://fonts.googleapis.com/css?family=Didact+Gothic);
+
+/* html { 
+	font-family:Futura, Helvetica;
+	color: white;
+	background-color: #222;
+}
+*/
+/* html, body{
+	margin: 0px;
+	padding: 0px;
+}  */
+
+
+.startmeter{
+	width:56vmin;
+	height:28vmin;
+	/* width:56px;
+	height:28px; */
+	position: relative;
+	overflow: hidden;
+    text-align: center;
+    margin: auto;
+	/* transform: translate(-50%, -50%); */
+}
+
+.startmeter .gauge-a{
+	 z-index: 1;
+	/* position: absolute; */
+	background-color: #beef;
+	width: 100%;
+	height: 100%;
+	/* top: 0%; */
+	border-radius:250vmin 250vmin 0vmin 0vmin ;
+	/* border-radius:250px 250px 0px 0px ; */
+}
+
+
+.startmeter .gauge-b{
+	z-index: 3;
+	position: absolute;
+	background-color: #222;
+	width: 75%;
+	height: 75%;
+    /* top: 75%; */
+    bottom: 0;
+	margin-left: 50%;
+    margin-right: auto;
+    transform: translateX(-50%);
+	border-radius:250vmin 250vmin 0vmin 0vmin ;
+	/* border-radius:250px 250px 0px 0px ; */
+}
+.startmeter .gauge-c{
+	z-index: 2;
+	position: absolute;
+	background-color: #5664F9;
+	width: 100%;
+	height: 100%;
+	/* top: 200px; */
+	margin-left: auto;
+	margin-right: auto;
+	border-radius:0vmin 0vmin 200vmin 200vmin ;
+     transform-origin:center top; 
+     transition: all 1.3s ease-in-out; 
+     /* transform: rotate(180deg); */
+}
+
+
+/* .startmeter .gauge-c{
+
+    transition: all 1.3s ease-in-out;
+	transform:rotate(120deg);
+    transform-origin:center top;
+}
+.startmeter .gauge-data{
+	color: rgba(255,255,255,1);
+} */
+                                            /* .startmeter:hover .gauge-c{
+                                                transform:rotate(120deg);
+                                            } */
+/* .startmeter:hover .gauge-data{
+	color: rgba(255,255,255,1);
+}  */
+
+.startmeter .gauge-data{
+	z-index: 4;
+	color: rgba(255,255,255,.2);
+	font-size: 1.5em;
+	line-height: 25vmin;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	transition: all 1s ease-out;
+}
+
+#loadedData{
+    color: rgba(255,255,255,1);
+}
