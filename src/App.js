@@ -13,6 +13,7 @@ import Forecast from './components/Forecast';
 import About from './components/About';
 import Advice from './components/Advice';
 import { ItemMeta } from 'semantic-ui-react';
+import { cloneWithoutLoc } from '@babel/types';
 
 
 export class App extends Component {
@@ -26,7 +27,8 @@ export class App extends Component {
     currentLevel: {region: '', text: '', value: 0},
     forecastA: {},
     forecastB: {},
-    forecastC: {}
+    forecastC: {},
+    aggedVals : []
   }
   
   
@@ -62,6 +64,10 @@ plus30Mins = (dateTime) => {
     else if (this.state.forecastB !== prevState.forecastB)
     {
       return this.getForecastC(this.state.setRegion)
+    }
+    else if (this.state.forecastC !== prevState.forecastC)
+    {
+      return this.aggForecast(this.allForecast(), 4)
     }
   }
   
@@ -113,6 +119,66 @@ getForecastC = () => {
     ).then(datainfo => console.log(datainfo))
 }
   
+
+allForecast = () => {
+  const allForecast = [...this.state.forecastA, ...this.state.forecastB, ...this.state.forecastC]
+  return allForecast
+}
+
+calTextLevel = (value) => {
+  if (value > 360) {
+      return 'Very High'
+  } 
+  else if (value >= 260 && value <= 359 ) {
+      return 'High'
+  }
+  else if (value >= 160 && value <= 259 ) {
+      return 'Moderate'
+  } 
+  else if (value >= 60 && value <= 159 ) {
+    return 'Low'
+  }
+  else if (value >= 59 && value <= 0 ) {
+    return 'Very Low'
+  }else 
+  {
+    return 'Level not known'
+  }
+}
+
+
+aggForecast = (forecastArray, granularity) => {
+ 
+  // const period = 8
+  // const periodUnits = 'h'
+  // const granularity = 4
+  // const forecastArray =[2,3,6,1,5,1,1,1,1,1,1,10]
+
+let agged = []
+
+for (let index = 0; index < forecastArray.length; index+=granularity) {
+  const half = forecastArray[index];
+  let set = forecastArray.slice(index, index+granularity).map(item => item.intensity.forecast)
+      console.log(set)
+  let sum = set.reduce((acc, cur) => acc + cur)
+      console.log(sum)
+      let avg = sum / set.length
+  agged = [...agged, {from:half.from, level:Math.round(avg), text:this.calTextLevel(avg)}]
+}
+this.setState({
+  aggedVals: agged
+})
+
+console.log(agged)
+return agged
+}
+
+
+
+
+
+
+
   
   render() {
     return (

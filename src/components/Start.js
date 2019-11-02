@@ -5,10 +5,6 @@ export class Start extends Component {
 
 
 
-
-
-
-
 startMeterValueMaths = () => {
             const maxVal = 500;
             let intensityValue = this.props.intensityData.value / maxVal
