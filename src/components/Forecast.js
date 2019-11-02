@@ -12,7 +12,7 @@ state = {
 
         periodOptions = [
             {
-              key: 8,
+              key: 6,
               text: '+6 hours',
               value: 6,
             //   image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg' },
@@ -44,8 +44,13 @@ state = {
             },
           ]
 
-
-
+          genRegionOptions = () => {
+          let output = this.props.regionIndex.map(obj => {
+                return {key: obj.id, text: obj.name, value: obj.id}
+            })
+            output.sort((a,b) => (a.key < b.key) ? 1 : -1)
+            return output
+        }
 
         setPeriod = (event, data) => {
             console.log(data.value)
@@ -73,11 +78,11 @@ state = {
    
    <Grid.Column floated='left'>      
     <p> <Dropdown
-         placeholder='Region'
+         placeholder='Period'
          selection='2'
          options={this.periodOptions}
-         onChange={(event, data) => this.props.setRegion(data.value)}
-       />
+         onChange={(event, data) => this.props.updatePeriod(data.value)}
+         />
        </p>
        </Grid.Column>
        <Grid.Column floated='left'>
@@ -91,10 +96,10 @@ state = {
    
     <Grid.Column floated='left'>      
      <p> <Dropdown
-          placeholder='Period'
+          placeholder='Region'
           selection
-          options={this.periodOptions}
-          onChange={(event, data) => this.props.updatePeriod(data.value)}
+          options={this.genRegionOptions()}
+          onChange={(event, data) => this.props.updateRegion(data.value)}
         />
         </p>
         </Grid.Column>
