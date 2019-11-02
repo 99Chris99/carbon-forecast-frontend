@@ -28,7 +28,8 @@ export class App extends Component {
     forecastA: {},
     forecastB: {},
     forecastC: {},
-    aggedVals : []
+    aggedVals: [],
+    bestPeriods: []
   }
   
   
@@ -146,7 +147,6 @@ calTextLevel = (value) => {
   }
 }
 
-
 aggForecast = (forecastArray, granularity) => {
  
   // const period = 8
@@ -165,14 +165,25 @@ for (let index = 0; index < forecastArray.length; index+=granularity) {
       let avg = sum / set.length
   agged = [...agged, {from:half.from, level:Math.round(avg), text:this.calTextLevel(avg)}]
 }
+
+let best = this.bestPeriods(agged)
+
 this.setState({
-  aggedVals: agged
+  aggedVals: agged,
+  bestPeriods: best
 })
+
+
 
 console.log(agged)
 return agged
 }
 
+bestPeriods = (objArray) => {
+
+return objArray.sort((a, b) => (a.level > b.level) ? 1 : -1).slice(0,3)
+
+}
 
 
 
