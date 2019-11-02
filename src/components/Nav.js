@@ -3,6 +3,7 @@ import {
     Link
 } from "react-router-dom";
 import { Menu } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react'
 
 export class Nav extends Component {
 
@@ -16,6 +17,7 @@ state = {}
 
     
       <Menu>
+      <Container>
           <Menu.Item as={Link} name="start" to="/start">
             Start
           </Menu.Item>
@@ -28,7 +30,10 @@ state = {}
           <Menu.Item as={Link} name="about" to="/about">
             About
           </Menu.Item>
+          </Container>
       </Menu>
+      
+
     
     {/* <nav>
         <ul>

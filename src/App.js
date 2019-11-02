@@ -15,6 +15,8 @@ import Advice from './components/Advice';
 import { ItemMeta } from 'semantic-ui-react';
 import { cloneWithoutLoc } from '@babel/types';
 
+import { Container } from 'semantic-ui-react'
+
 
 export class App extends Component {
   
@@ -23,7 +25,8 @@ export class App extends Component {
     setRegion: 18,
     setPostCode: '',
     useId: true,
-    regionIndex: [{id: 0, name: 'test'}],
+    setPeriod: 12,
+    regionIndex: [],
     currentLevel: {region: '', text: '', value: 0},
     forecastA: {},
     forecastB: {},
@@ -34,7 +37,7 @@ export class App extends Component {
   
   
 //2017-08-25T12:35Z
-
+//[{id: 0, name: 'test'}]
 
 now = () => {
   let date = new Date();
@@ -48,8 +51,6 @@ plus30Mins = (dateTime) => {
   let newdateTime = output.toISOString()
   return newdateTime
 }
-
-
 
 
   componentDidMount () {
@@ -157,6 +158,8 @@ aggForecast = (forecastArray, granularity) => {
 let agged = []
 
 for (let index = 0; index < forecastArray.length; index+=granularity) {
+ 
+  if (index%granularity === 0) {
   const half = forecastArray[index];
   let set = forecastArray.slice(index, index+granularity).map(item => item.intensity.forecast)
       console.log(set)
@@ -165,19 +168,19 @@ for (let index = 0; index < forecastArray.length; index+=granularity) {
       let avg = sum / set.length
   agged = [...agged, {from:half.from, level:Math.round(avg), text:this.calTextLevel(avg)}]
 }
-
+}
 let best = this.bestPeriods(agged)
 
 this.setState({
   aggedVals: agged,
   bestPeriods: best
 })
-
-
-
 console.log(agged)
 return agged
 }
+
+
+
 
 bestPeriods = (objArray) => {
 
@@ -185,12 +188,15 @@ return objArray.sort((a, b) => (a.level > b.level) ? 1 : -1).slice(0,3)
 
 }
 
+updateRegion = (newRegion) => {
+this.setState({setRegion: newRegion})
+}
+updatePeriod = (newPeriod) => {
+this.setState({setPeriod: newPeriod})
+}
 
 
 
-
-
-  
   render() {
     return (
 
@@ -200,10 +206,11 @@ return objArray.sort((a, b) => (a.level > b.level) ? 1 : -1).slice(0,3)
 
 <div>
      
-<Nav />
+<Nav/>
+
+<Container>
 
 <Switch>
-
 
     <Route exact path="/">
           <Start intensityData={this.state.currentLevel}/>
@@ -212,7 +219,9 @@ return objArray.sort((a, b) => (a.level > b.level) ? 1 : -1).slice(0,3)
           <Start intensityData={this.state.currentLevel}/>
     </Route>
     <Route path="/forecast">
-          <Forecast />
+          <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} setPeriod={this.state.setPeriod}
+                    updateRegion={this.updateRegion} updatePeriod={this.updatePeriod}
+          />
     </Route>
     <Route path="/advice">
           <Advice />
@@ -223,6 +232,7 @@ return objArray.sort((a, b) => (a.level > b.level) ? 1 : -1).slice(0,3)
 
 </Switch>
       
+</Container>
 </div>
 
 </Router>
