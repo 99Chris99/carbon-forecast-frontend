@@ -8,6 +8,7 @@ export class Forecast extends Component {
 state = {
     period: 48,
     region: 18,
+    sortByLevel: false
 }
 
 
@@ -66,7 +67,21 @@ state = {
             })
         }
 
+        controlSort = () => {
+            let newProps = this.props.aggedVals
+          if (this.state.sortByLevel === false){
+           newProps = this.props.aggedVals.sort((a,b) => (Date.parse(a.from) > Date.parse(b.from)? 1 : -1))
+            }
+            else if (this.state.sortByLevel === true){
+                newProps = this.props.aggedVals.sort((a,b) => (Date.parse(a.level) > Date.parse(b.level)? 1 : -1))
+            }
+                 return newProps
+        }
 
+        handleSortButton = (event) => {
+            let newVal = this.state.sortByLevel ? false : true
+            this.setState({sortByLevel: newVal})
+        } 
 
 
     render() {
@@ -116,8 +131,9 @@ state = {
             </div>
 <div id="summary-chart" >
 
-<SummaryChart aggedVals={this.props.aggedVals}/>
+<SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel}/>
 </div>
+<button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Date' : 'Intensity Level'}</button>
 </div>
         );
     }

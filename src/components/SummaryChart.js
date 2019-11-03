@@ -25,30 +25,44 @@ class SummaryChart extends Component {
     }
 
     componentDidUpdate (prevProps, prevState) {
-        if (this.props.aggedVals !== prevProps.aggedVals) {
+        if (this.props.aggedVals !== prevProps.aggedVals || this.props.sortTrigger !== prevProps.sortTrigger) {
             this.formatData()
         }
     }
 
+    parseDate = (input) => {
+        let optionsDate = { weekday: 'short', day: 'numeric', month: 'numeric' };
+        let optionsTime = { hour: 'numeric',minute: 'numeric', hour12: true};
+               let parsedDate = new Date(Date.UTC(
+                   parseInt(input.slice(0, 4), 10),
+                   parseInt(input.slice(5, 7), 10) - 1,
+                   parseInt(input.slice(8, 10), 10),
+                   parseInt(input.slice(11, 13), 10),
+                   parseInt(input.slice(14, 16), 10),
+                 //parseInt(input.slice(13,15), 10)
+               ))
+               return (`${parsedDate.toLocaleString("en-GB", optionsTime)}|${parsedDate.toLocaleString("en-GB", optionsDate)}`)
+       }
 
     formatData = () => {
         let data = []
         
         if (this.props.aggedVals !== [] ) {
         this.props.aggedVals.map(item => {
-            let bar = {x: `${item.from}`, y:item.level} 
+            let bar = {x: `${this.parseDate(item.from)}`, y:item.level} 
             return data = [...data, bar]
         })
         console.log(data)
         this.setState({rawData: data})    
-    
     }
     }
 
-    scaleData = () => {
-       
-
-
+    handleWidth = () => {
+      let  width = '100%'
+        if (this.props.aggedVals.length > 8) {
+            width = '250%'
+        }
+    return width
     }
 
   render() {
@@ -71,8 +85,8 @@ class SummaryChart extends Component {
        // display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width:  '150%',
-        height: '30vh',
+        width:  this.handleWidth(),
+        height: '50vh',
         overflow: 'auto',
       }}
     
@@ -91,8 +105,22 @@ class SummaryChart extends Component {
 
         <VerticalGridLines />
         <HorizontalGridLines />
-        <XAxis />
-        <YAxis />
+     
+        {/* <XAxis 
+        position="start"
+        // top={40}
+        top={30}
+        //height={150}
+        //width={1}
+        style={{
+            text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
+          }}
+          //tickLabelAngle={-45}
+          tickTotal={2}
+          /> */}
+        
+        {/* <YAxis /> */}
+        
         <VerticalBarSeries 
         data={this.state.rawData}
         color={'url(#CoolGradient)'}
@@ -102,9 +130,35 @@ class SummaryChart extends Component {
                     data={this.state.rawData.map(obj => {
                         return { ...obj, label: obj.y.toString() }
                     })}
+                    
                     animation
                     labelAnchorX="middle"
                     labelAnchorY="text-before-edge"
+                    
+                    />
+        <LabelSeries
+                    data={this.state.rawData.map(obj => {
+                        return { ...obj, y: -12, label: `${obj.x.split('|')[0]}` }
+                    })}
+                    animation
+                    labelAnchorX="middle"
+                    //labelAnchorY="text-before-edge"
+                    labelAnchorY="baseline"
+                    style={{
+                        text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
+                      }}
+                    />
+        <LabelSeries
+                    data={this.state.rawData.map(obj => {
+                        return { ...obj, y: -28, label: `${obj.x.split('|')[1]}` }
+                    })}
+                    animation
+                    labelAnchorX="middle"
+                    //labelAnchorY="text-before-edge"
+                    labelAnchorY="baseline"
+                    style={{
+                        text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
+                      }}
                     />
         </FlexibleXYPlot>
       </div>

@@ -25,7 +25,8 @@ export class App extends Component {
     setRegion: 18,
     setPostCode: '',
     useId: true,
-    setPeriod: 12,
+    setPeriod: 8,
+    setGran: 2,
     regionIndex: [],
     currentLevel: {region: '', text: '', value: 0},
     forecastA: {},
@@ -58,6 +59,9 @@ plus30Mins = (dateTime) => {
     this.compileRegionIndex()
   }
 
+
+  
+
   componentDidUpdate (prevProps, prevState) {
     if (this.state.forecastA !== prevState.forecastA)
     {
@@ -69,11 +73,13 @@ plus30Mins = (dateTime) => {
     }
     else if (this.state.forecastC !== prevState.forecastC)
     {
-      return this.aggForecast(this.allForecast(), this.state.setPeriod)
+      return (
+        this.aggForecast(this.allForecast(), this.determinGran()))
     }
     else if (this.state.setPeriod !== prevState.setPeriod)
     {
-      return this.aggForecast(this.allForecast(), this.state.setPeriod)
+      return (
+      this.aggForecast(this.allForecast(), this.determinGran()))
     }
   }
   
@@ -152,6 +158,23 @@ calTextLevel = (value) => {
   }
 }
 
+determinGran = () => {
+ let newGrand = 2
+  if (this.state.setPeriod <= 8) {
+    newGrand = 4
+  }else if (this.state.setPeriod > 8 && this.state.setPeriod <= 12) {
+    newGrand = 6
+  }else if (this.state.setPeriod > 12 && this.state.setPeriod <= 24) {
+    newGrand = 8
+  }else if (this.state.setPeriod > 24 && this.state.setPeriod <= 48) {
+    newGrand = 12
+  }else if (this.state.setPeriod > 48) {
+    newGrand = 14
+  }
+  this.setState({setGran: newGrand})
+  return newGrand
+}
+
 aggForecast = (forecastArray, granularity) => {
  
   // const period = 8
@@ -173,14 +196,17 @@ for (let index = 0; index < forecastArray.length; index+=granularity) {
   agged = [...agged, {from:half.from, level:Math.round(avg), text:this.calTextLevel(avg)}]
 }
 }
-let best = this.bestPeriods(agged)
+
+let newAgged = agged.slice(0, this.state.setPeriod)
+
+let best = this.bestPeriods(newAgged)
 
 this.setState({
-  aggedVals: agged,
+  aggedVals: newAgged,
   bestPeriods: best
 })
 //console.log(agged)
-return agged
+//return agged
 }
 
 
