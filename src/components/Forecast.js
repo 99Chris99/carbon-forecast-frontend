@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown, Table, Grid, Image, Segment } from 'semantic-ui-react';
+import SummaryChart from './SummayChart';
 
 export class Forecast extends Component {
 
@@ -109,7 +110,7 @@ state = {
  
  </Grid.Row>
  </Grid>
-
+<SummaryChart />
             </div>
         );
     }
