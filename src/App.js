@@ -69,7 +69,11 @@ plus30Mins = (dateTime) => {
     }
     else if (this.state.forecastC !== prevState.forecastC)
     {
-      return this.aggForecast(this.allForecast(), 4)
+      return this.aggForecast(this.allForecast(), this.state.setPeriod)
+    }
+    else if (this.state.setPeriod !== prevState.setPeriod)
+    {
+      return this.aggForecast(this.allForecast(), this.state.setPeriod)
     }
   }
   
@@ -162,9 +166,9 @@ for (let index = 0; index < forecastArray.length; index+=granularity) {
   if (index%granularity === 0) {
   const half = forecastArray[index];
   let set = forecastArray.slice(index, index+granularity).map(item => item.intensity.forecast)
-      console.log(set)
+      //console.log(set)
   let sum = set.reduce((acc, cur) => acc + cur)
-      console.log(sum)
+      //console.log(sum)
       let avg = sum / set.length
   agged = [...agged, {from:half.from, level:Math.round(avg), text:this.calTextLevel(avg)}]
 }
@@ -175,7 +179,7 @@ this.setState({
   aggedVals: agged,
   bestPeriods: best
 })
-console.log(agged)
+//console.log(agged)
 return agged
 }
 
@@ -220,7 +224,7 @@ this.setState({setPeriod: newPeriod})
     </Route>
     <Route path="/forecast">
           <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} setPeriod={this.state.setPeriod}
-                    updateRegion={this.updateRegion} updatePeriod={this.updatePeriod}
+                    updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals}
           />
     </Route>
     <Route path="/advice">

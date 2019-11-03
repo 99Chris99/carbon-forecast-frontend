@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Dropdown, Table, Grid, Image, Segment } from 'semantic-ui-react';
+import { Dropdown, Table, Grid, Image, Segment, Container } from 'semantic-ui-react';
+import SummaryChart from './SummaryChart'
 
 export class Forecast extends Component {
 
@@ -70,6 +71,9 @@ state = {
 
     render() {
         return (
+
+            <div>
+
             <div>
                 {/* <h1> Hi, it's me forecast! Hows things?</h1> */}
 
@@ -77,13 +81,13 @@ state = {
 <Grid.Row>
    
    <Grid.Column floated='left'>      
-    <p> <Dropdown
+    <Dropdown
          placeholder='Period'
          selection='2'
          options={this.periodOptions}
          onChange={(event, data) => this.props.updatePeriod(data.value)}
          />
-       </p>
+      
        </Grid.Column>
        <Grid.Column floated='left'>
    <p>Yep thats right I'm some text!</p>
@@ -95,13 +99,13 @@ state = {
 <Grid.Row>
    
     <Grid.Column floated='left'>      
-     <p> <Dropdown
+    <Dropdown
           placeholder='Region'
           selection
           options={this.genRegionOptions()}
           onChange={(event, data) => this.props.updateRegion(data.value)}
         />
-        </p>
+       
         </Grid.Column>
         <Grid.Column floated='left'>
     <p>Yep thats right I'm some text!</p>
@@ -109,8 +113,12 @@ state = {
  
  </Grid.Row>
  </Grid>
-
             </div>
+<div id="summary-chart" >
+
+<SummaryChart aggedVals={this.props.aggedVals}/>
+</div>
+</div>
         );
     }
 }

@@ -1,0 +1,17 @@
+
+
+#summary-chart {
+
+/* max-width: '1800px';
+overflow-x: 'scroll';
+display: 'flex';
+justifyContent: 'space-between';
+position: 'relative';
+width:  '1800px'; 
+height: '30vh'; */
+overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  
+
+}
