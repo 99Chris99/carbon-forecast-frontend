@@ -131,7 +131,7 @@ state = {
             </div>
 <div id="summary-chart" >
 
-<SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel}/>
+<SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>
 </div>
 <button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Date' : 'Intensity Level'}</button>
 </div>

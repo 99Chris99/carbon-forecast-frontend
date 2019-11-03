@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import './App.css';
 // import '../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries, HorizontalGridLines, XAxis, YAxis, VerticalGridLines, VerticalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
+import {XYPlot, LineSeries, HorizontalGridLines, XAxis, YAxis, Borders, VerticalGridLines, VerticalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
 import { ItemMeta } from 'semantic-ui-react';
 
 class SummaryChart extends Component {
@@ -65,6 +65,7 @@ class SummaryChart extends Component {
     return width
     }
 
+
   render() {
     // const data = [
     //   {x: 0, y: 8},
@@ -94,7 +95,8 @@ class SummaryChart extends Component {
 <div
         style={{width: '99%', height: '100%', border: '1px solid #ccc'}}
       >
-        <FlexibleXYPlot  xType="ordinal">
+        <FlexibleXYPlot  xType="ordinal" margin={{bottom: 80, left: 0, right: 0, top: 20}}>
+        
         <GradientDefs>
           <linearGradient id="CoolGradient" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="red" stopOpacity={0.4}/>
@@ -136,30 +138,39 @@ class SummaryChart extends Component {
                     labelAnchorY="text-before-edge"
                     
                     />
+
+
+
         <LabelSeries
+        
+                    //data={this.xlabelData('top')}
                     data={this.state.rawData.map(obj => {
-                        return { ...obj, y: -12, label: `${obj.x.split('|')[0]}` }
+                        return { ...obj, y: this.props.mobileUser ? -3 : -18, rotation: this.props.mobileUser ? 90 : 0, label: `${obj.x.split('|')[0]}` }
                     })}
                     animation
-                    labelAnchorX="middle"
+                    labelAnchorX={this.props.mobileUser ? "start" : "middle"}
                     //labelAnchorY="text-before-edge"
-                    labelAnchorY="baseline"
+                    labelAnchorY={this.props.mobileUser ? "text-after-edge" : "baseline"}
                     style={{
                         text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
                       }}
                     />
         <LabelSeries
                     data={this.state.rawData.map(obj => {
-                        return { ...obj, y: -28, label: `${obj.x.split('|')[1]}` }
+                        return { ...obj, y: this.props.mobileUser ? -3 :-34, rotation: this.props.mobileUser ? 90 : 0, label: `${obj.x.split('|')[1]}` }
                     })}
                     animation
-                    labelAnchorX="middle"
+                    labelAnchorX={this.props.mobileUser ? "start" : "middle"}
                     //labelAnchorY="text-before-edge"
-                    labelAnchorY="baseline"
+                    //labelAnchorY="baseline"
+                    labelAnchorY={this.props.mobileUser ? "text-before-edge" : "baseline"}
                     style={{
                         text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
                       }}
                     />
+
+
+
         </FlexibleXYPlot>
       </div>
 

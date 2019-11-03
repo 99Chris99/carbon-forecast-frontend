@@ -22,6 +22,7 @@ export class App extends Component {
   
   
   state = {
+    mobileUser: false,
     setRegion: 18,
     setPostCode: '',
     useId: true,
@@ -45,6 +46,23 @@ now = () => {
   return date.toISOString()
 }
 
+viewport = () => {
+let e = window
+let a = 'inner';
+if ( !( 'innerWidth' in window ) )
+{
+a = 'client';
+e = document.documentElement || document.body;
+}
+let dimentions = { width : e[ a+'Width' ] , height : e[ a+'Height' ] }
+
+if (dimentions.width < 600) {
+  this.setState({mobileUser: true})
+
+}
+}
+
+
 plus30Mins = (dateTime) => {
   let newTime = dateTime.split(/\D+/);
   let output =  new Date(Date.UTC(newTime[0], newTime[1]-1, newTime[2], newTime[3], newTime[4], newTime[5]));
@@ -55,6 +73,7 @@ plus30Mins = (dateTime) => {
 
 
   componentDidMount () {
+    this.viewport()
     this.get48hForecast(this.now())
     this.compileRegionIndex()
   }
@@ -251,6 +270,7 @@ this.setState({setPeriod: newPeriod})
     <Route path="/forecast">
           <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} setPeriod={this.state.setPeriod}
                     updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals}
+                    mobileUser={this.state.mobileUser}
           />
     </Route>
     <Route path="/advice">
