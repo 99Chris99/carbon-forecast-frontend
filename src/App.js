@@ -26,7 +26,7 @@ export class App extends Component {
     setRegion: 18,
     setPostCode: '',
     useId: true,
-    setPeriod: 8,
+    setPeriod: 12,
     setGran: 2,
     regionIndex: [],
     currentLevel: {region: '', text: '', value: 0},
@@ -34,7 +34,7 @@ export class App extends Component {
     forecastB: {},
     forecastC: {},
     aggedVals: [],
-    bestPeriods: []
+    bestPeriods: {}
   }
   
   
@@ -180,26 +180,30 @@ calTextLevel = (value) => {
 determinGran = () => {
  let newGrand = 2
   if (this.state.setPeriod <= 8) {
-    newGrand = 4
+    newGrand = 2
   }else if (this.state.setPeriod > 8 && this.state.setPeriod <= 12) {
-    newGrand = 6
+    newGrand = 2
   }else if (this.state.setPeriod > 12 && this.state.setPeriod <= 24) {
-    newGrand = 8
+    newGrand = 2
   }else if (this.state.setPeriod > 24 && this.state.setPeriod <= 48) {
-    newGrand = 12
-  }else if (this.state.setPeriod > 48) {
-    newGrand = 14
+    newGrand = 2
+  }else if (this.state.setPeriod > 48 && this.state.setPeriod <= 96) {
+    newGrand = 4
+  }else if (this.state.setPeriod > 200) {
+    newGrand = 6
   }
   this.setState({setGran: newGrand})
   return newGrand
 }
 
-aggForecast = (forecastArray, granularity) => {
+aggForecast = (inputArray, granularity) => {
  
   // const period = 8
   // const periodUnits = 'h'
   // const granularity = 4
   // const forecastArray =[2,3,6,1,5,1,1,1,1,1,1,10]
+
+  let forecastArray = inputArray.slice(0, this.state.setPeriod)
 
 let agged = []
 
@@ -216,12 +220,12 @@ for (let index = 0; index < forecastArray.length; index+=granularity) {
 }
 }
 
-let newAgged = agged.slice(0, this.state.setPeriod)
+//let newAgged = agged.slice(0, this.state.setPeriod)
 
-let best = this.bestPeriods(newAgged)
+let best = this.bestPeriods(agged)
 
 this.setState({
-  aggedVals: newAgged,
+  aggedVals: agged,
   bestPeriods: best
 })
 //console.log(agged)
@@ -233,7 +237,22 @@ this.setState({
 
 bestPeriods = (objArray) => {
 
-return objArray.sort((a, b) => (a.level > b.level) ? 1 : -1).slice(0,3)
+let day = objArray.map(item => {
+  if (parseInt(item.from.split('T')[1]) >= 6 && parseInt(item.from.split('T')[1]) <= 23){
+    return item
+  } 
+})
+
+let night = objArray.map(item => {
+  if (parseInt(item.from.split('T')[1]) < 6 || parseInt(item.from.split('T')[1]) === 24){
+    return item
+  } 
+})
+
+let bestDay = day.sort((a, b) => (a.level > b.level) ? 1 : -1).slice(0,3)
+let bestNight = night.sort((a, b) => (a.level > b.level) ? 1 : -1).slice(0,3)
+
+return {day:bestDay, night:bestNight}
 
 }
 
@@ -270,7 +289,7 @@ this.setState({setPeriod: newPeriod})
     <Route path="/forecast">
           <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} setPeriod={this.state.setPeriod}
                     updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals}
-                    mobileUser={this.state.mobileUser}
+                    mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods}
           />
     </Route>
     <Route path="/advice">

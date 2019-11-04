@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Table, Grid, Image, Segment, Container } from 'semantic-ui-react';
+import { Dropdown, Table, Grid, Card, Image, Segment, Container } from 'semantic-ui-react';
 import SummaryChart from './SummaryChart'
 
 export class Forecast extends Component {
@@ -8,41 +8,47 @@ export class Forecast extends Component {
 state = {
     period: 48,
     region: 18,
-    sortByLevel: false
+    sortByLevel: false,
+    bestPeriods: {}
 }
 
+componentDidUpdate (prevProps, prevState) {
+    if (this.props.bestPeriods !== prevProps.bestPeriods){
+        this.renderBestPeriods()
+    }
+}
 
         periodOptions = [
             {
               key: 6,
               text: '+6 hours',
-              value: 6,
+              value: 12,
             //   image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg' },
             },
             {
               key: 8,
               text: '+8 hours',
-              value: 8,
+              value: 16,
             },
             {
               key: 12,
               text: '+12 hours',
-              value: 12,
+              value: 24,
             },
             {
               key: 24,
               text: '+24 hours',
-              value: 24,
+              value: 48,
             },
             {
               key: 48,
               text: '+48 hours',
-              value: 48,
+              value: 96,
             },
             {
               key: 100,
               text: 'Max',
-              value: 100,
+              value: 500,
             },
           ]
 
@@ -82,6 +88,31 @@ state = {
             let newVal = this.state.sortByLevel ? false : true
             this.setState({sortByLevel: newVal})
         } 
+
+    renderBestPeriods = () => {
+                
+        let bestDay = this.props.bestPeriods.day[0]
+        let output = [{
+                        header:      `${bestDay.from}`,
+                        description: `${bestDay.level}\n${bestDay.text}`
+                    }]
+
+
+    //     if (typeof this.props.bestPeriods.day !== 'undefined'){
+    //     output = this.props.bestPeriods.day.map(best => {
+
+    //        return {
+    //             header:      `${best[0].from}`,
+    //             description: `${best[0].level}`,
+    //             description: `${best[0].text}`
+    //         }
+
+    //     }) 
+    // }
+            
+        this.setState({bestPeriods: output})
+    } 
+
 
 
     render() {
@@ -128,7 +159,13 @@ state = {
  
  </Grid.Row>
  </Grid>
-            </div>
+</div>
+<div>
+ <Card.Group  itemsPerRow={3} items={this.state.bestPeriods} />
+</div>
+
+
+
 <div id="summary-chart" >
 
 <SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>

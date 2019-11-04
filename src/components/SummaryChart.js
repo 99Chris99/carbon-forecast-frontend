@@ -7,16 +7,17 @@ import { ItemMeta } from 'semantic-ui-react';
 class SummaryChart extends Component {
 
     state = {
-        rawData: [{x: '0', y: 0},
-            {x: '0', y: 0},
-            {x: '0', y: 0},
-            {x: '0', y: 0},
-            {x: '0', y: 0},
-            {x: '0', y: 0},
-            {x: '0', y: 0},
-            {x: '0', y: 0},
-            {x: '0', y: 0},
-            {x: '0', y: 0}]
+        rawData: [{x: 'A', y: 0},
+            {x: 'A', y: 0},
+            {x: 'A', y: 0},
+            {x: 'A', y: 0},
+            {x: 'A', y: 0},
+            {x: 'A', y: 0},
+            {x: 'A', y: 0},
+            {x: 'A', y: 0},
+            {x: 'A', y: 0},
+            {x: 'A', y: 0}],
+        barPosition: {date: '', offset: 0}
     }
 
 
@@ -59,8 +60,12 @@ class SummaryChart extends Component {
 
     handleWidth = () => {
       let  width = '100%'
-        if (this.props.aggedVals.length > 8) {
+        if (this.props.aggedVals.length > 8 && this.props.aggedVals.length < 20) {
             width = '250%'
+        }else if (this.props.aggedVals.length >= 20 && this.props.aggedVals.length < 30) {
+            width = '350%'
+        }else if (this.props.aggedVals.length >= 30) {
+            width = '500%'
         }
     return width
     }
@@ -145,6 +150,7 @@ class SummaryChart extends Component {
         
                     //data={this.xlabelData('top')}
                     data={this.state.rawData.map(obj => {
+                        
                         return { ...obj, y: this.props.mobileUser ? -3 : -18, rotation: this.props.mobileUser ? 90 : 0, label: `${obj.x.split('|')[0]}` }
                     })}
                     animation
@@ -157,6 +163,7 @@ class SummaryChart extends Component {
                     />
         <LabelSeries
                     data={this.state.rawData.map(obj => {
+
                         return { ...obj, y: this.props.mobileUser ? -3 :-34, rotation: this.props.mobileUser ? 90 : 0, label: `${obj.x.split('|')[1]}` }
                     })}
                     animation
