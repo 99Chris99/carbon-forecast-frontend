@@ -36,6 +36,8 @@ export class Timeline extends Component {
         let output = 0
         let optionsDate = { weekday: 'short', day: 'numeric', month: 'numeric' };
         let optionsTime = { hour: 'numeric',minute: 'numeric', hour12: true};
+        let options24 = { hour: 'numeric',minute: 'numeric', hour12: false};
+
                let parsedDate = new Date(Date.UTC(
                    parseInt(input.slice(0, 4), 10),
                    parseInt(input.slice(5, 7), 10) - 1,
@@ -48,7 +50,11 @@ export class Timeline extends Component {
                    output =  parsedDate.toLocaleString("en-GB", optionsTime)
                }else if (timeOrDate === 'date') {
                output =  (`${parsedDate.toLocaleString("en-GB", optionsDate)}`)
-            }
+               }else if (timeOrDate === '24') {
+               output =  parsedDate.toLocaleString("en-GB", options24)
+              }
+
+
             return output
 
             }
@@ -69,20 +75,24 @@ export class Timeline extends Component {
             labelData = [...labelData, barLabel]
         })
         this.props.timelineVals.map((item, index) => {
+            
+            let middle = this.props.timelineVals[this.props.timelineVals.lenght-1].value / 2
+            
             let day = ''
-            let checkIndex = index =- 1
-            if (index ==! 0 && `${this.parseDate(item.from, 'date')}` ==! `${this.parseDate(item[`${checkIndex}`].from, 'date')}`)
+
+            if (parseInt(`${this.parseDate(item.from, '24')}`) < 1 || index < 1 )
             {
-               return day = `${this.parseDate(item.from, 'date')}`
+                day = `${this.parseDate(item.from, 'date')}`
+                console.log(day)   
             }
             let dayLabel = {x: 0, y: -index, 
                 label: day,
-                 xOffset:-50, yOffset:-15}  
+                 xOffset:middle, yOffset:-15}  
             dayLabels = [...dayLabels, dayLabel]
         })
     }
        
-        console.log(data)
+        //console.log(data)
         
         this.setState({
             rawData: data,
@@ -173,7 +183,7 @@ export class Timeline extends Component {
         <LabelSeries
         data={this.state.dayLabels}
         
-        labelAnchorX={"start"}
+        labelAnchorX={"middle"}
         labelAnchorY={"middle"}
         />
         {/* <HorizontalBarSeries 
