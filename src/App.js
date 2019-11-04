@@ -35,7 +35,8 @@ export class App extends Component {
     forecastB: {},
     forecastC: {},
     aggedVals: [],
-    bestPeriods: {}
+    bestPeriods: {},
+    timelineVals: []
   }
   
   
@@ -94,7 +95,9 @@ plus30Mins = (dateTime) => {
     else if (this.state.forecastC !== prevState.forecastC)
     {
       return (
-        this.aggForecast(this.allForecast(), this.determinGran()))
+        this.aggForecast(this.allForecast(), this.determinGran(), false),
+        this.aggForecast(this.allForecast(), 2, true)
+        )
     }
     else if (this.state.setPeriod !== prevState.setPeriod)
     {
@@ -197,14 +200,21 @@ determinGran = () => {
   return newGrand
 }
 
-aggForecast = (inputArray, granularity) => {
+aggForecast = (inputArray, granularity, timeline) => {
  
   // const period = 8
   // const periodUnits = 'h'
   // const granularity = 4
   // const forecastArray =[2,3,6,1,5,1,1,1,1,1,1,10]
 
-  let forecastArray = inputArray.slice(0, this.state.setPeriod)
+  let forecastArray = []
+
+  if (timeline) {
+  forecastArray = [...inputArray]
+  }else{
+  forecastArray = inputArray.slice(0, this.state.setPeriod)
+  }
+
 
 let agged = []
 
@@ -223,12 +233,20 @@ for (let index = 0; index < forecastArray.length; index+=granularity) {
 
 //let newAgged = agged.slice(0, this.state.setPeriod)
 
+
+if (timeline){
+  this.setState({
+    timelineVals: agged,
+  })
+}else {
+  
 let best = this.bestPeriods(agged)
 
 this.setState({
   aggedVals: agged,
   bestPeriods: best
 })
+}
 //console.log(agged)
 //return agged
 }
@@ -294,7 +312,7 @@ this.setState({setPeriod: newPeriod})
           />
     </Route>
     <Route path="/forecast-timeline">
-          <Timeline />
+          <Timeline timelineVals={this.state.timelineVals}/>
     </Route>
     <Route path="/advice">
           <Advice />

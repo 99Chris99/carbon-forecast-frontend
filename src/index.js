@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './custom-styles/start-meter.css';
 import './custom-styles/summary-chart.css';
+import './custom-styles/timeline-chart.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-less/semantic.less';

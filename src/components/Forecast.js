@@ -130,7 +130,7 @@ componentDidUpdate (prevProps, prevState) {
         let dayOutput = []
         let nightOutput = []
 
-        if (typeof bestDay[0] !== 'undefined') {
+        if (typeof bestDay[0] !== 'undefined' && typeof bestDay[1] !== 'undefined' && typeof bestDay[2] !== 'undefined') {
         dayOutput = [
                         //header:      `${bestDay.from}`,
                        { description:  `${this.parseDate(bestDay[0].from)}\n${bestDay[0].level}\n${bestDay[0].text}`},
@@ -140,7 +140,7 @@ componentDidUpdate (prevProps, prevState) {
         dayOutput = [  { description:  `Please change period to include night-time hours `}]
                 }
 
-        if (typeof bestNight[0] !== 'undefined'){
+        if (typeof bestNight[0] !== 'undefined' && typeof bestNight[1] !== 'undefined' && typeof bestNight[2] !== 'undefined'){
         nightOutput = [
                         //header:      `${bestDay.from}`,
                        { description:  `${this.parseDate(bestNight[0].from)}\n${bestNight[0].level}\n${bestNight[0].text}`},

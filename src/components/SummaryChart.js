@@ -110,8 +110,7 @@ class SummaryChart extends Component {
           </linearGradient>
         </GradientDefs>
 
-        <VerticalGridLines />
-        <HorizontalGridLines />
+      
      
         {/* <XAxis 
         position="start"

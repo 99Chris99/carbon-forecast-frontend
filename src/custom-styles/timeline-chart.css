@@ -1,0 +1,9 @@
+/* #timeline-chart {
+
+  } */
+
+  .rv-xy-plot__grid-lines__line {
+    stroke: gray;
+    stroke-width: 1;
+  }
+
