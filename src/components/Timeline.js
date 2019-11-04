@@ -7,14 +7,16 @@ export class Timeline extends Component {
         rawData: [{y: 0, x: 0, label:'loading | loaidng'}
         ],
         barPosition: {date: '', offset: 0},
-        labelData: [{lable: 'Testing'}]
+        labelData: [{lable: 'Testing'}],
+        height: 50
     }
 
 
     componentDidMount () {
         if (typeof this.props.timelineVals[0] !== 'undefined'){
           return (
-              this.formatData()
+              this.formatData(),
+              this.manageHeight()
           ) 
         }
     }
@@ -45,7 +47,7 @@ export class Timeline extends Component {
                if (timeOrDate === 'time'){
                    output =  parsedDate.toLocaleString("en-GB", optionsTime)
                }else if (timeOrDate === 'date') {
-               output =  (`${parsedDate.toLocaleString("en-GB", optionsTime)}|${parsedDate.toLocaleString("en-GB", optionsDate)}`)
+               output =  (`${parsedDate.toLocaleString("en-GB", optionsDate)}`)
             }
             return output
 
@@ -54,6 +56,7 @@ export class Timeline extends Component {
        formatData = () => {
         let data = []
         let labelData = []
+        let dayLabels = []
 
         if (this.props.timelineVals !== [] ) {
 
@@ -62,9 +65,20 @@ export class Timeline extends Component {
             data = [...data, bar]
         })
         this.props.timelineVals.map((item, index) => {
-            let barLabel = {x: 0, y: -index, label: `${this.parseDate(item.from, 'time')}`}  
+            let barLabel = {x: 0, y: -index, label: `${this.parseDate(item.from, 'time')}`, xOffset:-50}  
             labelData = [...labelData, barLabel]
-
+        })
+        this.props.timelineVals.map((item, index) => {
+            let day = ''
+            let checkIndex = index =- 1
+            if (index ==! 0 && `${this.parseDate(item.from, 'date')}` ==! `${this.parseDate(item[`${checkIndex}`].from, 'date')}`)
+            {
+               return day = `${this.parseDate(item.from, 'date')}`
+            }
+            let dayLabel = {x: 0, y: -index, 
+                label: day,
+                 xOffset:-50, yOffset:-15}  
+            dayLabels = [...dayLabels, dayLabel]
         })
     }
        
@@ -72,12 +86,18 @@ export class Timeline extends Component {
         
         this.setState({
             rawData: data,
-            labelData: labelData
+            labelData: labelData,
+            dayLabels: dayLabels
         })    
     
     }
     //day.sort((a, b) => (a.level > b.level)
-
+    manageHeight = () => {
+       let newHeight =  this.props.timelineVals.length += 400
+        this.setState({
+            height: newHeight
+        })
+    }
 
     render() {
         return (
@@ -91,8 +111,8 @@ export class Timeline extends Component {
         justifyContent: 'space-between',
         position: 'relative',
         width:  '100%',
-        //height: '50vh',
-        height: '550vh',
+        height: '800vh',
+        //height: `${this.state.height}vh`,
         overflow: 'auto',
       }}
     
@@ -100,7 +120,7 @@ export class Timeline extends Component {
 <div
         style={{width: '100%', height: '100%', border: '1px solid #ccc'}}
       >
-        <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 80, left: 40, right: 20, top: 50}}>
+        <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 80, left: 80, right: 20, top: 50}}>
         {/* xType="time" 
          yType="ordinal"
         */}
@@ -140,12 +160,21 @@ export class Timeline extends Component {
             strokeLinejoin: 'round',
             strokeWidth: 4
         }}
+        curve={'curveMonotoneX'}
         />
 
         <LabelSeries
         data={this.state.labelData}
+        
         labelAnchorX={"start"}
-        labelAnchorY={"text-end-edge"}
+        labelAnchorY={"middle"}
+        />
+
+        <LabelSeries
+        data={this.state.dayLabels}
+        
+        labelAnchorX={"start"}
+        labelAnchorY={"middle"}
         />
         {/* <HorizontalBarSeries 
         data={this.state.rawData}
