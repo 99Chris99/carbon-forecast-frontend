@@ -10,8 +10,19 @@ state = {
     region: 18,
     sortByLevel: false,
     bestPeriodDisplayDay: true,
+    bestPeriodLoaded: false,
     bestPeriodsDay: [{description: `Loading \n Loading \n Loading`}],
     bestPeriodsNight: [{description: `Loading \n Loading \n Loading`}]
+}
+
+componentDidMount () {
+    if (typeof this.props.bestPeriods !== 'undefined'){
+       if (typeof this.props.bestPeriods.day !== 'undefined' || typeof this.props.bestPeriods.night !== 'undefined'){
+            if (typeof this.props.bestPeriods.day[0] !== 'undefined' || typeof this.props.bestPeriods.night[0] !== 'undefined'){
+                this.renderBestPeriods()
+    }
+    }
+}
 }
 
 componentDidUpdate (prevProps, prevState) {
@@ -122,9 +133,9 @@ componentDidUpdate (prevProps, prevState) {
         if (typeof bestDay[0] !== 'undefined') {
         dayOutput = [
                         //header:      `${bestDay.from}`,
-                       { description:  `1. ${this.parseDate(bestDay[0].from)}\n${bestDay[0].level}\n${bestDay[0].text}`},
-                       { description:  `2. ${this.parseDate(bestDay[1].from)}\n${bestDay[1].level}\n${bestDay[1].text}`},
-                       { description:  `3. ${this.parseDate(bestDay[2].from)}\n${bestDay[2].level}\n${bestDay[2].text}`},
+                       { description:  `${this.parseDate(bestDay[0].from)}\n${bestDay[0].level}\n${bestDay[0].text}`},
+                       { description:  `${this.parseDate(bestDay[1].from)}\n${bestDay[1].level}\n${bestDay[1].text}`},
+                       { description:  `${this.parseDate(bestDay[2].from)}\n${bestDay[2].level}\n${bestDay[2].text}`},
                 ]}else{
         dayOutput = [  { description:  `Please change period to include night-time hours `}]
                 }
@@ -132,9 +143,9 @@ componentDidUpdate (prevProps, prevState) {
         if (typeof bestNight[0] !== 'undefined'){
         nightOutput = [
                         //header:      `${bestDay.from}`,
-                       { description:  `1. ${this.parseDate(bestNight[0].from)}\n${bestNight[0].level}\n${bestNight[0].text}`},
-                       { description:  `2. ${this.parseDate(bestNight[1].from)}\n${bestNight[1].level}\n${bestNight[1].text}`},
-                       { description:  `3. ${this.parseDate(bestNight[2].from)}\n${bestNight[2].level}\n${bestNight[2].text}`},
+                       { description:  `${this.parseDate(bestNight[0].from)}\n${bestNight[0].level}\n${bestNight[0].text}`},
+                       { description:  `${this.parseDate(bestNight[1].from)}\n${bestNight[1].level}\n${bestNight[1].text}`},
+                       { description:  `${this.parseDate(bestNight[2].from)}\n${bestNight[2].level}\n${bestNight[2].text}`},
                     ]
                 }else {
                    nightOutput = [  { description:  `Please change period to include night-time hours `}]
@@ -212,7 +223,7 @@ componentDidUpdate (prevProps, prevState) {
 
 <SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>
 </div>
-<button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Date' : 'Intensity Level'}</button>
+<button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Time' : 'Intensity Level'}</button>
 </div>
         );
     }

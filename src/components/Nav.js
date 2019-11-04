@@ -21,8 +21,11 @@ state = {}
           <Menu.Item as={Link} name="start" to="/start">
             Start
           </Menu.Item>
-          <Menu.Item as={Link} name="forecast" to="/forecast">
-            Forecast
+          <Menu.Item as={Link} name="forecast" to="/forecast-summary">
+            Forecast<br></br>Summary
+          </Menu.Item>
+          <Menu.Item as={Link} name="timeline" to="/forecast-timeline">
+            Forecast<br></br>Timeline
           </Menu.Item>
           <Menu.Item as={Link} name="advice" to="/advice">
             Advice

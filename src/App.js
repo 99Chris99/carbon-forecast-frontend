@@ -10,6 +10,7 @@ import API from './adapters/API'
 import Nav from './components/Nav';
 import Start from './components/Start';
 import Forecast from './components/Forecast';
+import Timeline from './components/Timeline';
 import About from './components/About';
 import Advice from './components/Advice';
 import { ItemMeta } from 'semantic-ui-react';
@@ -286,11 +287,14 @@ this.setState({setPeriod: newPeriod})
     <Route path="/start" >
           <Start intensityData={this.state.currentLevel}/>
     </Route>
-    <Route path="/forecast">
+    <Route path="/forecast-summary">
           <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} setPeriod={this.state.setPeriod}
                     updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals}
                     mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods}
           />
+    </Route>
+    <Route path="/forecast-timeline">
+          <Timeline />
     </Route>
     <Route path="/advice">
           <Advice />
