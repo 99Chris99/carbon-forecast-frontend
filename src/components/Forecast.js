@@ -9,7 +9,9 @@ state = {
     period: 48,
     region: 18,
     sortByLevel: false,
-    bestPeriods: {}
+    bestPeriodDisplayDay: true,
+    bestPeriodsDay: [{description: `Loading \n Loading \n Loading`}],
+    bestPeriodsNight: [{description: `Loading \n Loading \n Loading`}]
 }
 
 componentDidUpdate (prevProps, prevState) {
@@ -51,6 +53,21 @@ componentDidUpdate (prevProps, prevState) {
               value: 500,
             },
           ]
+        
+          parseDate = (input) => {
+            let optionsDate = { weekday: 'short', day: 'numeric', month: 'numeric' };
+            let optionsTime = { hour: 'numeric',minute: 'numeric', hour12: true};
+                   let parsedDate = new Date(Date.UTC(
+                       parseInt(input.slice(0, 4), 10),
+                       parseInt(input.slice(5, 7), 10) - 1,
+                       parseInt(input.slice(8, 10), 10),
+                       parseInt(input.slice(11, 13), 10),
+                       parseInt(input.slice(14, 16), 10),
+                     //parseInt(input.slice(13,15), 10)
+                   ))
+                   return (`${parsedDate.toLocaleString("en-GB", optionsTime)} ${parsedDate.toLocaleString("en-GB", optionsDate)}`)
+           }
+
 
           genRegionOptions = () => {
           let output = this.props.regionIndex.map(obj => {
@@ -88,29 +105,47 @@ componentDidUpdate (prevProps, prevState) {
             let newVal = this.state.sortByLevel ? false : true
             this.setState({sortByLevel: newVal})
         } 
+        handleDayNightButton = (event) => {
+            let newVal = this.state.bestPeriodDisplayDay ? false : true
+            this.setState({bestPeriodDisplayDay: newVal})
+        }
 
     renderBestPeriods = () => {
                 
-        let bestDay = this.props.bestPeriods.day[0]
-        let output = [{
-                        header:      `${bestDay.from}`,
-                        description: `${bestDay.level}\n${bestDay.text}`
-                    }]
+        //let bestDay = this.props.bestPeriods.length > 0 ? this.props.bestPeriods.day : [ {from: 'Loading',level:'Loading',text:'Loading'} ]
+        let bestDay =   this.props.bestPeriods.day
+        let bestNight = this.props.bestPeriods.night
+        
+        let dayOutput = []
+        let nightOutput = []
 
+        if (typeof bestDay[0] !== 'undefined') {
+        dayOutput = [
+                        //header:      `${bestDay.from}`,
+                       { description:  `1. ${this.parseDate(bestDay[0].from)}\n${bestDay[0].level}\n${bestDay[0].text}`},
+                       { description:  `2. ${this.parseDate(bestDay[1].from)}\n${bestDay[1].level}\n${bestDay[1].text}`},
+                       { description:  `3. ${this.parseDate(bestDay[2].from)}\n${bestDay[2].level}\n${bestDay[2].text}`},
+                ]}else{
+        dayOutput = [  { description:  `Please change period to include night-time hours `}]
+                }
 
-    //     if (typeof this.props.bestPeriods.day !== 'undefined'){
-    //     output = this.props.bestPeriods.day.map(best => {
+        if (typeof bestNight[0] !== 'undefined'){
+        nightOutput = [
+                        //header:      `${bestDay.from}`,
+                       { description:  `1. ${this.parseDate(bestNight[0].from)}\n${bestNight[0].level}\n${bestNight[0].text}`},
+                       { description:  `2. ${this.parseDate(bestNight[1].from)}\n${bestNight[1].level}\n${bestNight[1].text}`},
+                       { description:  `3. ${this.parseDate(bestNight[2].from)}\n${bestNight[2].level}\n${bestNight[2].text}`},
+                    ]
+                }else {
+                   nightOutput = [  { description:  `Please change period to include night-time hours `}]
 
-    //        return {
-    //             header:      `${best[0].from}`,
-    //             description: `${best[0].level}`,
-    //             description: `${best[0].text}`
-    //         }
-
-    //     }) 
-    // }
+            }
             
-        this.setState({bestPeriods: output})
+        this.setState({
+            bestPeriodsDay: dayOutput,
+            bestPeriodsNight: nightOutput
+        })
+       // return output
     } 
 
 
@@ -161,7 +196,14 @@ componentDidUpdate (prevProps, prevState) {
  </Grid>
 </div>
 <div>
- <Card.Group  itemsPerRow={3} items={this.state.bestPeriods} />
+    {/* <button class="ui button" onClick={this.handleDayNightButton}>Show {this.state.bestPeriodDisplayDay ? 'Daytime' : 'Night-time'}</button> */}
+    <p onClick={this.handleDayNightButton}>Top 3 times to use electricity duiring this period:
+    <br></br>
+     {this.state.bestPeriodDisplayDay ?  <b>Show Daytime</b> : `Show Daytime | `}   
+     {this.state.bestPeriodDisplayDay ?  ` | Show Night-time` : <b>Show Night-time</b>} 
+     </p>
+
+ <Card.Group  itemsPerRow={3} items={this.state.bestPeriodDisplayDay ? this.state.bestPeriodsDay : this.state.bestPeriodsNight} />
 </div>
 
 
