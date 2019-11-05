@@ -68,6 +68,14 @@ export class Timeline extends Component {
 
             }
 
+        lowCarbonLabel = (item) => {
+            let output = ''
+            if (item.text.split(' ')[0] === 'Low' || item.text.split(' ')[1] === 'Low' ) {
+                output = 'This is a good time to use electricity!'
+            }
+            return output
+        }
+
        formatData = () => {
         let data = []
         let labelData = []
@@ -78,7 +86,7 @@ export class Timeline extends Component {
         if (this.props.timelineVals !== [] ) {
 
         this.props.timelineVals.map((item, index) => {
-            let bar = {x: item.level, y: -index, label: `${item.text.split(' ')[1] === 'low' ? 'Carbon Level is Low: good time to use electricity!' : 'HiHi'}` }   
+            let bar = {x: item.level-10, y: -index, label: `${this.lowCarbonLabel(item)}` , yOffset:-25}   
             data = [...data, bar]
         })
         this.props.timelineVals.map((item, index) => {
@@ -187,12 +195,12 @@ export class Timeline extends Component {
         />
 
         <LabelSeries
-        data={this.state.labelData}
-        labelAnchorX={"start"}
-        labelAnchorY={"middle"}
+        data={this.state.rawData}
+        // labelAnchorX={"end"}
+        // labelAnchorY={"middle"}
         />
         <LabelSeries
-        data={this.state.rawData}
+        data={this.state.labelData}
         labelAnchorX={"start"}
         labelAnchorY={"middle"}
         />
