@@ -3,7 +3,7 @@ import { Container } from 'semantic-ui-react';
 
 export class Start extends Component {
     state = {
-        countDown: ''
+        countDown: ' '
     }
 
 
@@ -89,7 +89,9 @@ countDownToDoom = () => {
     <div>
     {/* <h4>HiHi{setInterval(() => this.countDownToDoom(), 1000)}</h4> */}
     {/* <h4>{setInterval(() => `${this.countDownToDoom()}`,1000)}</h4> */}
-   <span> <h4>{this.state.countDown}</h4><h4> {this.props.emmissions} </h4>  </span>
+   <br></br>
+   <h4>{this.state.countDown} - time left until global warming reaches 1.5 °c</h4>
+   <h4> {this.props.emmissions} - total emissions in tonnes produced since you opened this app (C02-e)</h4>  
     </div>
 
     </Container>

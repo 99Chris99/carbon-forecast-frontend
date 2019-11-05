@@ -110,7 +110,6 @@ plus30Mins = (dateTime) => {
     this.viewport()
     this.get48hForecast(this.now())
     this.compileRegionIndex()
-
     {setInterval(() => {this.countEmmissions()},500)}
     
   }
@@ -119,7 +118,10 @@ plus30Mins = (dateTime) => {
   
 
   componentDidUpdate (prevProps, prevState) {
-    if (this.state.forecastA !== prevState.forecastA)
+    if (this.state.setRegion !== prevState.setRegion){
+      this.get48hForecast(this.now())
+    }
+    else if (this.state.forecastA !== prevState.forecastA)
     {
       return this.getForecastB(this.state.setRegion)
     }
