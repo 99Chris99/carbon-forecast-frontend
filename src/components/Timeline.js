@@ -4,11 +4,11 @@ import {XYPlot, LineSeries, HorizontalGridLines, XAxis, YAxis, Borders, Vertical
 export class Timeline extends Component {
 
     state = {
-        rawData: [{y: 0, x: 0, label:'loading | loaidng'}
-        ],
+        rawData: [{y: 0, x: 0, label:'loading | loaidng'}],
         barPosition: {date: '', offset: 0},
         labelData: [{lable: 'Testing'}],
-        height: 50
+        height: 50,
+        middle: typeof this.props.middle !== 'undefined' ? this.props.mediumLevel : 150
     }
 
 
@@ -17,20 +17,29 @@ export class Timeline extends Component {
           return (
               this.formatData(),
               this.manageHeight()
-          ) 
+              ) 
+            }
         }
+        
+        componentDidUpdate (prevPros, prevState) {
+            if (this.state.rawData !== prevState.rawData)
+           console.log('hi')
     }
 
-    // componentDidUpdate (prevPros, prevState) {
-    //     if (this.state.rawData !== prevState.rawData)
-    //     {this.mapTest()}
+    
+
+    // mapTest = () => {
+    //     let test = this.state.rawData.map(item => {
+    //         return item.text.split('|')[0]})
+    //         console.log(`HiHi${test}`)
     // }
 
-    mapTest = () => {
-        let test = this.state.rawData.map(item => {
-            return item.text.split('|')[0]})
-            console.log(`HiHi${test}`)
-    }
+    // getMiddle = () => {
+    //     if (this.state.middle < 1) {
+    //     let middle = this.props.timelineVals[this.props.timelineVals.length-1].level / 2 
+    //     this.setState({middle: middle})
+    //     }
+    // }
 
     parseDate = (input, timeOrDate) => {
         let output = 0
@@ -63,21 +72,24 @@ export class Timeline extends Component {
         let data = []
         let labelData = []
         let dayLabels = []
+        let middleVal = this.props.middle
+        //let middle = this.props.timelineVals[this.props.timelineVals.length-1].level / 2 
 
         if (this.props.timelineVals !== [] ) {
 
         this.props.timelineVals.map((item, index) => {
-            let bar = {x: item.level, y: -index, label: `${item.text}` }   
+            let bar = {x: item.level, y: -index, label: `${item.text.split(' ')[1] === 'low' ? 'Carbon Level is Low: good time to use electricity!' : 'HiHi'}` }   
             data = [...data, bar]
         })
         this.props.timelineVals.map((item, index) => {
-            let barLabel = {x: 0, y: -index, label: `${this.parseDate(item.from, 'time')}`, xOffset:-50}  
+            let barLabel = {x: 0, y: -index, label: `${this.parseDate(item.from, 'time')}`, xOffset:-60}  
             labelData = [...labelData, barLabel]
         })
         this.props.timelineVals.map((item, index) => {
             
-            let middle = this.props.timelineVals[this.props.timelineVals.lenght-1].value / 2
-            
+           // let middle = this.props.screenWidth / 2
+           // let middle = this.state.rawData[this.state.rawData-1].x / 2 
+            //middle += 100
             let day = ''
 
             if (parseInt(`${this.parseDate(item.from, '24')}`) < 1 || index < 1 )
@@ -85,9 +97,10 @@ export class Timeline extends Component {
                 day = `${this.parseDate(item.from, 'date')}`
                 console.log(day)   
             }
-            let dayLabel = {x: 0, y: -index, 
+            let dayLabel = {x: this.state.middle, y: -index, 
                 label: day,
-                 xOffset:middle, yOffset:-15}  
+                xOffset: this.props.mobileUser ? 0 : -30,
+                 yOffset:-15}  
             dayLabels = [...dayLabels, dayLabel]
         })
     }
@@ -175,7 +188,11 @@ export class Timeline extends Component {
 
         <LabelSeries
         data={this.state.labelData}
-        
+        labelAnchorX={"start"}
+        labelAnchorY={"middle"}
+        />
+        <LabelSeries
+        data={this.state.rawData}
         labelAnchorX={"start"}
         labelAnchorY={"middle"}
         />
@@ -183,7 +200,7 @@ export class Timeline extends Component {
         <LabelSeries
         data={this.state.dayLabels}
         
-        labelAnchorX={"middle"}
+        labelAnchorX={"end"}
         labelAnchorY={"middle"}
         />
         {/* <HorizontalBarSeries 

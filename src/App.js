@@ -24,11 +24,14 @@ export class App extends Component {
   
   state = {
     mobileUser: false,
+    screenWidth:  400,
     setRegion: 18,
     setPostCode: '',
     useId: true,
     setPeriod: 12,
     setGran: 2,
+    mediumVal: 150,
+    middle: 150,
     regionIndex: [],
     currentLevel: {region: '', text: '', value: 0},
     forecastA: {},
@@ -58,10 +61,38 @@ e = document.documentElement || document.body;
 }
 let dimentions = { width : e[ a+'Width' ] , height : e[ a+'Height' ] }
 
+this.setState({
+  screenWidth: dimentions.width
+})
 if (dimentions.width < 600) {
-  this.setState({mobileUser: true})
-
+  this.setState({mobileUser: true,
+  })
 }
+}
+
+calMediumLevel = () => {
+
+  let set = this.state.timelineVals.map(item => item.level)
+  let sum = set.reduce((acc, cur) => acc + cur)
+  //console.log(sum)
+  let avg = sum / set.length
+  
+  this.setState({
+  mediumVal: Math.round(avg)
+  })
+}
+
+calMiddle = () => {
+  let set = this.state.timelineVals.map(item => item.level)
+  let big = set.reduce((acc, cur) => {
+    if (cur > acc){  
+    acc = cur}
+  })
+  //console.log(sum)
+  let avg = big / 2
+  this.setState({
+  middle: Math.round(avg)
+  })
 }
 
 
@@ -103,6 +134,12 @@ plus30Mins = (dateTime) => {
     {
       return (
       this.aggForecast(this.allForecast(), this.determinGran()))
+    }
+    else if (this.state.timelineVals !== prevState.timelineVals) {
+      return (
+        this.calMediumLevel(),
+        this.calMiddle()
+      )
     }
   }
   
@@ -312,7 +349,7 @@ this.setState({setPeriod: newPeriod})
           />
     </Route>
     <Route path="/forecast-timeline">
-          <Timeline timelineVals={this.state.timelineVals}/>
+          <Timeline timelineVals={this.state.timelineVals} screenWidth={this.state.screenWidth} middleLevel={this.state.middle} mobileUser={this.state.mobileUser}/>
     </Route>
     <Route path="/advice">
           <Advice />
