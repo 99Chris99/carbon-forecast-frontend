@@ -67,7 +67,7 @@ componentDidUpdate (prevProps, prevState) {
         
           parseDate = (input) => {
             let optionsDate = { weekday: 'short', day: 'numeric', month: 'numeric' };
-            let optionsTime = { hour: 'numeric',minute: 'numeric', hour12: true};
+            let optionsTime = { hour: 'numeric', minute: 'numeric', hour12: true};
                    let parsedDate = new Date(Date.UTC(
                        parseInt(input.slice(0, 4), 10),
                        parseInt(input.slice(5, 7), 10) - 1,

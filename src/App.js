@@ -32,6 +32,7 @@ export class App extends Component {
     setGran: 2,
     mediumVal: 150,
     middle: 150,
+    emissions: 0,
     regionIndex: [],
     currentLevel: {region: '', text: '', value: 0},
     forecastA: {},
@@ -109,6 +110,9 @@ plus30Mins = (dateTime) => {
     this.viewport()
     this.get48hForecast(this.now())
     this.compileRegionIndex()
+
+    {setInterval(() => {this.countEmmissions()},500)}
+    
   }
 
 
@@ -141,6 +145,11 @@ plus30Mins = (dateTime) => {
         this.calMiddle()
       )
     }
+  }
+
+  countEmmissions = () => {
+    let count = this.state.emissions += 0.0142
+    this.setState({emmissions: count})
   }
   
 get48hForecast = (start) => {
@@ -340,7 +349,7 @@ this.setState({setPeriod: newPeriod})
           <Start intensityData={this.state.currentLevel}/>
     </Route>
     <Route path="/start" >
-          <Start intensityData={this.state.currentLevel}/>
+          <Start intensityData={this.state.currentLevel} emmissions={this.state.emissions.toFixed(4)}/>
     </Route>
     <Route path="/forecast-summary">
           <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} setPeriod={this.state.setPeriod}
