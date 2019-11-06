@@ -3,7 +3,7 @@ import PostcodeJsLkp from '../content/PostcodeJsLkp';
 import React, { Component } from 'react'
 import { Search, Grid, Header, Segment } from 'semantic-ui-react'
 
-const initialState = { isLoading: false, results: [], value: '' }
+const initialState = { isLoading: false, results: [{title:''}], value: '', oneResult: false }
 
 
 
@@ -43,16 +43,26 @@ export default class PostCodeSearch extends Component {
         isLoading: false,
         results: _.filter(source, isMatch),
       })
+
     }, 300)
+
   }
 
   componentDidUpdate (prevProps, prevState) {
-
-    if (this.state.results ==! prevState.results && this.state.results.length === 1)
-    {
-      return  this.props.updatePostCode(this.state.value)
+    if (typeof this.state.results !== 'undefined'){
+    if (this.state.results !== prevState.results){
+       this.oneResultCheck() 
+    }
     }
   }
+
+  oneResultCheck = () => {
+      if (this.state.results.length === 1) {
+          this.setState({oneResult: true})
+        return  this.props.updatePostCode(this.state.value)
+      }
+      }
+  
 
   render() {
     const { isLoading, value, results } = this.state

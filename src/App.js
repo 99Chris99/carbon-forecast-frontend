@@ -108,7 +108,7 @@ plus30Mins = (dateTime) => {
 
   componentDidMount () {
     this.viewport()
-    this.get48hForecast(this.now())
+    this.get48hForecast(this.now(),true)
     this.compileRegionIndex()
     {setInterval(() => {this.countEmmissions()},500)}
     
@@ -119,8 +119,11 @@ plus30Mins = (dateTime) => {
 
   componentDidUpdate (prevProps, prevState) {
     if (this.state.setRegion !== prevState.setRegion){
-      this.get48hForecast(this.now())
+      this.get48hForecast(this.now(),true)
       this.compileRegionIndex()
+    }
+    else if (this.state.setPostCode !== prevState.setPostCode){
+      this.get48hForecast(this.now(),false)
     }
     else if (this.state.forecastA !== prevState.forecastA)
     {
@@ -155,11 +158,12 @@ plus30Mins = (dateTime) => {
     this.setState({emissions: count})
   }
   
-get48hForecast = (start) => {
-  if (this.state.useId){
+get48hForecast = (start, useID) => {
+  if (this.state.useId && useID){
     API.getRegionId48HrsData(this.state.setRegion, start).then(info => this.setState({forecastA: info.data.data}))
   }else {
-    API.getRegionPostCode48HrsData(this.state.setPostCode, start).then(info => this.setState({forecastA: info.data.data}, {setRegion: info.data.regionid}))
+ // API.getRegionPostCode48HrsData(this.state.setPostCode, start).then(info => this.setState({forecastA: info.data.data}, {setRegion: info.data.regionid}))
+    API.getRegionPostCode48HrsData(this.state.setPostCode, start).then(info => this.setState({forecastA: info.data.data}))
   }
 }
 getForecastB = () => {
@@ -361,7 +365,7 @@ this.setState({setPeriod: newPeriod})
           <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)}/>
     </Route>
     <Route path="/forecast-summary">
-          <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} updatePostCode={this.state.updatePostCode} setPeriod={this.state.setPeriod}
+          <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} updatePostCode={this.updatePostCode} setPeriod={this.state.setPeriod}
                     updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals}
                     mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods}
           />
