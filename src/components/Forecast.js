@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Dropdown, Table, Grid, Card, Image, Segment, Container } from 'semantic-ui-react';
-import SummaryChart from './SummaryChart'
+import { Dropdown, Search, Table, Grid, Card, Image, Segment, Container } from 'semantic-ui-react';
+import SummaryChart from './SummaryChart';
+import PostCodeSearch from './PostCodeSearch';
 
 export class Forecast extends Component {
 
@@ -182,7 +183,7 @@ componentDidUpdate (prevProps, prevState) {
       
        </Grid.Column>
        <Grid.Column floated='left'>
-   <p>Yep thats right I'm some text!</p>
+   <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
    </Grid.Column>
 
 </Grid.Row>
@@ -198,9 +199,15 @@ componentDidUpdate (prevProps, prevState) {
           onChange={(event, data) => this.props.updateRegion(data.value)}
         />
        
+
+
+
         </Grid.Column>
         <Grid.Column floated='left'>
     <p>Yep thats right I'm some text!</p>
+
+
+
     </Grid.Column>
  
  </Grid.Row>

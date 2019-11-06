@@ -91,7 +91,7 @@ countDownToDoom = () => {
     {/* <h4>{setInterval(() => `${this.countDownToDoom()}`,1000)}</h4> */}
    <br></br>
    <h4>{this.state.countDown} - time left until global warming reaches 1.5 °c</h4>
-   <h4> {this.props.emmissions} - total emissions in tonnes produced since you opened this app (C02-e)</h4>  
+   <h4> {this.props.emissions} - total emissions in tonnes produced since you opened this app (C02-e)</h4>  
     </div>
 
     </Container>

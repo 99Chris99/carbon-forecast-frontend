@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {XYPlot, LineSeries, HorizontalGridLines, XAxis, YAxis, Borders, VerticalGridLines, HorizontalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
+import { Sticky, Header, Table } from 'semantic-ui-react';
+
 
 export class Timeline extends Component {
 
     state = {
-        rawData: [{y: 0, x: 0, label:'loading | loaidng'}],
+        rawData: [{y: 0, x: 0, label:'loading | loadidng'}],
         barPosition: {date: '', offset: 0},
         labelData: [{lable: 'Testing'}],
         height: 50,
@@ -21,9 +23,12 @@ export class Timeline extends Component {
             }
         }
         
-        componentDidUpdate (prevPros, prevState) {
-            if (this.state.rawData !== prevState.rawData)
-           console.log('hi')
+        componentDidUpdate (prevProps, prevState) {
+            if (this.props.timelineVals !== prevProps.timelineVals)
+            return (
+                this.formatData(),
+                this.manageHeight()
+                ) 
     }
 
     
@@ -131,23 +136,50 @@ export class Timeline extends Component {
     }
 
     render() {
-        return (
-            <div>
-                
 
+
+        
+        return (
+            <div
+            style={{
+                height: '800vh'
+            }}
+            >
+          
+          <div id="sticky"> 
+        
+            Carbon Intensity Level
+          <Table id="sticky-table" unstackable >
+
+            <Table.Body>
+           
+
+            <Table.Row>
+            <Table.Cell>⟵  Low</Table.Cell>
+            <Table.Cell>Medium</Table.Cell>
+            <Table.Cell>High  ⟶</Table.Cell>
+            </Table.Row>
+            </Table.Body>
+          </Table>
+          
+          </div>
+                
                 <div id="timeline">
 <div
       style={{
-       // display: 'flex',
-        justifyContent: 'space-between',
-        position: 'relative',
-        width:  '100%',
-        height: '800vh',
-        //height: `${this.state.height}vh`,
-        overflow: 'auto',
-      }}
-    
+          // display: 'flex',
+          justifyContent: 'space-between',
+          position: 'relative',
+          width:  '100%',
+          height: '800vh',
+          //height: `${this.state.height}vh`,
+          overflow: 'auto',
+        }}
+      id="bg-fade"
     >
+
+
+
 <div
         style={{width: '100%', height: '100%', border: '1px solid #ccc'}}
       >
@@ -155,13 +187,7 @@ export class Timeline extends Component {
         {/* xType="time" 
          yType="ordinal"
         */}
-        <GradientDefs>
-          <linearGradient id="CoolGradient" y1="0" y2="0" x1="0" x2="1">
-            <stop offset="0%" stopColor="green" stopOpacity={0.4}/>
-            <stop offset="50%" stopColor="yellow" stopOpacity={0.4}/>
-            <stop offset="100%" stopColor="red" stopOpacity={0.4} />
-          </linearGradient>
-        </GradientDefs>
+        
 
         <HorizontalGridLines 
         tickTotal={this.state.rawData.length}
@@ -184,12 +210,12 @@ export class Timeline extends Component {
         
         <LineSeries 
         data={this.state.rawData}
-        color={'grey'}
+        color={'black'}
         animation
         style={{
             fill: 'none',
             strokeLinejoin: 'round',
-            strokeWidth: 4
+            strokeWidth: 8
         }}
         curve={'curveMonotoneX'}
         />
@@ -273,7 +299,7 @@ export class Timeline extends Component {
      
 
         </div>
-
+        
 
             </div>
         );

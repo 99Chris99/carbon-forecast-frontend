@@ -120,6 +120,7 @@ plus30Mins = (dateTime) => {
   componentDidUpdate (prevProps, prevState) {
     if (this.state.setRegion !== prevState.setRegion){
       this.get48hForecast(this.now())
+      this.compileRegionIndex()
     }
     else if (this.state.forecastA !== prevState.forecastA)
     {
@@ -151,7 +152,7 @@ plus30Mins = (dateTime) => {
 
   countEmmissions = () => {
     let count = this.state.emissions += 0.0142
-    this.setState({emmissions: count})
+    this.setState({emissions: count})
   }
   
 get48hForecast = (start) => {
@@ -184,6 +185,8 @@ getForecastC = () => {
 
 
   compileRegionIndex = () => {
+  
+    this.setState({regionIndex: []})
     API.getCurrentRegionalData().then(info => info.data[0].regions.map(item => {
           this.setState({
               regionIndex: 
@@ -326,6 +329,10 @@ return {day:bestDay, night:bestNight}
 updateRegion = (newRegion) => {
 this.setState({setRegion: newRegion})
 }
+
+updatePostCode = (newPostCode => {
+  this.setState({setPostCode: newPostCode})
+})
 updatePeriod = (newPeriod) => {
 this.setState({setPeriod: newPeriod})
 }
@@ -351,10 +358,10 @@ this.setState({setPeriod: newPeriod})
           <Start intensityData={this.state.currentLevel}/>
     </Route>
     <Route path="/start" >
-          <Start intensityData={this.state.currentLevel} emmissions={this.state.emissions.toFixed(4)}/>
+          <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)}/>
     </Route>
     <Route path="/forecast-summary">
-          <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} setPeriod={this.state.setPeriod}
+          <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} updatePostCode={this.state.updatePostCode} setPeriod={this.state.setPeriod}
                     updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals}
                     mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods}
           />
