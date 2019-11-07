@@ -1,32 +1,21 @@
 import _ from 'lodash'
 import PostcodeJsLkp from '../content/PostcodeJsLkp';
 import React, { Component } from 'react'
-import { Search, Grid, Header, Segment } from 'semantic-ui-react'
+import { Search, Button, Grid, Header, Segment } from 'semantic-ui-react'
 
-const initialState = { isLoading: false, results: [{title:''}], value: '', oneResult: false }
+const initialState = { isLoading: false, results: [{title:''}], value: '', confirmResult: ''}
 
-
-
-
-// const source = ([{
-//   title: `faker.company.companyName()`,
-//   description: 'faker.company.catchPhrase()',
-//   //image: 'faker.internet.avatar()',
-//   price: 100},
-//   {title: `A`,
-//   description: 'AAaaaa',
-// //   image: 'faker.internet.avatar()',
-//   price: 234,
-// }]
 
 const source = (
     PostcodeJsLkp.postcodes
 )
 
 
+//handleResultSelect = (e, { result }) => this.setState({ value: result.title },this.confrimResult(result.title))
 
 export default class PostCodeSearch extends Component {
   state = initialState
+
 
   handleResultSelect = (e, { result }) => this.setState({ value: result.title })
 
@@ -43,32 +32,32 @@ export default class PostCodeSearch extends Component {
         isLoading: false,
         results: _.filter(source, isMatch),
       })
-
     }, 300)
-
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (typeof this.state.results !== 'undefined'){
-    if (this.state.results !== prevState.results){
-       this.oneResultCheck() 
-    }
-    }
-  }
-
-  oneResultCheck = () => {
-      if (this.state.results.length === 1) {
-          this.setState({oneResult: true})
-        return  this.props.updatePostCode(this.state.value)
-      }
-      }
   
+
+  confirmResult = () => {
+    let valueCheck = this.state.value
+    if (typeof valueCheck !== 'undefined' && valueCheck !== '') {
+      console.log('confirming')
+    let result = source.filter(postcode => valueCheck === postcode.title)[0].title
+    if (typeof result !== 'undefined'){
+      console.log(result)
+      //this.setState({confirmResult: result})
+    this.props.updatePostCode(result)
+    }
+    }
+  }
+
+
+
 
   render() {
     const { isLoading, value, results } = this.state
 
     return (
-      
+        <div>
           <Search
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
@@ -79,7 +68,9 @@ export default class PostCodeSearch extends Component {
             value={value}
             {...this.props}
           />
-        
+
+          <Button onClick={event => this.confirmResult()}>Submit</Button>
+          </div>
     )
   }
 }

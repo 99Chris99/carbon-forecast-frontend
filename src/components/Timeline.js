@@ -176,6 +176,8 @@ export class Timeline extends Component {
           overflow: 'auto',
         }}
       id="bg-fade"
+
+      
     >
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Search, Table, Grid, Card, Image, Segment, Container } from 'semantic-ui-react';
+import { Dropdown, Search, Table, Grid, Card, Button, Image, Segment, Container } from 'semantic-ui-react';
 import SummaryChart from './SummaryChart';
 import PostCodeSearch from './PostCodeSearch';
 
@@ -9,6 +9,7 @@ export class Forecast extends Component {
 state = {
     period: 48,
     region: 18,
+    loading: true,
     sortByLevel: false,
     bestPeriodDisplayDay: true,
     bestPeriodLoaded: false,
@@ -24,15 +25,21 @@ componentDidMount () {
     }
     }
 }
+
+this.isLoading()
+
 }
 
 componentDidUpdate (prevProps, prevState) {
     if (this.props.bestPeriods !== prevProps.bestPeriods){
         this.renderBestPeriods()
     }
-}
 
-        periodOptions = [
+    if (this.props.aggedVals !== prevProps.aggedVals) {
+        this.isLoading()
+    }
+}
+    periodOptions = [
             {
               key: 6,
               text: '+6 hours',
@@ -65,6 +72,13 @@ componentDidUpdate (prevProps, prevState) {
               value: 500,
             },
           ]
+
+isLoading = () => {
+    if (this.props.aggedVals === [] || typeof this.props.aggedVals === 'undefined'){
+        this.setState({loading: true})
+    }else {this.setState({loading: false})}
+}
+
         
           parseDate = (input) => {
             let optionsDate = { weekday: 'short', day: 'numeric', month: 'numeric' };
@@ -104,11 +118,11 @@ componentDidUpdate (prevProps, prevState) {
 
         controlSort = () => {
             let newProps = this.props.aggedVals
-          if (this.state.sortByLevel === false){
+          if (this.state.sortByLevel ==! true){
            newProps = this.props.aggedVals.sort((a,b) => (Date.parse(a.from) > Date.parse(b.from)? 1 : -1))
             }
             else if (this.state.sortByLevel === true){
-                newProps = this.props.aggedVals.sort((a,b) => (Date.parse(a.level) > Date.parse(b.level)? 1 : -1))
+                newProps = this.props.aggedVals.sort((a,b) => a.level > b.level? 1 : -1)
             }
                  return newProps
         }
@@ -121,6 +135,8 @@ componentDidUpdate (prevProps, prevState) {
             let newVal = this.state.bestPeriodDisplayDay ? false : true
             this.setState({bestPeriodDisplayDay: newVal})
         }
+
+        
 
     renderBestPeriods = () => {
                 
@@ -184,6 +200,7 @@ componentDidUpdate (prevProps, prevState) {
        </Grid.Column>
        <Grid.Column floated='left'>
    <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
+   
    </Grid.Column>
 
 </Grid.Row>
