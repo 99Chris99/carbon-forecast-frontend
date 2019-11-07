@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {XYPlot, LineSeries, HorizontalGridLines, XAxis, YAxis, Borders, VerticalGridLines, HorizontalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
+import {XYPlot, LineSeries, MarkSeries, HorizontalGridLines, Hint, XAxis, YAxis, Borders, VerticalGridLines, HorizontalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
 import { Sticky, Header, Table } from 'semantic-ui-react';
 
 
@@ -10,7 +10,8 @@ export class Timeline extends Component {
         barPosition: {date: '', offset: 0},
         labelData: [{lable: 'Testing'}],
         height: 50,
-        middle: typeof this.props.middle !== 'undefined' ? this.props.mediumLevel : 150
+        middle: typeof this.props.middle !== 'undefined' ? this.props.mediumLevel : 150,
+        value: null
     }
 
 
@@ -135,9 +136,22 @@ export class Timeline extends Component {
         })
     }
 
+    _forgetValue = () => {
+        this.setState({
+          value: null
+        });
+      };
+    
+      _rememberValue = value => {
+        this.setState({value});
+      };
+    
+
+
     render() {
-
-
+        const {value} = this.state
+        let scrolledDown = window.scrollY;
+        console.log(scrolledDown)
         
         return (
             <div
@@ -222,6 +236,13 @@ export class Timeline extends Component {
         curve={'curveMonotoneX'}
         />
 
+        <MarkSeries
+          onValueMouseOver={this._rememberValue}
+          onValueMouseOut={this._forgetValue}
+          data={this.state.rawData}
+        />
+        {value ? <Hint value={value} /> : null}
+
         <LabelSeries
         data={this.state.rawData}
         // labelAnchorX={"end"}
@@ -239,6 +260,9 @@ export class Timeline extends Component {
         labelAnchorX={"end"}
         labelAnchorY={"middle"}
         />
+
+
+
         {/* <HorizontalBarSeries 
         data={this.state.rawData}
         color={'url(#CoolGradient)'}
