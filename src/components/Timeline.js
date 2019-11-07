@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {XYPlot, LineSeries, MarkSeries, HorizontalGridLines, Hint, XAxis, YAxis, Borders, VerticalGridLines, HorizontalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
 import { Sticky, Header, Table } from 'semantic-ui-react';
+import { withScroll } from 'react-window-decorators';
 
-
-export class Timeline extends Component {
+// @withScroll
+class Timeline extends Component {
 
     state = {
         rawData: [{y: 0, x: 0, label:'loading | loadidng'}],
@@ -11,11 +12,15 @@ export class Timeline extends Component {
         labelData: [{lable: 'Testing'}],
         height: 50,
         middle: typeof this.props.middle !== 'undefined' ? this.props.mediumLevel : 150,
-        value: null
+        value: null,
+        position:1000,
+        position: this.props.scrollPositionY
     }
 
 
     componentDidMount () {
+      this.getposition()
+
         if (typeof this.props.timelineVals[0] !== 'undefined'){
           return (
               this.formatData(),
@@ -23,8 +28,16 @@ export class Timeline extends Component {
               ) 
             }
         }
+
+        
         
         componentDidUpdate (prevProps, prevState) {
+            if (this.props.scrollPositionY !== prevProps.scrollPositionY) {
+                    if (this.props.scrollPositionY === this.state.position) {
+                        console.log('I love you chris!')
+                    }
+            }
+
             if (this.props.timelineVals !== prevProps.timelineVals)
             return (
                 this.formatData(),
@@ -146,12 +159,34 @@ export class Timeline extends Component {
         this.setState({value});
       };
     
+getposition = () => {
+      let elem = document.querySelector('#sticky-check');
+      let bounding = elem.getBoundingClientRect()      
+      console.log(bounding)
+
+      let sticky = document.querySelector('#sticky');
+      let stickyTop = sticky.getBoundingClientRect()      
+      console.log(stickyTop)
+
+      //let chartTop = document.querySelector('.rv-xy-plot__grid-lines')
+      let chartTop = document.querySelector('.rv-xy-plot__grid-lines')
+      let chartTopPos = chartTop.getBoundingClientRect()      
+      console.log(chartTopPos)
+      let stickPos = bounding.top + bounding.height
+      return this.setState({position:chartTopPos.bottom - stickPos})
+      
+      //if (scroll === bounding) {console.log('yey!'+ this.state.position)}
+    }
+
+
+    // <i ref={(ref) => this.scrollIcon = ref} className="fa fa-2x fa-chevron-down"></i>
 
 
     render() {
-        const {value} = this.state
-        let scrolledDown = window.scrollY;
-        console.log(scrolledDown)
+        //const {value} = this.state
+        let scroll = window.scrollY;
+        // console.log(scrolledDown)
+      
         
         return (
             <div
@@ -159,17 +194,17 @@ export class Timeline extends Component {
                 height: '800vh'
             }}
             >
-          
           <div id="sticky"> 
         
             Carbon Intensity Level
+            Vertical scroll position is: { this.props.scrollPositionY }
           <Table id="sticky-table" unstackable >
 
             <Table.Body>
            
 
             <Table.Row>
-            <Table.Cell>⟵  Low</Table.Cell>
+            <Table.Cell id="sticky-check">⟵  Low</Table.Cell>
             <Table.Cell>Medium</Table.Cell>
             <Table.Cell>High  ⟶</Table.Cell>
             </Table.Row>
@@ -177,9 +212,12 @@ export class Timeline extends Component {
           </Table>
           
           </div>
-                
+          <div id="stickyMeasure">
+          </div>
+
                 <div id="timeline">
 <div
+        
       style={{
           // display: 'flex',
           justifyContent: 'space-between',
@@ -241,7 +279,7 @@ export class Timeline extends Component {
           onValueMouseOut={this._forgetValue}
           data={this.state.rawData}
         />
-        {value ? <Hint value={value} /> : null}
+        {/* {value ? <Hint value={value} /> : null} */}
 
         <LabelSeries
         data={this.state.rawData}
@@ -332,4 +370,4 @@ export class Timeline extends Component {
     }
 }
 
-export default Timeline;
+export default withScroll (Timeline);
