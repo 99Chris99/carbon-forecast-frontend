@@ -24,19 +24,21 @@ background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(47,236,112,0.795
     position: -webkit-sticky; /* Safari */
     position: sticky;
     top: 0;
-    height: 5vh;
+    height: 20vh;
     width: 100%;
     background: #fff;
-    opacity: 0.6;
+    opacity: 0.9;
    filter: alpha(opacity=50);
    z-index: 100;
    text-align: center;
 }
 
 #sticky-table{
-
+  margin: 0;
+  padding-top:0;
   padding-left: 18vw;
   padding-right: 20vw;
   text-align: center;
-
+  /* height: 20vh; */
 }
+
