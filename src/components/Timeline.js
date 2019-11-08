@@ -13,7 +13,13 @@ class Timeline extends Component {
         height: 50,
         middle: typeof this.props.middle !== 'undefined' ? this.props.mediumLevel : 150,
         value: null,
-        position:1000,
+       // position:1000,
+        stickyTop:0,
+        plotTop:0,
+        gapVal: 1000,
+        scrollCount: 0,
+        initalScrollCounter:0,
+        dataIndex: 0,
         position: this.props.scrollPositionY
     }
 
@@ -33,16 +39,32 @@ class Timeline extends Component {
         
         componentDidUpdate (prevProps, prevState) {
             if (this.props.scrollPositionY !== prevProps.scrollPositionY) {
-                    if (this.props.scrollPositionY === this.state.position) {
-                        console.log('I love you chris!')
-                    }
-            }
-
+            this.manageScrollDisplay()}
+            
             if (this.props.timelineVals !== prevProps.timelineVals)
             return (
                 this.formatData(),
                 this.manageHeight()
                 ) 
+    }
+    
+    manageScrollDisplay = () => {
+        
+        let initalScrollCounter = this.state.initalScrollCounter < 1 ? this.state.gapVal + this.state.stickyTop : this.state.initalScrollCounter
+        let dataIndex = 0
+        if (this.props.scrollPositionY >= initalScrollCounter) {
+            console.log('I love you chris!')
+        //this.setState({scrollCount: initalScrollCounter})
+            if (this.props.scrollPositionY >= initalScrollCounter + Math.abs(this.state.scrollCount)) {
+                //let newVal = this.state.scrollCount + this.state.gapVal
+                const step = this.state.chartTop - this.state.plotTop
+                console.log("Youve got this" + this.state.scrollCount)
+                console.log(this.state.scrollCount)
+                const scroll = this.state.scrollCount + step
+                 this.setState({scrollCount: scroll})
+            }
+        }
+
     }
 
     
@@ -168,12 +190,23 @@ getposition = () => {
       let stickyTop = sticky.getBoundingClientRect()      
       console.log(stickyTop)
 
+      const plot = document.querySelector('.rv-xy-plot')
+      const plotA = plot.getBoundingClientRect()
+      const plotB = plot.getBoundingClientRect()
+
+      let plotTop = plotA.top
+      let plotX = plotB.x
+    //   let plotTopNew = plotTop =- plotTop.x   
+       console.log(plotTop + ' ' + plotX)
+    //   console.log(plotTopNew)
+
       //let chartTop = document.querySelector('.rv-xy-plot__grid-lines')
       let chartTop = document.querySelector('.rv-xy-plot__grid-lines')
-      let chartTopPos = chartTop.getBoundingClientRect()      
+      let chartTopPos = chartTop.getBoundingClientRect() 
+
       console.log(chartTopPos)
       let stickPos = bounding.top + bounding.height
-      return this.setState({position:chartTopPos.bottom - stickPos})
+      return this.setState({gapVal:chartTopPos.bottom - stickPos, stickyTop: stickyTop.top, chartTop:130, plotTop:(plotTop - plotX)})
       
       //if (scroll === bounding) {console.log('yey!'+ this.state.position)}
     }
