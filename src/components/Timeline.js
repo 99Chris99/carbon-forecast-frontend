@@ -19,13 +19,16 @@ class Timeline extends Component {
         gapVal: 1000,
         scrollCount: 0,
         initalScrollCounter:0,
-        dataIndex: 0,
-        position: this.props.scrollPositionY
+        dataIndex: -1,
+        position: this.props.scrollPositionY,
+        scrollPlots: [],
+        getLevel:0
     }
 
 
     componentDidMount () {
       this.getposition()
+      this.manageScrollDisplay()
 
         if (typeof this.props.timelineVals[0] !== 'undefined'){
           return (
@@ -39,19 +42,64 @@ class Timeline extends Component {
         
         componentDidUpdate (prevProps, prevState) {
             if (this.props.scrollPositionY !== prevProps.scrollPositionY) {
-            this.manageScrollDisplay()}
-            
+               return this.getLevel()
+            }
             if (this.props.timelineVals !== prevProps.timelineVals)
             return (
                 this.formatData(),
                 this.manageHeight()
                 ) 
+            if (this.state.rawData !== prevState.rawData)
+            {
+               return this.scrollPlots()
+            }
+
+            }
+
+
+    scrollPlots = () => {
+
+       let scrollPlots =  this.state.rawData.map((point, index) => {    
+        let data = {y: this.state.plotGap * (index+1), level: point.x}
+            return data
+        })
+
+        this.setState({scrollPlots: scrollPlots})
     }
+
+    getLevel = () => {
+        
+        if (this.state.scrollPlots.length > 1) {
+
+        let currY = this.props.scrollPositionY
+        let newArray = this.state.scrollPlots.map(obj => {
+            return obj.y
+          })
+           let closest = newArray.reduce((prev, curr) => {
+           return (Math.abs(curr - currY) < Math.abs(prev - currY) ? curr : prev);
+           })
+          let found = this.state.scrollPlots.find(obj => {
+            return obj.y === closest
+          })
+         return this.setState({
+              currentLevel:found.level
+          })
+        }
+          //return found.level 
+        
+        }
+
+
+  //var closest = counts.reduce(function(prev, curr) {
+  //return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
+
+
+    
     
     manageScrollDisplay = () => {
         
         let initalScrollCounter = this.state.initalScrollCounter < 1 ? this.state.gapVal + this.state.stickyTop : this.state.initalScrollCounter
-        let dataIndex = 0
+        //let dataIndex = 0
         if (this.props.scrollPositionY >= initalScrollCounter) {
             console.log('I love you chris!')
         //this.setState({scrollCount: initalScrollCounter})
@@ -61,7 +109,8 @@ class Timeline extends Component {
                 console.log("Youve got this" + this.state.scrollCount)
                 console.log(this.state.scrollCount)
                 const scroll = this.state.scrollCount + step
-                 this.setState({scrollCount: scroll})
+                let newIndex = this.state.dataIndex + 1
+                 this.setState({scrollCount: scroll, dataIndex:newIndex})
             }
         }
 
@@ -206,7 +255,10 @@ getposition = () => {
 
       console.log(chartTopPos)
       let stickPos = bounding.top + bounding.height
-      return this.setState({gapVal:chartTopPos.bottom - stickPos, stickyTop: stickyTop.top, chartTop:130, plotTop:(plotTop - plotX)})
+      let gap = plotA.height - (plotTop - plotX)
+      //this.setState({plotGap: Math.abs(gap)})
+      this.setState({plotGap: 50})
+      return this.setState({gapVal:chartTopPos.bottom - stickPos, stickyTop: stickyTop.top, chartTop:chartTopPos.bottom - chartTopPos.top, plotTop:(plotTop - plotX)})
       
       //if (scroll === bounding) {console.log('yey!'+ this.state.position)}
     }
@@ -227,10 +279,12 @@ getposition = () => {
                 height: '800vh'
             }}
             >
-          <div id="sticky"> 
+          <div id="sticky" onClick={(event => this.scrollPlots())}> 
         
             Carbon Intensity Level
-            Vertical scroll position is: { this.props.scrollPositionY }
+            Vertical scroll position is: { this.props.scrollPositionY } <br></br>
+            {/* Carbon Intensity: {typeof this.state.rawData[this.state.dataIndex] !== 'undefined' ? this.state.rawData[this.state.dataIndex].x : 0} */}
+            Carbon Intensity: {this.state.currentLevel}
           <Table id="sticky-table" unstackable >
 
             <Table.Body>
@@ -311,6 +365,7 @@ getposition = () => {
           onValueMouseOver={this._rememberValue}
           onValueMouseOut={this._forgetValue}
           data={this.state.rawData}
+          id="markSeries"
         />
         {/* {value ? <Hint value={value} /> : null} */}
 
