@@ -16,8 +16,8 @@ state = {}
             <div>
 
     
-      <Menu>
-      <Container>
+      {/* <Container> */}
+      <Menu fluid widths={5}>
           <Menu.Item as={Link} name="start" to="/start">
             Start
           </Menu.Item>
@@ -33,8 +33,8 @@ state = {}
           <Menu.Item as={Link} name="about" to="/about">
             About
           </Menu.Item>
-          </Container>
       </Menu>
+          {/* </Container> */}
       
 
     

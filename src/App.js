@@ -359,7 +359,7 @@ this.setState({setPeriod: newPeriod})
 <Switch>
 
     <Route exact path="/">
-          <Start intensityData={this.state.currentLevel}/>
+          <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)}/>
     </Route>
     <Route path="/start" >
           <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)}/>

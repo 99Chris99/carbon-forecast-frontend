@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {XYPlot, LineSeries, MarkSeries, HorizontalGridLines, Hint, XAxis, YAxis, Borders, VerticalGridLines, HorizontalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
-import { Sticky, Header, Table } from 'semantic-ui-react';
+import { Sticky, Header, Table, TableCell } from 'semantic-ui-react';
 import { withScroll } from 'react-window-decorators';
 
 // @withScroll
@@ -13,13 +13,14 @@ class Timeline extends Component {
         height: 50,
         middle: typeof this.props.middle !== 'undefined' ? this.props.mediumLevel : 150,
         value: null,
-        scrollCount: 0,
+       // scrollCount: 0,
         initalScrollCounter:0,
         dataIndex: -1,
         position: this.props.scrollPositionY,
         scrollPlots: [],
         getLevel:0,
         yOffset:0,
+        currentLevel:{level:0, time:'loading', text:'loading'}
     }
 
 
@@ -77,7 +78,7 @@ calYOffset = () => {
     
     let valA = stickyTopVals.top
     let valB = girdPlotTopVals.top - girdPlotOuterTopVals.top
-    let output = valA+valB
+    let output = 109//106//valA+valB-2
     this.setState({yOffset: output})
     return output
 }
@@ -87,7 +88,7 @@ calYOffset = () => {
        // console.log('clientHeight '+ chartTop.clientHeight )
        let height = chartTop.getBoundingClientRect()
        console.log(height)
-        let output = height.height / this.state.rawData.length
+        let output = (height.height / this.state.rawData.length)
         console.log(output)
         return output
     
@@ -98,13 +99,25 @@ calYOffset = () => {
         this.calYOffset()
         let gap =this.chartGap()
         console.log(gap)
-       let scrollPlots =  this.state.rawData.map((point, index) => {    
+        let scrollPlots =  this.props.timelineVals.map((point, index) => {    
         
-        let data = {y: (gap * (index)), level: point.x}
+        let data = {time:`${this.parseDate(point.from, 'time')} ${this.parseDate(point.from, 'date')}`,
+        y: (gap * index)+(index/2), level: point.level, text: point.text}
             return data
         })
         this.setState({scrollPlots: scrollPlots})
     }
+    // scrollPlots = () => {
+    //     this.calYOffset()
+    //     let gap =this.chartGap()
+    //     console.log(gap)
+    //    let scrollPlots =  this.state.rawData.map((point, index) => {    
+        
+    //     let data = {y: (gap * (index)), level: point.x}
+    //         return data
+    //     })
+    //     this.setState({scrollPlots: scrollPlots})
+    // }
 
     getLevel = () => {
         
@@ -121,54 +134,13 @@ calYOffset = () => {
             return obj.y === closest
           })
          return this.setState({
-              currentLevel:found.level
+              currentLevel:{level: found.level, time:found.time, text:found.text}
           })
         }
           //return found.level 
         
         }
 
-
-  //var closest = counts.reduce(function(prev, curr) {
-  //return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
-
-
-    
-    
-    // manageScrollDisplay = () => {
-        
-    //     let initalScrollCounter = this.state.initalScrollCounter < 1 ? this.state.gapVal + this.state.stickyTop : this.state.initalScrollCounter
-    //     //let dataIndex = 0
-    //     if (this.props.scrollPositionY >= initalScrollCounter) {
-    //         console.log('I love you chris!')
-    //     //this.setState({scrollCount: initalScrollCounter})
-    //         if (this.props.scrollPositionY >= initalScrollCounter + Math.abs(this.state.scrollCount)) {
-    //             //let newVal = this.state.scrollCount + this.state.gapVal
-    //             const step = this.state.chartTop - this.state.plotTop
-    //             console.log("Youve got this" + this.state.scrollCount)
-    //             console.log(this.state.scrollCount)
-    //             const scroll = this.state.scrollCount + step
-    //             let newIndex = this.state.dataIndex + 1
-    //              this.setState({scrollCount: scroll, dataIndex:newIndex})
-    //         }
-    //     }
-
-    // }
-
-    
-
-    // mapTest = () => {
-    //     let test = this.state.rawData.map(item => {
-    //         return item.text.split('|')[0]})
-    //         console.log(`HiHi${test}`)
-    // }
-
-    // getMiddle = () => {
-    //     if (this.state.middle < 1) {
-    //     let middle = this.props.timelineVals[this.props.timelineVals.length-1].level / 2 
-    //     this.setState({middle: middle})
-    //     }
-    // }
 
     parseDate = (input, timeOrDate) => {
         let output = 0
@@ -218,6 +190,7 @@ calYOffset = () => {
             let bar = {x: item.level-10, y: -index, label: `${this.lowCarbonLabel(item)}` , yOffset:-25}   
             data = [...data, bar]
         })
+
         this.props.timelineVals.map((item, index) => {
             let barLabel = {x: 0, y: -index, label: `${this.parseDate(item.from, 'time')}`, xOffset:-60}  
             labelData = [...labelData, barLabel]
@@ -289,15 +262,21 @@ calYOffset = () => {
             >
           <div id="sticky"> 
           Carbon Intensity Level <br></br>
-            Vertical scroll position is: { this.props.scrollPositionY - this.state.yOffset } <br></br>
-            Carbon Intensity: {this.state.currentLevel}
+            {/* Vertical scroll position is: { this.props.scrollPositionY - this.state.yOffset } <br></br> */}
+            {/* Carbon Intensity: {this.state.currentLevel.level} */}
            
-          <Table id="sticky-table" unstackable >
+          <Table id="sticky-table" fixed unstackable singleLine celled>
 
             <Table.Body>
+            <Table.Row textAlign='center'> 
+            <Table.Cell>{this.state.currentLevel.time}</Table.Cell>
+            <Table.Cell>{this.state.currentLevel.level}</Table.Cell>
+            <Table.Cell> Share </Table.Cell>
 
-            <Table.Row>
-            <Table.Cell id="sticky-check">⟵  Low</Table.Cell>
+            </Table.Row>
+
+            <Table.Row textAlign='center'>
+            <Table.Cell>⟵  Low</Table.Cell>
             <Table.Cell>Medium</Table.Cell>
             <Table.Cell>High  ⟶</Table.Cell>
             </Table.Row>
@@ -328,9 +307,12 @@ calYOffset = () => {
 
 
 <div
-        style={{width: '100%', height: '100%', border: '1px solid #ccc'}}
+        style={{width: '100%', height: '100%'}}
+        // style={{width: '100%', height: '100%', border: '1px solid #ccc'}}
       >
-        <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 80, left: 80, right: 20, top: 50}}>
+        <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 1000, left: 80, right: 20, top: 50}}> 
+        {/* <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 80, left: 80, right: 20, top: 50}}>  */}
+        {/*50*/}
         {/* xType="time" 
          yType="ordinal"
         */}
@@ -367,12 +349,12 @@ calYOffset = () => {
         curve={'curveMonotoneX'}
         />
 
-        <MarkSeries
+        {/* <MarkSeries
           onValueMouseOver={this._rememberValue}
           onValueMouseOut={this._forgetValue}
           data={this.state.rawData}
           id="markSeries"
-        />
+        /> */}
         {/* {value ? <Hint value={value} /> : null} */}
 
         <LabelSeries

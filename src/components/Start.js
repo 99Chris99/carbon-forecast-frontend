@@ -17,7 +17,6 @@ startMeterValueMaths = () => {
             //  console.log(intensityValue)
             //  console.log(intensityValue * 180)
             return intensityValue * 180
-
 }
 
 parseDate = (input) => {
@@ -73,7 +72,7 @@ countDownToDoom = () => {
         return (
             <div>
             <div>
-            <h1>Hi there, I'm the start page, hope you are well!</h1>   
+            {/* <h1>Hi there, I'm the start page, hope you are well!</h1>    */}
             <br></br>
             </div>
             <div>
