@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Search, Table, Grid, Card, Button, Image, Segment, Container } from 'semantic-ui-react';
+import { Dropdown, Search, Table, Divider, Grid, Card, Button, Image, Segment, Container, TableRow } from 'semantic-ui-react';
 import SummaryChart from './SummaryChart';
 import PostCodeSearch from './PostCodeSearch';
 
@@ -173,64 +173,21 @@ isLoading = () => {
             bestPeriodsDay: dayOutput,
             bestPeriodsNight: nightOutput
         })
-       // return output
+        // return output
     } 
+    
 
-
-
+    
     render() {
         return (
-
+            
             <div>
 
             <div>
                 {/* <h1> Hi, it's me forecast! Hows things?</h1> */}
 
-<Grid columns='2' >
-<Grid.Row>
-   
-   <Grid.Column floated='left'>      
-    <Dropdown
-         placeholder='Period'
-         selection='2'
-         options={this.periodOptions}
-         onChange={(event, data) => this.props.updatePeriod(data.value)}
-         />
-      
-       </Grid.Column>
-       <Grid.Column floated='left'>
-   <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
-   
-   </Grid.Column>
-
-</Grid.Row>
-
-
-<Grid.Row>
-   
-    <Grid.Column floated='left'>      
-    <Dropdown
-          placeholder='Region'
-          selection
-          options={this.genRegionOptions()}
-          onChange={(event, data) => this.props.updateRegion(data.value)}
-        />
-       
-
-
-
-        </Grid.Column>
-        <Grid.Column floated='left'>
-    <p>Yep thats right I'm some text!</p>
-
-
-
-    </Grid.Column>
- 
- </Grid.Row>
- </Grid>
-</div>
-<div>
+                <div>
+            <Divider horizontal>Lowest Levels</Divider>
     {/* <button class="ui button" onClick={this.handleDayNightButton}>Show {this.state.bestPeriodDisplayDay ? 'Daytime' : 'Night-time'}</button> */}
     <p onClick={this.handleDayNightButton}>Top 3 times to use electricity duiring this period:
     <br></br>
@@ -242,12 +199,83 @@ isLoading = () => {
 </div>
 
 
+<Divider horizontal>Options</Divider>
+
+<Table   columns={2}>
+<Table.Row>
+<Table.Cell>
+    <Dropdown
+         compact={this.props.mobileUser ? true : false}
+         placeholder='Period'
+         selection='2'
+         options={this.periodOptions}
+         onChange={(event, data) => this.props.updatePeriod(data.value)}
+         />
+    </Table.Cell>
+
+            <Table.Cell>
+    <p>Yep thats right I'm some text!</p>
+   </Table.Cell>
+   </Table.Row>
+
+   <Table.Row>
+    <Table.Cell>
+    <Dropdown
+          placeholder='Region'
+          selection
+          options={this.genRegionOptions()}
+          onChange={(event, data) => this.props.updateRegion(data.value)}
+        />
+    </Table.Cell>
+        <Table.Cell>
+   <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
+    </Table.Cell>
+    </Table.Row>
+ </Table>
+{/* <Grid columns='2' >
+<Grid.Row>
+   <Grid.Column floated='left'>      
+    <Dropdown
+         placeholder='Period'
+         selection='2'
+         options={this.periodOptions}
+         onChange={(event, data) => this.props.updatePeriod(data.value)}
+         />
+       </Grid.Column>
+       <Grid.Column floated='left'>
+   <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
+   </Grid.Column>
+</Grid.Row>
+<Grid.Row>
+    <Grid.Column floated='left'>      
+    <Dropdown
+          placeholder='Region'
+          selection
+          options={this.genRegionOptions()}
+          onChange={(event, data) => this.props.updateRegion(data.value)}
+        />
+        </Grid.Column>
+        <Grid.Column floated='left'>
+    <p>Yep thats right I'm some text!</p>
+    </Grid.Column>
+ </Grid.Row>
+ </Grid> */}
+
+
+
+</div>
+
+
+<Divider horizontal>Carbon Levels</Divider>
 
 <div id="summary-chart" >
 
 <SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>
 </div>
 <button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Time' : 'Intensity Level'}</button>
+
+
+
 </div>
         );
     }

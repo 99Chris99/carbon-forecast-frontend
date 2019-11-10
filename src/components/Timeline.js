@@ -266,6 +266,7 @@ calYOffset = () => {
             {/* Carbon Intensity: {this.state.currentLevel.level} */}
            
           <Table id="sticky-table" fixed unstackable singleLine celled>
+          {/* <Table id="sticky-table" fixed unstackable singleLine celled> */}
 
             <Table.Body>
             <Table.Row textAlign='center'> 

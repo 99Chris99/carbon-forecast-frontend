@@ -12,7 +12,33 @@ code {
   monospace;
 }
 
+.ui.search .prompt {
+  border-radius: 0.3rem !important;
+   max-width: 26vw !important;
+  /* min-width: 50vw !important;  */
+  
+  /* float: left !important; */
+  /* display: inline-block!important; */
+}
+#searchBtn {
+  /* display: inline-block!important; */
+ margin-left: 2px;;
+}
 
+#searchInputCell {
+  /* padding-right:0 !important; */
+}
+
+#searchBtnCell {
+  /* float: left !important; */
+  padding-left: 5px !important;
+}
+
+
+.ui.horizontal.segments {
+  border: 0 !important;
+  box-shadow: 0 0 0 0!important;
+}
 
 
 

@@ -98,7 +98,8 @@ class SummaryChart extends Component {
     
     >
 <div
-        style={{width: '99%', height: '100%', border: '1px solid #ccc'}}
+        //style={{width: '99%', height: '100%', border: '1px solid #ccc'}}
+        style={{width: '99%', height: '100%'}}
       >
         <FlexibleXYPlot  xType="ordinal" margin={{bottom: 80, left: 0, right: 0, top: 20}}>
         

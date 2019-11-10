@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import PostcodeJsLkp from '../content/PostcodeJsLkp';
 import React, { Component } from 'react'
-import { Search, Button, Grid, Header, Segment } from 'semantic-ui-react'
+import { Search, Button, Table, Input, Grid, Header, Segment } from 'semantic-ui-react'
 
 const initialState = { isLoading: false, results: [{title:''}], value: '', confirmResult: ''}
 
@@ -58,7 +58,9 @@ export default class PostCodeSearch extends Component {
 
     return (
         <div>
-          <Search
+ <Segment.Group horizontal>
+          <Search 
+            // style={{maxwidth: "2vw"}}
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {
@@ -66,11 +68,42 @@ export default class PostCodeSearch extends Component {
             })}
             results={results}
             value={value}
-            {...this.props}
+            {...this.props} 
           />
-
-          <Button onClick={event => this.confirmResult()}>Submit</Button>
+  
+          <Button id="searchBtn" onClick={event => this.confirmResult()}>Submit</Button>
+          </Segment.Group>
           </div>
     )
   }
 }
+//   render() {
+//     const { isLoading, value, results } = this.state
+
+//     return (
+//         <div>
+//  <Table fixed unstackable singleLine celled compact>
+// {/* <Table fixed unstackable singleLine celled > */}
+// <Table.Row>
+//   <Table.Cell textAlign='left' id="searchInputCell">
+//           <Search 
+//             loading={isLoading}
+//             onResultSelect={this.handleResultSelect}
+//             onSearchChange={_.debounce(this.handleSearchChange, 500, {
+//               leading: true,
+//             })}
+//             results={results}
+//             value={value}
+//             {...this.props} 
+//           />
+//           </Table.Cell>
+//           <Table.Cell textAlign='left' id="searchBtnCell">
+//           <Button id="searchBtn" onClick={event => this.confirmResult()}>Submit</Button>
+
+// </Table.Cell>
+//         </Table.Row>
+// </Table>
+//           </div>
+//     )
+//   }
+// }
