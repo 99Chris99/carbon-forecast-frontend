@@ -11,9 +11,10 @@ import Nav from './components/Nav';
 import Start from './components/Start';
 import Forecast from './components/Forecast';
 import Timeline from './components/Timeline';
+import Hero from './components/Hero';
 import About from './components/About';
 import Advice from './components/Advice';
-import { ItemMeta } from 'semantic-ui-react';
+import { ItemMeta, Header } from 'semantic-ui-react';
 import { cloneWithoutLoc } from '@babel/types';
 
 import { Container } from 'semantic-ui-react'
@@ -40,7 +41,8 @@ export class App extends Component {
     forecastC: {},
     aggedVals: [],
     bestPeriods: {},
-    timelineVals: []
+    timelineVals: [],
+    loading:true
   }
   
   
@@ -105,8 +107,15 @@ plus30Mins = (dateTime) => {
   return newdateTime
 }
 
+loading = () => {
+  if (typeof this.state.forecastC[0] === 'undefined') {
+    console.log('loading check')
+    this.setState({loading:true})
+  }else {this.setState({loading:false})}
+}
 
   componentDidMount () {
+    this.loading()
     this.viewport()
     this.get48hForecast(this.now(),true)
     this.compileRegionIndex()
@@ -137,7 +146,8 @@ plus30Mins = (dateTime) => {
     {
       return (
         this.aggForecast(this.allForecast(), this.determinGran(), false),
-        this.aggForecast(this.allForecast(), 2, true)
+        this.aggForecast(this.allForecast(), 2, true),
+        this.loading()
         )
     }
     else if (this.state.setPeriod !== prevState.setPeriod)
@@ -348,13 +358,14 @@ this.setState({setPeriod: newPeriod})
 
 
 <Router>
-
-
 <div>
-     
+
+<Hero mobileUser={this.state.mobileUser}/>
+
 <Nav/>
 
-<Container>
+<Container className="parentContainer" >
+
 
 <Switch>
 
@@ -367,11 +378,11 @@ this.setState({setPeriod: newPeriod})
     <Route path="/forecast-summary">
           <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} updatePostCode={this.updatePostCode} setPeriod={this.state.setPeriod}
                     updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals}
-                    mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods}
+                    mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods} loading={this.state.loading}
           />
     </Route>
     <Route path="/forecast-timeline">
-          <Timeline timelineVals={this.state.timelineVals} screenWidth={this.state.screenWidth} middleLevel={this.state.middle} mobileUser={this.state.mobileUser}/>
+          <Timeline loading={this.state.loading} timelineVals={this.state.timelineVals} screenWidth={this.state.screenWidth} middleLevel={this.state.middle} mobileUser={this.state.mobileUser}/>
     </Route>
     <Route path="/advice">
           <Advice />

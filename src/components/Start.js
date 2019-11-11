@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Grid } from 'semantic-ui-react';
 
 export class Start extends Component {
     state = {
@@ -71,30 +71,50 @@ countDownToDoom = () => {
     render() {
         return (
             <div>
-            <div>
-            {/* <h1>Hi there, I'm the start page, hope you are well!</h1>    */}
-            <br></br>
-            </div>
-            <div>
+       
+
             <Container>
-        
+          <div className="bgPanel">
+        <h1>Carbon Forecast</h1>
+        <br></br>
     <div className="startmeter">
 		<div className="gauge-a"></div>
 		<div className="gauge-b"></div>
 		<div className="gauge-c" style={{transform:`rotate(${this.props.intensityData.value > 0 ? this.startMeterValueMaths() : 0}deg)`}}></div>
 		<div className="gauge-data" id={this.props.intensityData.value > 0 ? 'loadedData' : undefined}><h1 id="percent">{this.props.intensityData.value}</h1><br></br>Hover On Me</div>
 	</div>
+        <br></br>
+        <br></br>
 
-    <div>
+          </div>
+            
+
+    <div className="bgPanel">
     {/* <h4>HiHi{setInterval(() => this.countDownToDoom(), 1000)}</h4> */}
     {/* <h4>{setInterval(() => `${this.countDownToDoom()}`,1000)}</h4> */}
    <br></br>
-   <h4>{this.state.countDown} - time left until global warming reaches 1.5 °c</h4>
-   <h4> {this.props.emissions} - total emissions in tonnes produced since you opened this app (C02-e)</h4>  
+ {/* columns={2} */}
+    <Grid centered stackable columns={2} padded>
+      <Grid.Column width={6}>
+      <h2>{this.state.countDown}</h2>
+   <h4> Until global warming reaches 1.5 °c</h4>      
+   </Grid.Column>
+   {/* <Grid.Column width={3}> </Grid.Column> */}
+      <Grid.Column width={6}>
+      <h2> {this.props.emissions} C02-e </h2>
+   <h4>Total emissions in tonnes produced since you opened this app (C02-e)</h4>       
+    </Grid.Column>
+    </Grid>
+
+
     </div>
 
+
+
+
+
     </Container>
-    </div>
+   
     </div>
             
         );

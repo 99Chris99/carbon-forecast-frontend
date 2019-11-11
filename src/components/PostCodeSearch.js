@@ -57,8 +57,8 @@ export default class PostCodeSearch extends Component {
     const { isLoading, value, results } = this.state
 
     return (
-        <div>
- <Segment.Group horizontal>
+        <div >
+ <Segment.Group style={{background: 'none'}} horizontal>
           <Search 
             // style={{maxwidth: "2vw"}}
             loading={isLoading}

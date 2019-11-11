@@ -8,9 +8,14 @@
   }
 
 #bg-fade {
-background: rgb(255,255,255);
-background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(47,236,112,0.7959558823529411) 5%, rgba(218,228,44,0.8281687675070029) 48%, rgba(255,0,0,0.6601015406162465) 95%, rgba(255,255,255,0) 100%);
+  
+  background: rgb(140,232,172);
+  background: linear-gradient(90deg, rgba(140,232,172,1) 29%, rgba(218,228,44,0.9878326330532213) 30%, rgba(218,228,44,1) 70%, rgba(217,107,107,1) 71%);
+  
+  
 }
+/* background: rgb(255,255,255);
+background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(47,236,112,0.7959558823529411) 5%, rgba(218,228,44,0.8281687675070029) 48%, rgba(255,0,0,0.6601015406162465) 95%, rgba(255,255,255,0) 100%); */
 /* #bg-fade {
   background: rgb(255,255,255);
   background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(140,236,47,0.7959558823529411) 5%, rgba(218,228,44,1) 48%, rgba(255,0,1,0.804359243697479) 95%, rgba(255,255,255,0) 100%);
@@ -24,7 +29,7 @@ background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(47,236,112,0.795
     position: -webkit-sticky; /* Safari */
     position: sticky;
     top: 0;
-    height: 25vh;
+    /* height: 25vh; */
     width: 100%;
     background: #fff;
     opacity: 0.9;

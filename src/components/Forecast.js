@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Search, Table, Divider, Grid, Card, Button, Image, Segment, Container, TableRow } from 'semantic-ui-react';
+import { Dropdown, Search, Table, Divider,Dimmer,Loader, Grid, Card, Button, Image, Segment, Container, TableRow } from 'semantic-ui-react';
 import SummaryChart from './SummaryChart';
 import PostCodeSearch from './PostCodeSearch';
 
@@ -26,8 +26,6 @@ componentDidMount () {
     }
 }
 
-this.isLoading()
-
 }
 
 componentDidUpdate (prevProps, prevState) {
@@ -36,7 +34,7 @@ componentDidUpdate (prevProps, prevState) {
     }
 
     if (this.props.aggedVals !== prevProps.aggedVals) {
-        this.isLoading()
+        this.loadingSwitch()
     }
 }
     periodOptions = [
@@ -146,35 +144,57 @@ isLoading = () => {
         
         let dayOutput = []
         let nightOutput = []
+        let dayOutputBig = []
+        let nightOutputBig = []
 
         if (typeof bestDay[0] !== 'undefined' && typeof bestDay[1] !== 'undefined' && typeof bestDay[2] !== 'undefined') {
         dayOutput = [
-                        //header:      `${bestDay.from}`,
                        { description:  `${this.parseDate(bestDay[0].from)}\n${bestDay[0].level}\n${bestDay[0].text}`},
                        { description:  `${this.parseDate(bestDay[1].from)}\n${bestDay[1].level}\n${bestDay[1].text}`},
                        { description:  `${this.parseDate(bestDay[2].from)}\n${bestDay[2].level}\n${bestDay[2].text}`},
-                ]}else{
+                ]
+        dayOutputBig = [
+                       { header: `${this.parseDate(bestDay[0].from)}`, description:`${bestDay[0].level}\n${bestDay[0].text}`},
+                       { header:  `${this.parseDate(bestDay[1].from)}`, description:`${bestDay[1].level}\n${bestDay[1].text}`},
+                       { header:  `${this.parseDate(bestDay[2].from)}`, description:`${bestDay[2].level}\n${bestDay[2].text}`},
+                ]
+            
+            }else{
         dayOutput = [  { description:  `Please change period to include night-time hours `}]
                 }
 
+
+                
+
         if (typeof bestNight[0] !== 'undefined' && typeof bestNight[1] !== 'undefined' && typeof bestNight[2] !== 'undefined'){
         nightOutput = [
-                        //header:      `${bestDay.from}`,
                        { description:  `${this.parseDate(bestNight[0].from)}\n${bestNight[0].level}\n${bestNight[0].text}`},
                        { description:  `${this.parseDate(bestNight[1].from)}\n${bestNight[1].level}\n${bestNight[1].text}`},
                        { description:  `${this.parseDate(bestNight[2].from)}\n${bestNight[2].level}\n${bestNight[2].text}`},
                     ]
+                    nightOutputBig = [
+                        { header: `${this.parseDate(bestNight[0].from)}`, description:`${bestNight[0].level}\n${bestNight[0].text}`},
+                        { header:  `${this.parseDate(bestNight[1].from)}`, description:`${bestNight[1].level}\n${bestNight[1].text}`},
+                        { header:  `${this.parseDate(bestNight[2].from)}`, description:`${bestNight[2].level}\n${bestNight[2].text}`},
+                 ]
+
                 }else {
                    nightOutput = [  { description:  `Please change period to include night-time hours `}]
 
             }
             
         this.setState({
-            bestPeriodsDay: dayOutput,
-            bestPeriodsNight: nightOutput
+            bestPeriodsDay: this.props.mobileUser ? dayOutput : dayOutputBig ,
+            bestPeriodsNight: this.props.mobileUser ? nightOutput : nightOutputBig
         })
         // return output
     } 
+
+    loadingSwitch() {
+        this.setState({
+            loading: !this.state.loading
+        })
+    }
     
 
     
@@ -186,8 +206,8 @@ isLoading = () => {
             <div>
                 {/* <h1> Hi, it's me forecast! Hows things?</h1> */}
 
-                <div>
-            <Divider horizontal>Lowest Levels</Divider>
+                <div className="bgPanel">
+            {/* <Divider horizontal>Lowest Levels</Divider> */}
     {/* <button class="ui button" onClick={this.handleDayNightButton}>Show {this.state.bestPeriodDisplayDay ? 'Daytime' : 'Night-time'}</button> */}
     <p onClick={this.handleDayNightButton}>Top 3 times to use electricity duiring this period:
     <br></br>
@@ -199,7 +219,12 @@ isLoading = () => {
 </div>
 
 
-<Divider horizontal>Options</Divider>
+{/* <Divider horizontal>Options</Divider> */}
+<div className="bgPanel">
+<Dimmer active={this.props.loading}>
+        <Loader>Loading</Loader>
+    </Dimmer>
+
 
 <Table   columns={2}>
 <Table.Row>
@@ -224,7 +249,7 @@ isLoading = () => {
           placeholder='Region'
           selection
           options={this.genRegionOptions()}
-          onChange={(event, data) => this.props.updateRegion(data.value)}
+          onChange={(event, data) => {this.props.updateRegion(data.value)}}
         />
     </Table.Cell>
         <Table.Cell>
@@ -232,6 +257,8 @@ isLoading = () => {
     </Table.Cell>
     </Table.Row>
  </Table>
+
+ </div>
 {/* <Grid columns='2' >
 <Grid.Row>
    <Grid.Column floated='left'>      
@@ -266,13 +293,13 @@ isLoading = () => {
 </div>
 
 
-<Divider horizontal>Carbon Levels</Divider>
+{/* <Divider horizontal>Carbon Levels</Divider> */}
 
-<div id="summary-chart" >
+<div id="summary-chart" className="bgPanel">
 
 <SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>
-</div>
 <button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Time' : 'Intensity Level'}</button>
+</div>
 
 
 

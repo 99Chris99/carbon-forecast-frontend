@@ -16,7 +16,7 @@ state = {}
             <div>
 
     
-      {/* <Container> */}
+     
       <Menu fluid widths={5}>
           <Menu.Item as={Link} name="start" to="/start">
             Start

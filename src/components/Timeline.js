@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {XYPlot, LineSeries, MarkSeries, HorizontalGridLines, Hint, XAxis, YAxis, Borders, VerticalGridLines, HorizontalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
-import { Sticky, Header, Table, TableCell } from 'semantic-ui-react';
+import { Sticky, Header, Table, Dimmer, Loader, TableCell } from 'semantic-ui-react';
 import { withScroll } from 'react-window-decorators';
 
 // @withScroll
@@ -78,7 +78,7 @@ calYOffset = () => {
     
     let valA = stickyTopVals.top
     let valB = girdPlotTopVals.top - girdPlotOuterTopVals.top
-    let output = 109//106//valA+valB-2
+    let output = valA+valB-2 //109
     this.setState({yOffset: output})
     return output
 }
@@ -96,7 +96,8 @@ calYOffset = () => {
 
 
     scrollPlots = () => {
-        this.calYOffset()
+        setTimeout(() => this.calYOffset(), 700)
+
         let gap =this.chartGap()
         console.log(gap)
         let scrollPlots =  this.props.timelineVals.map((point, index) => {    
@@ -255,12 +256,25 @@ calYOffset = () => {
       
         
         return (
+
+
+
             <div
             style={{
                 height: '800vh'
             }}
             >
-          <div id="sticky"> 
+
+
+
+                
+<Dimmer active={this.props.loading}>
+        <Loader>Loading</Loader>
+    </Dimmer>
+
+
+
+          <div id="sticky" height={2}> 
           Carbon Intensity Level <br></br>
             {/* Vertical scroll position is: { this.props.scrollPositionY - this.state.yOffset } <br></br> */}
             {/* Carbon Intensity: {this.state.currentLevel.level} */}
