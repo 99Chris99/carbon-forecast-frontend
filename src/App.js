@@ -170,9 +170,11 @@ loading = () => {
   
 get48hForecast = (start, useID) => {
   if (this.state.useId && useID){
+    this.setState({loading:true})
     API.getRegionId48HrsData(this.state.setRegion, start).then(info => this.setState({forecastA: info.data.data}))
   }else {
- // API.getRegionPostCode48HrsData(this.state.setPostCode, start).then(info => this.setState({forecastA: info.data.data}, {setRegion: info.data.regionid}))
+    // API.getRegionPostCode48HrsData(this.state.setPostCode, start).then(info => this.setState({forecastA: info.data.data}, {setRegion: info.data.regionid}))
+    this.setState({loading:true})
     API.getRegionPostCode48HrsData(this.state.setPostCode, start).then(info => this.setState({forecastA: info.data.data}))
   }
 }
@@ -190,9 +192,9 @@ getForecastC = () => {
   const start = this.state.forecastB[this.state.forecastB.length - 1].to
   const startPlus30 = this.plus30Mins(start)
   if (this.state.useId) {
-    API.getRegionId48HrsData(this.state.setRegion, startPlus30).then(info => this.setState({forecastC: info.data.data}))
+    API.getRegionId48HrsData(this.state.setRegion, startPlus30).then(info => this.setState({forecastC: info.data.data, loding:false}))
 }else{
-    API.getRegionPostCode48HrsData(this.state.setPostCode, startPlus30).then(info => this.setState({forecastC: info.data.data}))
+    API.getRegionPostCode48HrsData(this.state.setPostCode, startPlus30).then(info => this.setState({forecastC: info.data.data, loading:false}))
   } 
 }
 
@@ -238,7 +240,7 @@ calTextLevel = (value) => {
   else if (value >= 60 && value <= 159 ) {
     return 'Low'
   }
-  else if (value >= 59 && value <= 0 ) {
+  else if (value <= 59 && value >= 0 ) {
     return 'Very Low'
   }else 
   {

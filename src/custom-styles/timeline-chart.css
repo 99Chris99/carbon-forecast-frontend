@@ -46,6 +46,11 @@ background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(47,236,112,0.795
   /* height: 20vh; */
 }
 
+.rv-xy-plot__series--label-text{
+  /* color: #00ff80 !important; 
+  fill: #00ff80 !important;  */
+}
+
 
 .ui.table tr td { border: 0px !important; }
 .ui.table { border: 0px !important; }

@@ -9,7 +9,6 @@ export class Forecast extends Component {
 state = {
     period: 48,
     region: 18,
-    loading: true,
     sortByLevel: false,
     bestPeriodDisplayDay: true,
     bestPeriodLoaded: false,
@@ -34,7 +33,7 @@ componentDidUpdate (prevProps, prevState) {
     }
 
     if (this.props.aggedVals !== prevProps.aggedVals) {
-        this.loadingSwitch()
+    
     }
 }
     periodOptions = [
@@ -71,11 +70,7 @@ componentDidUpdate (prevProps, prevState) {
             },
           ]
 
-isLoading = () => {
-    if (this.props.aggedVals === [] || typeof this.props.aggedVals === 'undefined'){
-        this.setState({loading: true})
-    }else {this.setState({loading: false})}
-}
+
 
         
           parseDate = (input) => {
@@ -190,25 +185,11 @@ isLoading = () => {
         // return output
     } 
 
-    loadingSwitch() {
-        console.log('loading switch')
-        this.setState({
-            loading: !this.state.loading
-        })
-    }
-    
-    childLoading() {
-    //   return  this.setState({
-    //         loading: true
-    //     })
-    //return this.loadingSwitch()
-        console.log('childloading')
-    }
+  
 
     handleDropDown = (data) => {
         return (
-                this.props.updateRegion(data.value),
-                this.loadingSwitch()
+                this.props.updateRegion(data.value)
                 )
             }
 
@@ -226,8 +207,8 @@ isLoading = () => {
     {/* <button class="ui button" onClick={this.handleDayNightButton}>Show {this.state.bestPeriodDisplayDay ? 'Daytime' : 'Night-time'}</button> */}
     <p onClick={this.handleDayNightButton}>Top 3 times to use electricity duiring this period:
     <br></br>
-     {this.state.bestPeriodDisplayDay ?  <b>Show Daytime</b> : `Daytime | `}   
-     {this.state.bestPeriodDisplayDay ?  ` | Night-time` : <b>Show Night-time</b>} 
+     {this.state.bestPeriodDisplayDay ?  <b>Show Daytime</b> : `Show Daytime | `}   
+     {this.state.bestPeriodDisplayDay ?  ` | Show Night-time` : <b>Show Night-time</b>} 
      </p>
 
  <Card.Group  itemsPerRow={3} items={this.state.bestPeriodDisplayDay ? this.state.bestPeriodsDay : this.state.bestPeriodsNight} />
@@ -239,9 +220,9 @@ isLoading = () => {
 {/* <Dimmer active={this.props.loading}>
         <Loader>Loading</Loader>
     </Dimmer> */}
-    <Dimmer active={this.state.loading}>
+     <Dimmer active={this.props.loading} page>
         <Loader>Loading</Loader>
-    </Dimmer>
+    </Dimmer> 
 
 <Table   columns={2}>
 <Table.Row>
@@ -271,7 +252,7 @@ isLoading = () => {
         />
     </Table.Cell>
         <Table.Cell>
-   <PostCodeSearch updatePostCode={this.props.updatePostCode} childLoading={this.childLoading}/>
+   <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
     </Table.Cell>
     </Table.Row>
  </Table>

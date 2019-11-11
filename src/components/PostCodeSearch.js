@@ -38,17 +38,18 @@ export default class PostCodeSearch extends Component {
   
 
   confirmResult = () => {
-    let valueCheck = this.state.value
-    if (typeof valueCheck !== 'undefined' && valueCheck !== '') {
+    let valueCheck = this.state.value.toUpperCase()
+     
+    if (typeof valueCheck !== 'undefined' && valueCheck !== '' && !valueCheck.includes(" ")) {
       console.log('confirming')
     let result = source.filter(postcode => valueCheck === postcode.title)[0].title
     if (typeof result !== 'undefined'){
       console.log(result)
       //this.setState({confirmResult: result})
     this.props.updatePostCode(result)
-    this.props.childLoading()
+    
     }
-    }
+    }else{(console.log('Search error'))}
   }
 
 

@@ -81,8 +81,14 @@ countDownToDoom = () => {
 		<div className="gauge-b"></div>
 		<div className="gauge-c" style={{transform:`rotate(${this.props.intensityData.value > 0 ? this.startMeterValueMaths() : 0}deg)`}}></div>
 		<div className="gauge-data" id={this.props.intensityData.value > 0 ? 'loadedData' : undefined}><h1 id="percent">{this.props.intensityData.value}</h1><br></br>Hover On Me</div>
-	</div>
-        <Header as='h2' textAlign='center'>
+    </div>
+    <div style={{width: '100%', paddingLeft: '20%', paddingRight: '20%'}}>
+    <Header as='h3' textAlign='justified' >
+      Low High
+    </Header>
+    </div>
+        
+        <Header as='h2' textAlign='center' style={{marginTop:'0'}}>
         Current level of carbon emmsions for GB electricity supply
         </Header>
         <br></br>
@@ -99,7 +105,7 @@ countDownToDoom = () => {
     <Grid centered stackable columns={2} padded>
       <Grid.Column width={6}>
       <h2>{this.state.countDown}</h2>
-   <h4> Until global warming reaches 1.5 °c</h4>      
+   <h4> Until global warming reaches +1.5 °c</h4>      
    </Grid.Column>
    {/* <Grid.Column width={3}> </Grid.Column> */}
       <Grid.Column width={6}>

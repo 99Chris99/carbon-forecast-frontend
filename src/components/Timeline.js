@@ -175,8 +175,10 @@ calYOffset = () => {
 
         lowCarbonLabel = (item) => {
             let output = ''
-            if (item.text.split(' ')[0] === 'Low' || item.text.split(' ')[1] === 'Low' ) {
-                output = 'Low CO2 Level!'
+            console.log(item.text)
+            //if (item.text.split(' ')[0] === 'Low' || item.text.split(' ')[1] === 'Low' ) {
+            if (item.text === 'Low' || item.text === 'Very Low' ) {
+                output = '★'
             }
             return output
         }
@@ -191,7 +193,7 @@ calYOffset = () => {
         if (this.props.timelineVals !== [] ) {
 
         this.props.timelineVals.map((item, index) => {
-            let bar = {x: item.level-10, y: -index, label: `${this.lowCarbonLabel(item)}` , yOffset:-25}   
+            let bar = {x: item.level-10, y: -index, label: `${this.lowCarbonLabel(item)}`,style: {fill: '#00cc66'}, yOffset:-25}   
             data = [...data, bar]
         })
 
@@ -272,14 +274,15 @@ calYOffset = () => {
 
 
 
-<Dimmer active={this.props.loading}>
+
+<Dimmer active={this.props.loading} page>
         <Loader>Loading</Loader>
     </Dimmer>
 
 
 
           <div id="sticky" height={2}> 
-          Carbon Intensity Level <br></br>
+         <h2> Carbon Intensity Timeline</h2> <br></br>
             {/* Vertical scroll position is: { this.props.scrollPositionY - this.state.yOffset } <br></br> */}
             {/* Carbon Intensity: {this.state.currentLevel.level} */}
            
@@ -288,16 +291,16 @@ calYOffset = () => {
 
             <Table.Body>
             <Table.Row textAlign='center'> 
-            <Table.Cell>{this.state.currentLevel.time}</Table.Cell>
-            <Table.Cell>{this.state.currentLevel.level}</Table.Cell>
-            <Table.Cell> Share </Table.Cell>
+            <Table.Cell><h3>{this.state.currentLevel.time}</h3></Table.Cell>
+            <Table.Cell><h3>{this.state.currentLevel.level}</h3></Table.Cell>
+            <Table.Cell><h3>Share</h3></Table.Cell>
 
             </Table.Row>
 
             <Table.Row textAlign='center'>
-            <Table.Cell>⟵  Low</Table.Cell>
-            <Table.Cell>Medium</Table.Cell>
-            <Table.Cell>High  ⟶</Table.Cell>
+            <Table.Cell><h3 style={this.state.currentLevel.text === "Low" || this.state.currentLevel.text === "Very Low" ? {color: 'green', fontWeight: 'bold'} : {color: 'black', fontWeight: 'normal'}}>⟵  Low</h3></Table.Cell>
+            <Table.Cell><h3 style={this.state.currentLevel.text === "Moderate" ? {color: 'orange', fontWeight: 'bold'} : {color: 'black', fontWeight: 'normal'}}>Medium</h3></Table.Cell>
+            <Table.Cell><h3 style={this.state.currentLevel.text === "High" || this.state.currentLevel.text === "Very High" ? {color: 'red', fontWeight: 'bold', borderStyle: 'solid', borderColor:'red' } : {color: 'black', fontWeight: 'normal'}}>High  ⟶</h3></Table.Cell>
             </Table.Row>
             </Table.Body>
           </Table>
@@ -389,7 +392,6 @@ calYOffset = () => {
 
         <LabelSeries
         data={this.state.dayLabels}
-        
         labelAnchorX={"end"}
         labelAnchorY={"middle"}
         />
