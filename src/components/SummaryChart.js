@@ -108,6 +108,13 @@ class SummaryChart extends Component {
             <stop offset="0%" stopColor="red" stopOpacity={0.4}/>
             <stop offset="50%" stopColor="yellow" stopOpacity={0.4}/>
             <stop offset="100%" stopColor="green" stopOpacity={0.4} />
+         
+            {/* <stop offset="0%" stopColor="red" stopOpacity={0.4}/>
+            <stop offset="50%" stopColor="yellow" stopOpacity={0.4}/>
+            <stop offset="100%" stopColor="green" stopOpacity={0.4} />
+          */}
+         
+         
           </linearGradient>
         </GradientDefs>
 

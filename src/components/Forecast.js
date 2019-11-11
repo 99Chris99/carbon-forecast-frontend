@@ -191,11 +191,26 @@ isLoading = () => {
     } 
 
     loadingSwitch() {
+        console.log('loading switch')
         this.setState({
             loading: !this.state.loading
         })
     }
     
+    childLoading() {
+    //   return  this.setState({
+    //         loading: true
+    //     })
+    //return this.loadingSwitch()
+        console.log('childloading')
+    }
+
+    handleDropDown = (data) => {
+        return (
+                this.props.updateRegion(data.value),
+                this.loadingSwitch()
+                )
+            }
 
     
     render() {
@@ -211,8 +226,8 @@ isLoading = () => {
     {/* <button class="ui button" onClick={this.handleDayNightButton}>Show {this.state.bestPeriodDisplayDay ? 'Daytime' : 'Night-time'}</button> */}
     <p onClick={this.handleDayNightButton}>Top 3 times to use electricity duiring this period:
     <br></br>
-     {this.state.bestPeriodDisplayDay ?  <b>Show Daytime</b> : `Show Daytime | `}   
-     {this.state.bestPeriodDisplayDay ?  ` | Show Night-time` : <b>Show Night-time</b>} 
+     {this.state.bestPeriodDisplayDay ?  <b>Show Daytime</b> : `Daytime | `}   
+     {this.state.bestPeriodDisplayDay ?  ` | Night-time` : <b>Show Night-time</b>} 
      </p>
 
  <Card.Group  itemsPerRow={3} items={this.state.bestPeriodDisplayDay ? this.state.bestPeriodsDay : this.state.bestPeriodsNight} />
@@ -221,10 +236,12 @@ isLoading = () => {
 
 {/* <Divider horizontal>Options</Divider> */}
 <div className="bgPanel">
-<Dimmer active={this.props.loading}>
+{/* <Dimmer active={this.props.loading}>
+        <Loader>Loading</Loader>
+    </Dimmer> */}
+    <Dimmer active={this.state.loading}>
         <Loader>Loading</Loader>
     </Dimmer>
-
 
 <Table   columns={2}>
 <Table.Row>
@@ -249,11 +266,12 @@ isLoading = () => {
           placeholder='Region'
           selection
           options={this.genRegionOptions()}
-          onChange={(event, data) => {this.props.updateRegion(data.value)}}
+          onChange={(event, data) => {this.handleDropDown(data)}}
+          //onChange={(event, data) => {this.props.updateRegion(data.value)}}
         />
     </Table.Cell>
         <Table.Cell>
-   <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
+   <PostCodeSearch updatePostCode={this.props.updatePostCode} childLoading={this.childLoading}/>
     </Table.Cell>
     </Table.Row>
  </Table>

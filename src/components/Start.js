@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Grid } from 'semantic-ui-react';
+import { Container, Grid, Header } from 'semantic-ui-react';
 
 export class Start extends Component {
     state = {
@@ -75,7 +75,6 @@ countDownToDoom = () => {
 
             <Container>
           <div className="bgPanel">
-        <h1>Carbon Forecast</h1>
         <br></br>
     <div className="startmeter">
 		<div className="gauge-a"></div>
@@ -83,6 +82,9 @@ countDownToDoom = () => {
 		<div className="gauge-c" style={{transform:`rotate(${this.props.intensityData.value > 0 ? this.startMeterValueMaths() : 0}deg)`}}></div>
 		<div className="gauge-data" id={this.props.intensityData.value > 0 ? 'loadedData' : undefined}><h1 id="percent">{this.props.intensityData.value}</h1><br></br>Hover On Me</div>
 	</div>
+        <Header as='h2' textAlign='center'>
+        Current level of carbon emmsions for GB electricity supply
+        </Header>
         <br></br>
         <br></br>
 

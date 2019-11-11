@@ -84,6 +84,7 @@ calYOffset = () => {
 }
 
     chartGap = () => {
+    
         const chartTop = document.querySelector('.rv-xy-plot__grid-lines')
        // console.log('clientHeight '+ chartTop.clientHeight )
        let height = chartTop.getBoundingClientRect()
@@ -91,13 +92,14 @@ calYOffset = () => {
         let output = (height.height / this.state.rawData.length)
         console.log(output)
         return output
-    
     }
+    
 
 
     scrollPlots = () => {
         setTimeout(() => this.calYOffset(), 700)
 
+    setTimeout(() => {
         let gap =this.chartGap()
         console.log(gap)
         let scrollPlots =  this.props.timelineVals.map((point, index) => {    
@@ -107,6 +109,7 @@ calYOffset = () => {
             return data
         })
         this.setState({scrollPlots: scrollPlots})
+    },800)
     }
     // scrollPlots = () => {
     //     this.calYOffset()
@@ -173,7 +176,7 @@ calYOffset = () => {
         lowCarbonLabel = (item) => {
             let output = ''
             if (item.text.split(' ')[0] === 'Low' || item.text.split(' ')[1] === 'Low' ) {
-                output = 'This is a good time to use electricity!'
+                output = 'Low CO2 Level!'
             }
             return output
         }
@@ -261,13 +264,14 @@ calYOffset = () => {
 
             <div
             style={{
-                height: '800vh'
+                height: '800vh',
+                background: '#fff'
             }}
             >
 
 
 
-                
+
 <Dimmer active={this.props.loading}>
         <Loader>Loading</Loader>
     </Dimmer>

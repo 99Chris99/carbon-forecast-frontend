@@ -46,6 +46,7 @@ export default class PostCodeSearch extends Component {
       console.log(result)
       //this.setState({confirmResult: result})
     this.props.updatePostCode(result)
+    this.props.childLoading()
     }
     }
   }
