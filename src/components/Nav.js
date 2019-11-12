@@ -27,6 +27,9 @@ state = {}
           <Menu.Item as={Link} name="timeline" to="/forecast-timeline">
             Forecast<br></br>Timeline
           </Menu.Item>
+          <Menu.Item as={Link} name="fuelmix" to="/forecast-fuelmix">
+            Forecast<br></br>Fuel Mix
+          </Menu.Item>
           <Menu.Item as={Link} name="advice" to="/advice">
             Advice
           </Menu.Item>

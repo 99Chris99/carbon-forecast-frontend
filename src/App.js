@@ -14,6 +14,7 @@ import Timeline from './components/Timeline';
 import Hero from './components/Hero';
 import About from './components/About';
 import Advice from './components/Advice';
+import FuelMix from './components/FuelMix';
 import ScrollToTop from './components/ScrollToTop';
 import { ItemMeta, Header } from 'semantic-ui-react';
 import { cloneWithoutLoc } from '@babel/types';
@@ -42,6 +43,7 @@ export class App extends Component {
     forecastC: {},
     aggedVals: [],
     bestPeriods: {},
+    fuelMix: [],
     timelineVals: [],
     loading:true
   }
@@ -268,6 +270,16 @@ determinGran = () => {
   return newGrand
 }
 
+formatFuelMix = (array) => {
+  return array.map(obj => {
+    return {label: obj.perc > 1 && obj.fuel !== 'biomass' ? obj.fuel : ''
+      ,angle: obj.perc
+      ,subLabel: obj.fuel === 'biomass' ? '  biomass' : ''    
+    }
+
+  })
+}
+
 aggForecast = (inputArray, granularity, timeline) => {
  
   // const period = 8
@@ -276,12 +288,16 @@ aggForecast = (inputArray, granularity, timeline) => {
   // const forecastArray =[2,3,6,1,5,1,1,1,1,1,1,10]
 
   let forecastArray = []
+  let forecastArrayFuelMix = []
+  
 
   if (timeline) {
   forecastArray = [...inputArray]
   }else{
   forecastArray = inputArray.slice(0, this.state.setPeriod)
-  }
+  forecastArrayFuelMix = [...inputArray]
+}
+
 
 
 let agged = []
@@ -299,6 +315,26 @@ for (let index = 0; index < forecastArray.length; index+=granularity) {
 }
 }
 
+let fuelMix = []
+
+for (let index = 0; index < forecastArrayFuelMix.length; index+=2) {
+ 
+  if (index%2 === 0) {
+  const half = forecastArrayFuelMix[index];
+  let set = forecastArrayFuelMix.slice(index, index+2).map(item => item.intensity.forecast)
+      //console.log(set)
+  let sum = set.reduce((acc, cur) => acc + cur)
+      //console.log(sum)
+      let avg = sum / set.length
+    fuelMix = [...fuelMix, {date:half.from, level:Math.round(avg), 
+    text:this.calTextLevel(avg),
+    chartData: this.formatFuelMix(half.generationmix)
+  }]
+}
+}
+
+
+
 //let newAgged = agged.slice(0, this.state.setPeriod)
 
 
@@ -312,7 +348,8 @@ let best = this.bestPeriods(agged)
 
 this.setState({
   aggedVals: agged,
-  bestPeriods: best
+  bestPeriods: best,
+  fuelMix: fuelMix
 })
 }
 //console.log(agged)
@@ -390,6 +427,12 @@ this.setState({setPeriod: newPeriod})
     <Route path="/forecast-timeline">
           <Timeline loading={this.state.loading} timelineVals={this.state.timelineVals} screenWidth={this.state.screenWidth} middleLevel={this.state.middle} mobileUser={this.state.mobileUser}/>
     </Route>
+      <Route path="/forecast-fuelmix">
+      <FuelMix data={this.state.fuelMix} mobileUser={this.state.mobileUser}/>
+
+      </Route>
+
+
     <Route path="/advice">
           <Advice />
     </Route>
