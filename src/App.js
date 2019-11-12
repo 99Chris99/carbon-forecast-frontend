@@ -272,9 +272,12 @@ determinGran = () => {
 
 formatFuelMix = (array) => {
   return array.map(obj => {
-    return {label: obj.perc > 1 && obj.fuel !== 'biomass' ? obj.fuel : ''
+    //return {label: obj.perc > 1 && obj.fuel !== 'biomass' ? obj.fuel : ''
+    return {label: obj.perc > 1 ? obj.fuel : ''
       ,angle: obj.perc
-      ,subLabel: obj.fuel === 'biomass' ? '  biomass' : ''    
+      ,className: `${obj.fuel}Wedge`
+      ,tableText: obj.fuel
+    //  ,subLabel: obj.fuel === 'biomass' ? 'biomass' : ''    
     }
 
   })
