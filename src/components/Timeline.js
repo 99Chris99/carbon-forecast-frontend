@@ -27,12 +27,16 @@ class Timeline extends Component {
 
     componentDidMount () {
      // this.getposition()
-    //  this.manageScrollDisplay()
+     //  this.manageScrollDisplay()
 
-        if (typeof this.props.timelineVals[0] !== 'undefined'){
-          return (
-              this.formatData(),
-              this.manageHeight()
+   
+       
+    
+
+         if (typeof this.props.timelineVals[0] !== 'undefined'){
+        return (
+            this.formatData(),
+            this.manageHeight()
               ) 
             }
         }
@@ -97,10 +101,10 @@ calYOffset = () => {
 
 
     scrollPlots = () => {
-        setTimeout(() => this.calYOffset(), 700)
-
-    setTimeout(() => {
-        let gap =this.chartGap()
+        setTimeout(() => this.calYOffset(), 300)
+        
+        setTimeout(() => {
+            let gap =this.chartGap()
         console.log(gap)
         let scrollPlots =  this.props.timelineVals.map((point, index) => {    
         
@@ -109,7 +113,7 @@ calYOffset = () => {
             return data
         })
         this.setState({scrollPlots: scrollPlots})
-    },800)
+    },400)
     }
     // scrollPlots = () => {
     //     this.calYOffset()
@@ -250,16 +254,25 @@ calYOffset = () => {
     
 
 
+      
+      
+      colorChange = (text1, text2, color) => {
+        if (this.state.currentLevel.text === text1 || this.state.currentLevel.text === text2) {
+         return {color: color, fontWeight: 'bold', borderBottom: `2px solid ${color}`} 
+        }else return {color: 'black', fontWeight: 'normal', border:'none'}
+    }
+      
+    
 
-    // <i ref={(ref) => this.scrollIcon = ref} className="fa fa-2x fa-chevron-down"></i>
-
-
+    
     render() {
         //const {value} = this.state
         let scroll = window.scrollY;
         // console.log(scrolledDown)
-      
+        const highlight = "highlight"
         
+
+
         return (
 
 
@@ -298,9 +311,9 @@ calYOffset = () => {
             </Table.Row>
 
             <Table.Row textAlign='center'>
-            <Table.Cell><h3 style={this.state.currentLevel.text === "Low" || this.state.currentLevel.text === "Very Low" ? {color: 'green', fontWeight: 'bold'} : {color: 'black', fontWeight: 'normal'}}>⟵  Low</h3></Table.Cell>
-            <Table.Cell><h3 style={this.state.currentLevel.text === "Moderate" ? {color: 'orange', fontWeight: 'bold'} : {color: 'black', fontWeight: 'normal'}}>Medium</h3></Table.Cell>
-            <Table.Cell><h3 style={this.state.currentLevel.text === "High" || this.state.currentLevel.text === "Very High" ? {color: 'red', fontWeight: 'bold', borderStyle: 'solid', borderColor:'red' } : {color: 'black', fontWeight: 'normal'}}>High  ⟶</h3></Table.Cell>
+            <Table.Cell><h3 style={this.colorChange("Low","Very Low", "green")}>⟵  Low</h3></Table.Cell>
+            <Table.Cell><h3 style={this.colorChange("Moderate","Moderate", "orange")}>Medium</h3></Table.Cell>
+            <Table.Cell><h3 style={this.colorChange("High","Very Hight", "red")}>High  ⟶</h3></Table.Cell>
             </Table.Row>
             </Table.Body>
           </Table>

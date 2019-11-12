@@ -14,6 +14,7 @@ import Timeline from './components/Timeline';
 import Hero from './components/Hero';
 import About from './components/About';
 import Advice from './components/Advice';
+import ScrollToTop from './components/ScrollToTop';
 import { ItemMeta, Header } from 'semantic-ui-react';
 import { cloneWithoutLoc } from '@babel/types';
 
@@ -360,6 +361,9 @@ this.setState({setPeriod: newPeriod})
 
 
 <Router>
+<ScrollToTop />
+ 
+
 <div>
 
 <Hero mobileUser={this.state.mobileUser}/>
