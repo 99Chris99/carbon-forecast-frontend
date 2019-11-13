@@ -156,7 +156,8 @@ componentDidUpdate (prevProps, prevState) {
                 ]
             
             }else{
-        dayOutput = [  { description:  `Please change period to include night-time hours `}]
+        dayOutput = [  { description:  `Please increase period to include night-time hours `}]
+        dayOutputBig = [  { description:  `Please increase period to include night-time hours `}]
                 }
 
 
@@ -175,7 +176,8 @@ componentDidUpdate (prevProps, prevState) {
                  ]
 
                 }else {
-                   nightOutput = [  { description:  `Please change period to include night-time hours `}]
+                   nightOutput = [  { description:  `Please increase period to include night-time hours `}]
+                   nightOutputBig = [  { description:  `Please increase period to include night-time hours `}]
 
             }
             
@@ -203,7 +205,7 @@ componentDidUpdate (prevProps, prevState) {
 
 
 <div className="bgPanel">
-            <h1>Forecast Summary</h1>
+           <h1> <span className="textHighlight"> Forecast Summary </span> </h1>
       <Accordion defaultActiveIndex={[]} panels={TitleContent.forecastSummaryTitle} exclusive={false}/>
       </div>
 
@@ -213,15 +215,28 @@ componentDidUpdate (prevProps, prevState) {
             {/* <Divider horizontal>Lowest Levels</Divider> */}
     {/* <button class="ui button" onClick={this.handleDayNightButton}>Show {this.state.bestPeriodDisplayDay ? 'Daytime' : 'Night-time'}</button> */}
                 <div className="bgPanel">
-    <h3>Top 3 Periods</h3>
+    <h2><span className="textHighlight">Top 3 Periods</span></h2>
     
-    <p onClick={this.handleDayNightButton}>Top 3 times to use electricity duiring this period:
-    <br></br>
+    <p>Top 3 times to use electricity duiring this period:
+    </p>
+ <Card.Group itemsPerRow={3} items={this.state.bestPeriodDisplayDay ? this.state.bestPeriodsDay : this.state.bestPeriodsNight} />
+    
+    {/* <p onClick={this.handleDayNightButton}>
      {this.state.bestPeriodDisplayDay ?  <b>Show Daytime</b> : `Show Daytime | `}   
      {this.state.bestPeriodDisplayDay ?  ` | Show Night-time` : <b>Show Night-time</b>} 
-     </p>
+     </p> */}
+<br></br>
+        <Button size='small'  attached='left'
+        active={this.state.bestPeriodDisplayDay}
+        toggle
+        onClick={this.handleDayNightButton}
+        >Day</Button>
+        <Button size='small' attached='right'
+        active={!this.state.bestPeriodDisplayDay}
+        toggle
+        onClick={this.handleDayNightButton}
+        >Night</Button>
 
- <Card.Group  itemsPerRow={3} items={this.state.bestPeriodDisplayDay ? this.state.bestPeriodsDay : this.state.bestPeriodsNight} />
 </div>
 
 
@@ -231,7 +246,10 @@ componentDidUpdate (prevProps, prevState) {
         <Loader>Loading</Loader>
     </Dimmer> */}
 
-    <h3>Options</h3>
+    <h2>Options</h2>
+    <h4>Selected Period: {this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}  |  Selected Region: {this.props.useId ? this.props.regionName : this.props.setPostCode} </h4>
+
+    
      <Dimmer active={this.props.loading} page>
         <Loader>Loading</Loader>
     </Dimmer> 
@@ -239,9 +257,11 @@ componentDidUpdate (prevProps, prevState) {
 <Table   columns={2}>
 <Table.Row>
 <Table.Cell>
+    Period:
+    <br />
     <Dropdown
          compact={this.props.mobileUser ? true : false}
-         placeholder='Period'
+         placeholder={this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}
          selection='2'
          options={this.periodOptions}
          onChange={(event, data) => this.props.updatePeriod(data.value)}
@@ -249,15 +269,17 @@ componentDidUpdate (prevProps, prevState) {
     </Table.Cell>
 
             <Table.Cell>
-    <p>Period: {this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}</p>
-    <p>Region: {this.props.useId ? this.props.regionName : this.props.setPostCode}</p>
+    {/* <h3>Period: {this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}</h3>
+    <h3>Region: {this.props.useId ? this.props.regionName : this.props.setPostCode}</h3> */}
    </Table.Cell>
    </Table.Row>
 
    <Table.Row>
     <Table.Cell>
+        Region
+        <br/>
     <Dropdown
-          placeholder='Region'
+          placeholder={this.props.useId ? this.props.regionName : 'Select Region'}
           selection
           options={this.genRegionOptions()}
           onChange={(event, data) => {this.handleDropDown(data)}}
@@ -265,6 +287,7 @@ componentDidUpdate (prevProps, prevState) {
         />
     </Table.Cell>
         <Table.Cell>
+           
    <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
     </Table.Cell>
     </Table.Row>
@@ -308,7 +331,7 @@ componentDidUpdate (prevProps, prevState) {
 {/* <Divider horizontal>Carbon Levels</Divider> */}
 
 <div id="summary-chart" className="bgPanel">
-<h3>Summary Chart</h3>
+<h2>Summary Chart</h2>
 <SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>
 <button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Time' : 'Intensity Level'}</button>
 </div>
