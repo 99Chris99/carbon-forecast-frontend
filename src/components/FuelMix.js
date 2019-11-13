@@ -10,7 +10,8 @@ export class FuelMix extends Component {
         count:0,
         arrayCheck:[],
         playing: false,
-        waite:false
+        waite:false,
+        time:0
     }
 
     componentDidMount () {
@@ -28,17 +29,71 @@ export class FuelMix extends Component {
             this.setState({chartData:this.props.data})
         }
         if (this.state.playing !== prevState.playing && this.state.playing === true) {
-            {setInterval(() => {this.setState({count: this.state.count +=1})},1000)}
-          
-            // for (let index = this.state.count; index < this.state.chartData.length; setTimeout(() => {index++}, 1500)){
-            //    // const element = array[index];
-               
-            //        this.setState({count: this.state.count +=1})
-               
+           return this.player()
             }
+        // if (this.state.time !== prevState.time && this.state.playing === true && this.state.time >= (prevState.time+800)) {
+        //   return (
+        //     this.handleCount(+1),
+        //     this.autoPlay()
+            
+        //   )
+        }
+        
+        player = () => {
+
+            let timer = 0
+            let counter = 0
+            let timeA = Date.now()
+            let timeB = Date.now()
+            let interval = 800
+          let intervalRunner = setInterval(() => {
+            console.log('hihi')
+            if (this.state.playing) {
+              this.handleCount(+1)
+                  counter%2 === 0 ? timeA = Date.now() : timeB = Date.now()
+                  
+                  let check = 0
+                  counter%2 === 0 ? check = (timeA-=timeB) : check = (timeB-=timeA)
+                  //check < 800 ? interval +=(800-check) : interval = 
+                  console.log(check)
+                  check >= 1 ? interval = (800 - check) : interval = (800 + check)
+                 console.log(interval)
+                  counter += 1
+            }else clearInterval(intervalRunner)
+          },
+          interval >= 1 ? interval : 0)
+        }
+      
+
+        setTime = () => {
+          let newTime = Date.now() 
+          this.setState({time:newTime}) 
         }
 
-    }
+        autoPlay = () => {
+          let timer = 0
+          let firstTime = Date.now() 
+          while (this.state.playing) {
+            if (Date.now() >= (firstTime + timer)){
+              this.handleCount(+1)
+              timer += 700
+            }
+
+          }
+        }
+
+        playTimer = () => {
+          let start = Date.now()
+          let timer = 0
+          {setInterval(() => {
+              let timeNow = Date.now()  
+            if (this.state.playing && timeNow >= (start + timer) && timeNow <= (start + timer)) {
+              this.handleCount(+1)
+            timer += 800
+            }
+              },10)}
+        }
+    
 
     parseDate = (input) => {
         let optionsDate = { weekday: 'short', day: 'numeric', month: 'numeric' };
@@ -64,14 +119,13 @@ export class FuelMix extends Component {
         if (newCount < this.state.chartData.length && newCount >= 0){
         this.setState({
             count: newCount
-        })}else{console.log('end of chart')}
-    
+        })}else{this.setState({playing:false})}
     }
 
     auto = () => {
         let newCount = this.state.count
-        if (newCount < this.state.chartData.length && newCount >= 0){
-            this.setState({playing: !this.playing})
+        if (newCount < this.state.chartData.length){
+            this.setState({playing: !this.state.playing})
         
     }
     }
@@ -204,7 +258,7 @@ export class FuelMix extends Component {
 <div>
 
 <Segment textAlign='center'>
-    <h3>Energy sources for this hour</h3>
+    <h3>Your electricity supply will come frome these sources</h3>
 <Table>
 
 <Table.Row>
