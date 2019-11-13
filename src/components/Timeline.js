@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {XYPlot, LineSeries, MarkSeries, HorizontalGridLines, Hint, XAxis, YAxis, Borders, VerticalGridLines, HorizontalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
-import { Sticky, Header, Table, Dimmer, Loader, TableCell } from 'semantic-ui-react';
+import { Sticky, Header, Accordion, Table, Dimmer, Loader, TableCell } from 'semantic-ui-react';
 import { withScroll } from 'react-window-decorators';
+import TitleContent from '../content/TitleContent';
 
 // @withScroll
 class Timeline extends Component {
@@ -275,9 +276,19 @@ calYOffset = () => {
 
         return (
 
+<div>
+
+<div className="bgPanel">
+            <h1>Timeline Forecast</h1>
+        <p>Use the Forecast Timeline to see the forecast in detail over time.</p>
+        <p>The black line is the Carbon Intensity level. The Carbon Intensity increases as it travels to the right.</p>
+        <p>As you scroll the info panel will update, with the Time, Carbon Intensity Level and Low, Medium, High, indicators.</p>
+      {/* <Accordion defaultActiveIndex={[]} panels={TitleContent.fuelMixTitle} exclusive={false}/> */}
+      </div>
 
 
             <div
+            className="bgPanel"
             style={{
                 height: '800vh',
                 background: '#fff'
@@ -474,6 +485,8 @@ calYOffset = () => {
 
         </div>
         
+
+            </div>
 
             </div>
         );

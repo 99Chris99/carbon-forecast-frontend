@@ -15,6 +15,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Advice from './components/Advice';
 import FuelMix from './components/FuelMix';
+import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import { ItemMeta, Header } from 'semantic-ui-react';
 import { cloneWithoutLoc } from '@babel/types';
@@ -410,8 +411,11 @@ this.setState({setPeriod: newPeriod})
 
 <Nav/>
 
-<Container className="parentContainer" >
+<div style={{ display:"flex", minHeight:"100vh", flexDirection:"column" }}>
 
+<div style={{ flex:1 }}>
+
+<Container className="parentContainer" >
 
 <Switch>
 
@@ -445,8 +449,18 @@ this.setState({setPeriod: newPeriod})
 
 </Switch>
       
+
 </Container>
 </div>
+
+
+  
+  <Footer />
+
+</div>
+
+</div>
+
 
 </Router>
 
