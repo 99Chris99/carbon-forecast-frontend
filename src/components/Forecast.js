@@ -247,7 +247,7 @@ componentDidUpdate (prevProps, prevState) {
     </Dimmer> */}
 
     <h2>Options</h2>
-    <h4>Selected Period: {this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}  |  Selected Region: {this.props.useId ? this.props.regionName : this.props.setPostCode} </h4>
+    <h4>Selected: Period: {this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}  |  Region: {this.props.useId ? this.props.regionName : this.props.setPostCode} </h4>
 
     
      <Dimmer active={this.props.loading} page>
