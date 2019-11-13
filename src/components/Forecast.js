@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Dropdown, Search, Table, Divider,Dimmer,Loader, Grid, Card, Button, Image, Segment, Container, TableRow } from 'semantic-ui-react';
+import { Dropdown, Accordion, Search, Table, Divider,Dimmer,Loader, Grid, Card, Button, Image, Segment, Container, TableRow } from 'semantic-ui-react';
 import SummaryChart from './SummaryChart';
+import TitleContent from '../content/TitleContent';
 import PostCodeSearch from './PostCodeSearch';
 
 export class Forecast extends Component {
@@ -198,6 +199,13 @@ componentDidUpdate (prevProps, prevState) {
         return (
             
             <div>
+
+
+
+<div className="bgPanel">
+            <h1>Forecast Summary</h1>
+      <Accordion defaultActiveIndex={[]} panels={TitleContent.forecastSummaryTitle} exclusive={false}/>
+      </div>
 
             <div>
                 {/* <h1> Hi, it's me forecast! Hows things?</h1> */}

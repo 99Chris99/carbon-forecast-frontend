@@ -8,7 +8,7 @@ import { Accordion } from 'semantic-ui-react'
 
   
   const Content = () => (
-    <Accordion defaultActiveIndex={[]} panels={AboutContent.aboutContent} exclusive={false} />
+    <Accordion defaultActiveIndex={[]} panels={AboutContent.aboutContent} exclusive={false}/>
   )
 
 

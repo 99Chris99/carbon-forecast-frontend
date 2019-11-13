@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import TitleContent from '../content/TitleContent';
 import {RadialChart, GradientDefs} from 'react-vis';
-import { Segment, Table, Icon, Button, List } from 'semantic-ui-react';
+import { Segment, Table, Icon, Button, List, Accordion } from 'semantic-ui-react';
 
 
 export class FuelMix extends Component {
@@ -93,24 +94,23 @@ export class FuelMix extends Component {
     }
 
 
+    
     render() {
-        const myData = [
-            {angle: 1, gradientLabel: 'grad1'},
-        {angle: 2, gradientLabel: 'grad2'},
-        {angle: 5, gradientLabel: 'grad3'}
-          ]
-
           let data = this.state.chartData
         
         
         return (
 
+        <div style={{textAlign: 'centre'}}>
 
-        <div className="bgPanel">
-            <h2>Wow its a lovely day, and as the Fuel Mix I love lovely days!</h2>
+<div className="bgPanel">
+            <h1>Fuel Mix Forecast</h1>
+      <Accordion defaultActiveIndex={[]} panels={TitleContent.fuelMixTitle} exclusive={false}/>
+      </div>
 
+          <div className="bgPanel">
 
-<Segment textAlign='center'>
+ <Segment basic textAlign='center'>
 
     <h3>{data.length > 1 ? this.parseDate(this.state.chartData[this.state.count].date) : undefined}</h3>
           {/* <div style={{width:'100%', paddingLeft:'auto', paddingRight:'auto'}}> */}
@@ -211,14 +211,12 @@ export class FuelMix extends Component {
   </Segment.Group>
 
  
-    
-
-
 </Segment>
+</div>
 
-<div>
+<div className='bgPanel'>
 
-<Segment textAlign='center'>
+{/* <Segment textAlign='center'> */}
     <h3>Your electricity supply will come frome these sources</h3>
 
 
@@ -333,7 +331,7 @@ export class FuelMix extends Component {
 </Table>
 
 
-</Segment>
+{/* </Segment> */}
 
 </div>
 
