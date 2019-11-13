@@ -286,13 +286,19 @@ calYOffset = () => {
       {/* <Accordion defaultActiveIndex={[]} panels={TitleContent.fuelMixTitle} exclusive={false}/> */}
       </div>
 
+<div  className="bgPanel" style={{
+   
+                background: '#fff',
+               
+            }}>
 
             <div
-            className="bgPanel"
+            
             style={{
                 height: '800vh',
-                background: '#fff'
+                
             }}
+            id="bg-fade"
             >
 
 
@@ -310,16 +316,22 @@ calYOffset = () => {
             {/* Vertical scroll position is: { this.props.scrollPositionY - this.state.yOffset } <br></br> */}
             {/* Carbon Intensity: {this.state.currentLevel.level} */}
            
+
+
+
+
+
+
           <Table id="sticky-table" fixed unstackable singleLine celled>
           {/* <Table id="sticky-table" fixed unstackable singleLine celled> */}
 
             <Table.Body>
+            
             <Table.Row textAlign='center'> 
-            <Table.Cell><h3>{this.state.currentLevel.time}</h3></Table.Cell>
-            <Table.Cell><h3>{this.state.currentLevel.level}</h3></Table.Cell>
-            <Table.Cell><h3>Share</h3></Table.Cell>
-
-            </Table.Row>
+            <Table.Cell><h3>{this.state.currentLevel.time.slice(8)}</h3></Table.Cell>
+            <Table.Cell><h3>{this.state.currentLevel.time.slice(0,8)}</h3></Table.Cell>
+            <Table.Cell><h3>{`${this.state.currentLevel.level} CO2e`}</h3></Table.Cell>
+            </Table.Row> 
 
             <Table.Row textAlign='center'>
             <Table.Cell><h3 style={this.colorChange("Low","Very Low", "green")}>⟵  Low</h3></Table.Cell>
@@ -333,7 +345,7 @@ calYOffset = () => {
           <div id="stickyMeasure">
           </div>
 
-                <div id="timeline">
+                <div id="timeline" height={800} style={{marginBottom: '0vh'}}>
 <div
         
       style={{
@@ -342,10 +354,11 @@ calYOffset = () => {
           position: 'relative',
           width:  '100%',
           height: '800vh',
+        //   height: '800vh',
           //height: `${this.state.height}vh`,
-          overflow: 'auto',
+           overflow: 'auto',
         }}
-      id="bg-fade"
+      
 
       
     >
@@ -356,7 +369,8 @@ calYOffset = () => {
         style={{width: '100%', height: '100%'}}
         // style={{width: '100%', height: '100%', border: '1px solid #ccc'}}
       >
-        <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 1000, left: 80, right: 20, top: 50}}> 
+        {/* <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 1000, left: 80, right: 20, top: 50}}>  */}
+        <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 250, left: 80, right: 20, top: 50}}> 
         {/* <FlexibleXYPlot  id="timeline-chart" margin={{bottom: 80, left: 80, right: 20, top: 50}}>  */}
         {/*50*/}
         {/* xType="time" 
@@ -486,7 +500,7 @@ calYOffset = () => {
         </div>
         
 
-            </div>
+            </div></div>
 
             </div>
         );

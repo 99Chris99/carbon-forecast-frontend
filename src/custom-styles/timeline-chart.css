@@ -9,8 +9,8 @@
 
 #bg-fade {
   
-  background: rgb(33,186,69);
-  background: linear-gradient(90deg, rgba(33,186,69,0.5) 20%, rgba(251,189,8,0.5) 49%, rgba(219,40,40,0.5) 80%);
+  background: rgb(33,186,69) !important;
+  background: linear-gradient(90deg, rgba(33,186,69,0.5) 20%, rgba(251,189,8,0.5) 49%, rgba(219,40,40,0.5) 80%) !important;
   
 }
 /* background: rgb(255,255,255);
