@@ -17,7 +17,7 @@ state = {}
 
     
      
-      <Menu fluid widths={5}>
+      <Menu fluid widths={6}>
           <Menu.Item as={Link} name="start" to="/start">
             Start
           </Menu.Item>

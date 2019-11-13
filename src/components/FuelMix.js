@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {RadialChart, GradientDefs} from 'react-vis';
-import { Segment, Table, Icon, Button } from 'semantic-ui-react';
+import { Segment, Table, Icon, Button, List } from 'semantic-ui-react';
 
 
 export class FuelMix extends Component {
@@ -10,8 +10,6 @@ export class FuelMix extends Component {
         count:0,
         arrayCheck:[],
         playing: false,
-        waite:false,
-        time:0
     }
 
     componentDidMount () {
@@ -31,12 +29,6 @@ export class FuelMix extends Component {
         if (this.state.playing !== prevState.playing && this.state.playing === true) {
            return this.player()
             }
-        // if (this.state.time !== prevState.time && this.state.playing === true && this.state.time >= (prevState.time+800)) {
-        //   return (
-        //     this.handleCount(+1),
-        //     this.autoPlay()
-            
-        //   )
         }
         
         player = () => {
@@ -47,52 +39,22 @@ export class FuelMix extends Component {
             let timeB = Date.now()
             let interval = 800
           let intervalRunner = setInterval(() => {
-            console.log('hihi')
+      
             if (this.state.playing) {
               this.handleCount(+1)
                   counter%2 === 0 ? timeA = Date.now() : timeB = Date.now()
                   
                   let check = 0
                   counter%2 === 0 ? check = (timeA-=timeB) : check = (timeB-=timeA)
-                  //check < 800 ? interval +=(800-check) : interval = 
-                  console.log(check)
+  
                   check >= 1 ? interval = (800 - check) : interval = (800 + check)
-                 console.log(interval)
+            
                   counter += 1
             }else clearInterval(intervalRunner)
           },
           interval >= 1 ? interval : 0)
         }
       
-
-        setTime = () => {
-          let newTime = Date.now() 
-          this.setState({time:newTime}) 
-        }
-
-        autoPlay = () => {
-          let timer = 0
-          let firstTime = Date.now() 
-          while (this.state.playing) {
-            if (Date.now() >= (firstTime + timer)){
-              this.handleCount(+1)
-              timer += 700
-            }
-
-          }
-        }
-
-        playTimer = () => {
-          let start = Date.now()
-          let timer = 0
-          {setInterval(() => {
-              let timeNow = Date.now()  
-            if (this.state.playing && timeNow >= (start + timer) && timeNow <= (start + timer)) {
-              this.handleCount(+1)
-            timer += 800
-            }
-              },10)}
-        }
     
 
     parseDate = (input) => {
@@ -131,7 +93,6 @@ export class FuelMix extends Component {
     }
 
 
-
     render() {
         const myData = [
             {angle: 1, gradientLabel: 'grad1'},
@@ -163,7 +124,7 @@ export class FuelMix extends Component {
   height={this.props.mobileUser ? 180 : 340} 
   showLabels={true}
   animation={true}
-  radius={130}
+  radius={this.props.mobileUser ? 65 : 130}
   colorType={'literal'}
       colorDomain={[0, 100]}
       colorRange={[0, 10]}
@@ -228,22 +189,22 @@ export class FuelMix extends Component {
       </div>
 
 
-      <Segment.Group horizontal>
-    <Segment>
-    <Button icon labelPosition='left' onClick={() => this.handleCount(-1)}>
+      <Segment.Group horizontal basic>
+    <Segment basic>
+    <Button icon labelPosition={this.props.mobileUser ? false : 'left'} onClick={() => this.handleCount(-1)}>
       <Icon name='left arrow' />
-      Prev Hour
+      {this.props.mobileUser ? '' : 'Prev Hour'}
     </Button>
     </Segment>
-    <Segment> 
-        <Button icon labelPosition='right' onClick={() => this.auto()}>
-      <Icon name='play' />
-      Auto
+    <Segment basic> 
+        <Button icon labelPosition={this.props.mobileUser ? false : 'right'} onClick={() => this.auto()}>
+      <Icon name={this.state.playing ? 'pause' : 'play'} />
+      {this.props.mobileUser ? '' : 'Auto'}
     </Button>
     </Segment>
-    <Segment>
-        <Button icon labelPosition='right' onClick={() => this.handleCount(+1)}>
-      Next Hour
+    <Segment basic>
+        <Button icon labelPosition={this.props.mobileUser ? false : 'right'} onClick={() => this.handleCount(+1)}>
+      {this.props.mobileUser ? '' : 'Next Hour'}
       <Icon name='right arrow' />
     </Button>
     </Segment>
@@ -259,8 +220,51 @@ export class FuelMix extends Component {
 
 <Segment textAlign='center'>
     <h3>Your electricity supply will come frome these sources</h3>
-<Table>
 
+
+<List style={{display: this.props.mobileUser ? 'block' : 'none'}}>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[0].tableText : undefined}
+{data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[0].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[1].tableText : undefined}
+ {data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[1].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[2].tableText : undefined}
+ {data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[2].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[3].tableText : undefined}
+ {data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[3].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[4].tableText : undefined}
+ {data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[4].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[5].tableText : undefined}
+ {data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[5].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[6].tableText : undefined}
+ {data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[6].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[7].tableText : undefined}
+ {data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[7].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+    <List.Item>
+{data.length > 1 ? this.state.chartData[this.state.count].chartData[8].tableText : undefined}
+ {data.length > 1 ? `: ${this.state.chartData[this.state.count].chartData[8].angle.toFixed(2)}%` : undefined}
+    </List.Item>
+  </List>
+
+
+
+
+<Table style={{display: this.props.mobileUser ? 'none' : 'block'}}>
 <Table.Row>
     <Table.Cell>
     {data.length > 1 ? this.state.chartData[this.state.count].chartData[0].tableText : undefined}
