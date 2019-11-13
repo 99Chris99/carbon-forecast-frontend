@@ -210,9 +210,11 @@ componentDidUpdate (prevProps, prevState) {
             <div>
                 {/* <h1> Hi, it's me forecast! Hows things?</h1> */}
 
-                <div className="bgPanel">
             {/* <Divider horizontal>Lowest Levels</Divider> */}
     {/* <button class="ui button" onClick={this.handleDayNightButton}>Show {this.state.bestPeriodDisplayDay ? 'Daytime' : 'Night-time'}</button> */}
+                <div className="bgPanel">
+    <h3>Top 3 Periods</h3>
+    
     <p onClick={this.handleDayNightButton}>Top 3 times to use electricity duiring this period:
     <br></br>
      {this.state.bestPeriodDisplayDay ?  <b>Show Daytime</b> : `Show Daytime | `}   
@@ -228,6 +230,8 @@ componentDidUpdate (prevProps, prevState) {
 {/* <Dimmer active={this.props.loading}>
         <Loader>Loading</Loader>
     </Dimmer> */}
+
+    <h3>Options</h3>
      <Dimmer active={this.props.loading} page>
         <Loader>Loading</Loader>
     </Dimmer> 
@@ -245,7 +249,8 @@ componentDidUpdate (prevProps, prevState) {
     </Table.Cell>
 
             <Table.Cell>
-    <p>Yep thats right I'm some text!</p>
+    <p>Period: {this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}</p>
+    <p>Region: {this.props.useId ? this.props.regionName : this.props.setPostCode}</p>
    </Table.Cell>
    </Table.Row>
 
@@ -303,7 +308,7 @@ componentDidUpdate (prevProps, prevState) {
 {/* <Divider horizontal>Carbon Levels</Divider> */}
 
 <div id="summary-chart" className="bgPanel">
-
+<h3>Summary Chart</h3>
 <SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>
 <button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Time' : 'Intensity Level'}</button>
 </div>

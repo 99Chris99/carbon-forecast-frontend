@@ -26,12 +26,16 @@ export class FuelMix extends Component {
     componentDidUpdate (prevProps, prevState) {
         if (this.props.data !== prevProps.data) {
             this.setState({chartData:this.props.data})
+           
         }
         if (this.state.playing !== prevState.playing && this.state.playing === true) {
-           return this.player()
+           return (this.player())
             }
         }
         
+
+               
+
         player = () => {
 
             let timer = 0
@@ -138,7 +142,7 @@ export class FuelMix extends Component {
       labelsAboveChildren={true}
  >
 <GradientDefs>
-        <linearGradient id="biomass" x1="0" x2="0" y1="0" y2="1">
+        <linearGradient id="bio" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor="#ffb347" stopOpacity={0.9} />
           <stop offset="100%" stopColor="#ffcc33" stopOpacity={0.9} />
         </linearGradient>

@@ -89,7 +89,7 @@ countDownToDoom = () => {
     </div>
         
         <Header as='h2' textAlign='center' style={{marginTop:'0'}}>
-        Current level of carbon emmsions for GB electricity supply
+        Current level of carbon emmsions for {this.props.regionName} electricity supply
         </Header>
         <br></br>
         <br></br>

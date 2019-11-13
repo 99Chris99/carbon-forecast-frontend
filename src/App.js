@@ -46,7 +46,8 @@ export class App extends Component {
     bestPeriods: {},
     fuelMix: [],
     timelineVals: [],
-    loading:true
+    loading:true,
+    currentRegionName: 'GB'
   }
   
   
@@ -134,9 +135,11 @@ loading = () => {
     if (this.state.setRegion !== prevState.setRegion){
       this.get48hForecast(this.now(),true)
       this.compileRegionIndex()
+      this.setState({useId:true})
     }
     else if (this.state.setPostCode !== prevState.setPostCode){
       this.get48hForecast(this.now(),false)
+      this.setState({useId:false})
     }
     else if (this.state.forecastA !== prevState.forecastA)
     {
@@ -217,7 +220,8 @@ getForecastC = () => {
           )
           if (item.regionid === this.state.setRegion){
             this.setState({
-              currentLevel: {region: item.regionid, text: item.intensity.index, value: item.intensity.forecast}
+              currentLevel: {region: item.regionid, text: item.intensity.index, value: item.intensity.forecast},
+              currentRegionName:item.shortname
             })
           }
        }
@@ -273,8 +277,9 @@ determinGran = () => {
 
 formatFuelMix = (array) => {
   return array.map(obj => {
-    //return {label: obj.perc > 1 && obj.fuel !== 'biomass' ? obj.fuel : ''
-    return {label: obj.perc > 1 ? obj.fuel : ''
+    //return {label: obj.perc > 1 && obj.fuel !== 'biomass' ? obj.fuel : '.   biomass'
+    //return {label: obj.perc > 1 ? obj.fuel : ''
+    return {label: obj.perc > 1 ? obj.fuel === 'biomass' ? 'bio' : obj.fuel : ''
       ,angle: obj.perc
       ,className: `${obj.fuel}Wedge`
       ,tableText: obj.fuel
@@ -421,15 +426,15 @@ this.setState({setPeriod: newPeriod})
 <Switch>
 
     <Route exact path="/">
-          <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)}/>
+          <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)} regionName={this.state.currentRegionName}/>
     </Route>
     <Route path="/start" >
-          <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)}/>
+          <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)} regionName={this.state.currentRegionName}/>
     </Route>
     <Route path="/forecast-summary">
           <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} updatePostCode={this.updatePostCode} setPeriod={this.state.setPeriod}
-                    updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals}
-                    mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods} loading={this.state.loading}
+                    updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals} setPostCode={this.state.setPostCode}
+                    mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods} loading={this.state.loading} useId={this.state.useId} regionName={this.state.currentRegionName}
           />
     </Route>
     <Route path="/forecast-timeline">
