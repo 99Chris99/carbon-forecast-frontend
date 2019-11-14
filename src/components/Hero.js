@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Logo from "../images/CarbonForecastLogoWhiteMedium.png";
 import LogoSmall from "../images/CarbonForecastLogoWhiteSmall.png";
-
+import { Segment } from 'semantic-ui-react';
 export class Hero extends Component {
     render() {
         return (
@@ -9,7 +9,14 @@ export class Hero extends Component {
 
              <div height={5} id="header">
 
-<img src={this.props.mobileUser ? LogoSmall : Logo} style={{margin: '2vw'}}/>
+<div id="header-content">
+<img src={this.props.mobileUser ? LogoSmall : Logo} />
+
+
+
+</div>
+
+
 
 
 </div>

@@ -6,10 +6,16 @@ const id48Hrs = `${allRegionsURL}intensity/{from}/fw48h/regionid/`
 
 const handleErrors = (response) => {
     if (!response.ok) {
+    //if (response !== 200) {
         console.log('run for your lives its an error!!!')
-        throw Error(response.statusText);
+        throw Error(response.statusText, reload());
     }
+    console.log('All good')
     return response;
+}
+
+const reload = () => {
+    alert('Error retrieving forecast data, please reload.')
 }
 
 const getCurrentNationalData = () => fetch(nationalURL,{method: "GET"}).then(handleErrors).then(response => response.json())

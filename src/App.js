@@ -421,7 +421,7 @@ this.setState({setPeriod: newPeriod})
 
 <div style={{ flex:1 }}>
 
-<Container className="parentContainer" >
+<Container className="parentContainer" style={{maxWidth: '80vw'}} >
 
 <Switch>
 
