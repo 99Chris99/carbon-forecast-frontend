@@ -8,7 +8,8 @@ const handleErrors = (response) => {
     if (!response.ok) {
     //if (response !== 200) {
         console.log('run for your lives its an error!!!')
-        throw Error(response.statusText, reload());
+        alert('Error retrieving forecast data, please reload.')
+        // throw Error(response.statusText, reload());
     }
     console.log('All good')
     return response;

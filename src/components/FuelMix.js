@@ -109,15 +109,14 @@ export class FuelMix extends Component {
 
 <div className="bgPanel">
             <h1>Fuel Mix Forecast</h1>
-      <Accordion defaultActiveIndex={[]} panels={TitleContent.fuelMixTitle} exclusive={false}/>
+      <Accordion defaultActiveIndex={[0]} panels={TitleContent.fuelMixTitle} exclusive={false}/>
       </div>
 
           <div className="bgPanel">
-
+<h2>Fuel Mix Chart</h2>
  <Segment basic textAlign='center'>
-
-    <h3>{data.length > 1 ? this.parseDate(this.state.chartData[this.state.count].date) : undefined}</h3>
-          {/* <div style={{width:'100%', paddingLeft:'auto', paddingRight:'auto'}}> */}
+ <h3>{`Carbon Intensity: ${data.length > 1 ? this.state.chartData[this.state.count].level : ''}`}</h3>
+   
           <div style={{display: 'inline-block'}}>
             <RadialChart
 
@@ -189,7 +188,11 @@ export class FuelMix extends Component {
 
 
       </GradientDefs>
-      </RadialChart>  
+          
+
+      </RadialChart> 
+      <h3>{`Time: ${data.length > 1 ? this.parseDate(this.state.chartData[this.state.count].date) : ''}`}</h3> 
+    
       </div>
 
 
@@ -214,14 +217,14 @@ export class FuelMix extends Component {
     </Segment>
   </Segment.Group>
 
- 
 </Segment>
 </div>
 
 <div className='bgPanel'>
 
 {/* <Segment textAlign='center'> */}
-    <h3>Your electricity supply will come frome these sources</h3>
+<h2>Fuel Mix Breakdown</h2>
+    <h3>The electricity supply will comes frome these sources</h3>
 
 
 <List style={{display: this.props.mobileUser ? 'block' : 'none'}}>

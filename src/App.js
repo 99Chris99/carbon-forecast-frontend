@@ -461,7 +461,7 @@ this.setState({setPeriod: newPeriod})
 
 
   
-  <Footer />
+  <Footer emissions={this.state.emissions.toFixed(4)}/>
 
 </div>
 

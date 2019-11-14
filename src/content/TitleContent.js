@@ -16,6 +16,26 @@ const fuelMixTitle = [
             }
             }
         ]
+const startTitle = [
+    
+        {
+            key: 'startTitle',
+            title: 'Info',
+            content: {
+                content: (
+            <div>
+                <p>Carbon Forecast, gives you the forecast of the level of carbon emissions (Carbon Intensity) the electricity supply to you home produces. 
+<br></br>– Empowering you to manage your energy usage to reduce your carbon footprint.
+</p>
+                <p>Carbon Intensity is a measure of how much CO2 emissions are produced per kilowatt hour of electricity consumed. 
+<br></br>- The greater the number, the greater the amount of emissions.
+</p>
+
+                </div>
+            )    
+            }
+            }
+        ]
 
 const forecastSummaryTitle = [
     
@@ -44,5 +64,5 @@ const forecastSummaryTitle = [
 
 
   export default {
-    fuelMixTitle, forecastSummaryTitle
+    fuelMixTitle, forecastSummaryTitle, startTitle
   }

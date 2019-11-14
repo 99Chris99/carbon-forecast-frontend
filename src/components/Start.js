@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Grid, Header } from 'semantic-ui-react';
+import { Container, Grid, Header, Accordion} from 'semantic-ui-react';
+import TitleContent from '../content/TitleContent';
 
 export class Start extends Component {
     state = {
@@ -74,6 +75,14 @@ countDownToDoom = () => {
        
 
             <Container>
+            <div className="bgPanel">
+            <h1> <span className="textHighlight"> Carbon Forecast </span> </h1>
+      <Accordion defaultActiveIndex={[0]} panels={TitleContent.startTitle} exclusive={false}/>
+   
+
+            </div>
+
+
           <div className="bgPanel">
         <br></br>
     <div className="startmeter">
@@ -110,7 +119,7 @@ countDownToDoom = () => {
    {/* <Grid.Column width={3}> </Grid.Column> */}
       <Grid.Column width={6}>
       <h2> {this.props.emissions} C02-e </h2>
-   <h4>Total emissions in tonnes produced since you opened this app (C02-e)</h4>       
+   <h4>Total carbon emissions in tonnes produced since you opened this app (C02-e)</h4>       
     </Grid.Column>
     </Grid>
 

@@ -206,7 +206,7 @@ componentDidUpdate (prevProps, prevState) {
 
 <div className="bgPanel">
            <h1> <span className="textHighlight"> Forecast Summary </span> </h1>
-      <Accordion defaultActiveIndex={[]} panels={TitleContent.forecastSummaryTitle} exclusive={false}/>
+      <Accordion defaultActiveIndex={[0]} panels={TitleContent.forecastSummaryTitle} exclusive={false}/>
       </div>
 
             <div>
