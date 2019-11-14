@@ -113,7 +113,8 @@ countDownToDoom = () => {
  {/* columns={2} */}
     <Grid centered stackable columns={2} padded>
       <Grid.Column width={6}>
-      <h2>{`${this.state.countDown}`}</h2>
+      {/* <h2>{`${this.state.countDown}`}</h2> */}
+      <h2>15 years 0 months 7 days </h2>
    <h4> Until global warming reaches +1.5 °c</h4>      
    </Grid.Column>
    {/* <Grid.Column width={3}> </Grid.Column> */}
