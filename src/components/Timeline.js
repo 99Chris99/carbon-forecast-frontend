@@ -66,8 +66,8 @@ class Timeline extends Component {
 //         console.log('clientHeight '+ chartTop.clientHeight )
 
 
-calYOffset = () => {
 
+calYOffset = () => {
     const stickyTop = document.querySelector('#sticky')
     let stickyTopVals = stickyTop.getBoundingClientRect()
     console.log(stickyTopVals)
@@ -322,7 +322,7 @@ calYOffset = () => {
 
 
 
-          <Table id="sticky-table" fixed unstackable singleLine celled>
+          <Table className="sticky-table" fixed unstackable singleLine celled>
           {/* <Table id="sticky-table" fixed unstackable singleLine celled> */}
 
             <Table.Body>

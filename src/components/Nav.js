@@ -7,33 +7,40 @@ import { Container } from 'semantic-ui-react'
 
 export class Nav extends Component {
 
-state = {}
+state = {disabled: false}
 
+disable = (event) => {
+  event.preventDefault();
+  this.setState({
+    disabled: true
+})
 
+setTimeout(() => this.setState({ disabled: false }), 700);
+
+}
 
     render() {
         return (
             <div>
 
-    
      
-      <Menu fluid widths={6}>
-          <Menu.Item as={Link} name="start" to="/start">
+      <Menu fluid widths={6} onClick={(event) => this.disable(event)}>
+          <Menu.Item disabled={this.state.disabled} as={Link} name="start" to="/start">
             Start
           </Menu.Item>
-          <Menu.Item as={Link} name="forecast" to="/forecast-summary">
+          <Menu.Item disabled={this.state.disabled} as={Link} name="forecast" to="/forecast-summary">
             Forecast<br></br>Summary
           </Menu.Item>
-          <Menu.Item as={Link} name="timeline" to="/forecast-timeline">
+          <Menu.Item  disabled={this.state.disabled} as={Link} name="timeline" to="/forecast-timeline">
             Forecast<br></br>Timeline
           </Menu.Item>
-          <Menu.Item as={Link} name="fuelmix" to="/forecast-fuelmix">
+          <Menu.Item disabled={this.state.disabled} as={Link} name="fuelmix" to="/forecast-fuelmix">
             Forecast<br></br>Fuel Mix
           </Menu.Item>
-          <Menu.Item as={Link} name="advice" to="/advice">
+          <Menu.Item disabled={this.state.disabled} as={Link} name="advice" to="/advice">
             Advice
           </Menu.Item>
-          <Menu.Item as={Link} name="about" to="/about">
+          <Menu.Item disabled={this.state.disabled} as={Link} name="about" to="/about">
             About
           </Menu.Item>
       </Menu>
