@@ -79,6 +79,14 @@ code {
  
 }
 
+.img-header {
+  vertical-align: baseline !important;
+}
+
+.text-header {
+  margin-bottom: 30px !important;
+}
+
 /* #header {
 } */
 

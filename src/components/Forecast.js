@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Accordion, Search, Table, Divider,Dimmer,Loader, Grid, Card, Button, Image, Segment, Container, TableRow } from 'semantic-ui-react';
+import { Dropdown, Accordion,Transition, Search, Table, Divider,Dimmer,Loader, Grid, Card, Button, Image, Segment, Container, TableRow } from 'semantic-ui-react';
 import SummaryChart from './SummaryChart';
 import TitleContent from '../content/TitleContent';
 import PostCodeSearch from './PostCodeSearch';
@@ -335,7 +335,6 @@ componentDidUpdate (prevProps, prevState) {
 <SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>
 <button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Time' : 'Intensity Level'}</button>
 </div>
-
 
 
 </div>

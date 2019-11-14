@@ -17,7 +17,7 @@ import Advice from './components/Advice';
 import FuelMix from './components/FuelMix';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
-import { ItemMeta, Header } from 'semantic-ui-react';
+import { ItemMeta, Header, Transition } from 'semantic-ui-react';
 import { cloneWithoutLoc } from '@babel/types';
 
 import { Container } from 'semantic-ui-react'
@@ -432,10 +432,12 @@ this.setState({setPeriod: newPeriod})
           <Start intensityData={this.state.currentLevel} emissions={this.state.emissions.toFixed(4)} regionName={this.state.currentRegionName}/>
     </Route>
     <Route path="/forecast-summary">
+    <Transition visible={true} animation='scale' duration={500}>
           <Forecast regionIndex={this.state.regionIndex} setRegion={this.state.setRegion} updatePostCode={this.updatePostCode} setPeriod={this.state.setPeriod}
                     updateRegion={this.updateRegion} updatePeriod={this.updatePeriod} aggedVals={this.state.aggedVals} setPostCode={this.state.setPostCode}
                     mobileUser={this.state.mobileUser} bestPeriods={this.state.bestPeriods} loading={this.state.loading} useId={this.state.useId} regionName={this.state.currentRegionName}
           />
+          </Transition>
     </Route>
     <Route path="/forecast-timeline">
           <Timeline loading={this.state.loading} timelineVals={this.state.timelineVals} screenWidth={this.state.screenWidth} middleLevel={this.state.middle} mobileUser={this.state.mobileUser}/>

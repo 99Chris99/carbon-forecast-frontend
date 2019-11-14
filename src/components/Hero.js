@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Logo from "../images/CarbonForecastLogoWhiteMedium.png";
-import LogoSmall from "../images/CarbonForecastLogoWhiteSmall.png";
+import Logo from "../images/CarbonForecastLogo2Big.png";
+import LogoSmall from "../images/CarbonForecastLogo2Small.png";
 import { Segment } from 'semantic-ui-react';
 export class Hero extends Component {
     render() {
@@ -9,11 +9,12 @@ export class Hero extends Component {
 
              <div height={5} id="header">
 
-<div id="header-content">
-<img src={this.props.mobileUser ? LogoSmall : Logo} />
+<div id="header-content" style={{paddingLeft:'3vw'}}>
+<h1>
+    <img className="img-header" src={this.props.mobileUser ? LogoSmall : Logo} />
 
 
-
+</h1>
 </div>
 
 
