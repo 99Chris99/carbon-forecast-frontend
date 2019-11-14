@@ -24,7 +24,7 @@ setTimeout(() => this.setState({ disabled: false }), 700);
             <div>
 
      
-      <Menu fluid widths={6} onClick={(event) => this.disable(event)}>
+      <Menu fluid widths={5} onClick={(event) => this.disable(event)}>
           <Menu.Item disabled={this.state.disabled} as={Link} name="start" to="/start">
             Start
           </Menu.Item>
@@ -37,9 +37,9 @@ setTimeout(() => this.setState({ disabled: false }), 700);
           <Menu.Item disabled={this.state.disabled} as={Link} name="fuelmix" to="/forecast-fuelmix">
             Forecast<br></br>Fuel Mix
           </Menu.Item>
-          <Menu.Item disabled={this.state.disabled} as={Link} name="advice" to="/advice">
+          {/* <Menu.Item disabled={this.state.disabled} as={Link} name="advice" to="/advice">
             Advice
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item disabled={this.state.disabled} as={Link} name="about" to="/about">
             About
           </Menu.Item>

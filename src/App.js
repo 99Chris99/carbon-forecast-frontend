@@ -443,14 +443,14 @@ this.setState({setPeriod: newPeriod})
           <Timeline loading={this.state.loading} timelineVals={this.state.timelineVals} screenWidth={this.state.screenWidth} middleLevel={this.state.middle} mobileUser={this.state.mobileUser}/>
     </Route>
       <Route path="/forecast-fuelmix">
-      <FuelMix data={this.state.fuelMix} mobileUser={this.state.mobileUser}/>
+      <FuelMix loading={this.state.loading} data={this.state.fuelMix} mobileUser={this.state.mobileUser}/>
 
       </Route>
 
 
-    <Route path="/advice">
+    {/* <Route path="/advice">
           <Advice />
-    </Route>
+    </Route> */}
     <Route path="/about">
           <About />
     </Route>

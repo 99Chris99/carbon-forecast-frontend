@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TitleContent from '../content/TitleContent';
 import {RadialChart, GradientDefs} from 'react-vis';
-import { Segment, Table, Icon, Button, List, Accordion } from 'semantic-ui-react';
+import { Segment, Table, Icon, Button, List, Accordion, Dimmer, Loader } from 'semantic-ui-react';
 
 
 export class FuelMix extends Component {
@@ -106,6 +106,10 @@ export class FuelMix extends Component {
         return (
 
         <div style={{textAlign: 'centre'}}>
+
+<Dimmer active={this.props.loading} page>
+        <Loader>Loading</Loader>
+    </Dimmer> 
 
 <div className="bgPanel">
             <h1>Fuel Mix Forecast</h1>
