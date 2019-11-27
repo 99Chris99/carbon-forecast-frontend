@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Accordion,Transition, Search, Table, Divider,Dimmer,Loader, Grid, Card, Button, Image, Segment, Container, TableRow } from 'semantic-ui-react';
+import { Dropdown, Accordion, Table, Dimmer,Loader, Card, Button,} from 'semantic-ui-react';
 import SummaryChart from './SummaryChart';
 import TitleContent from '../content/TitleContent';
 import PostCodeSearch from './PostCodeSearch';
