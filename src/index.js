@@ -7,7 +7,7 @@ import './custom-styles/timeline-chart.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-less/semantic.less';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 ReactDOM.render(
 <Router>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import './App.css';
 // import '../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries, HorizontalGridLines, XAxis, YAxis, Borders, VerticalGridLines, VerticalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
-import { ItemMeta } from 'semantic-ui-react';
+import { VerticalBarSeries, GradientDefs, FlexibleXYPlot, LabelSeries} from 'react-vis';
+
 
 class SummaryChart extends Component {
 
@@ -53,7 +53,7 @@ class SummaryChart extends Component {
             let bar = {x: `${this.parseDate(item.from)}`, y:item.level} 
             return data = [...data, bar]
         })
-        console.log(data)
+       // console.log(data)
         this.setState({rawData: data})    
     }
     }
@@ -72,18 +72,7 @@ class SummaryChart extends Component {
 
 
   render() {
-    // const data = [
-    //   {x: 0, y: 8},
-    //   {x: 1, y: 5},
-    //   {x: 2, y: 4},
-    //   {x: 3, y: 9},
-    //   {x: 4, y: 1},
-    //   {x: 5, y: 7},
-    //   {x: 6, y: 6},
-    //   {x: 7, y: 3},
-    //   {x: 8, y: 2},
-    //   {x: 9, y: 0}
-    // ];
+ 
     return (
       <div id="summary-chart">
 <div
@@ -98,7 +87,6 @@ class SummaryChart extends Component {
     
     >
 <div
-        //style={{width: '99%', height: '100%', border: '1px solid #ccc'}}
         style={{width: '99%', height: '100%'}}
       >
         <FlexibleXYPlot  xType="ordinal" margin={{bottom: 80, left: 0, right: 0, top: 20}}>
@@ -109,31 +97,14 @@ class SummaryChart extends Component {
             <stop offset="50%" stopColor="yellow" stopOpacity={0.4}/>
             <stop offset="100%" stopColor="green" stopOpacity={0.4} />
          
-            {/* <stop offset="0%" stopColor="red" stopOpacity={0.4}/>
-            <stop offset="50%" stopColor="yellow" stopOpacity={0.4}/>
-            <stop offset="100%" stopColor="green" stopOpacity={0.4} />
-          */}
+       
          
          
           </linearGradient>
         </GradientDefs>
 
       
-     
-        {/* <XAxis 
-        position="start"
-        // top={40}
-        top={30}
-        //height={150}
-        //width={1}
-        style={{
-            text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
-          }}
-          //tickLabelAngle={-45}
-          tickTotal={2}
-          /> */}
-        
-        {/* <YAxis /> */}
+   
         
         <VerticalBarSeries 
         data={this.state.rawData}

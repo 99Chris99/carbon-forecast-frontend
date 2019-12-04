@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import {XYPlot, LineSeries, MarkSeries, HorizontalGridLines, Hint, XAxis, YAxis, Borders, VerticalGridLines, HorizontalBarSeries, GradientDefs, AreaSeries, FlexibleXYPlot, LabelSeries} from 'react-vis';
-import { Sticky, Header, Accordion, Table, Dimmer, Loader, TableCell } from 'semantic-ui-react';
+import {LineSeries, HorizontalGridLines,  FlexibleXYPlot, LabelSeries} from 'react-vis';
+import { Table, Dimmer, Loader, } from 'semantic-ui-react';
 import { withScroll } from 'react-window-decorators';
-import TitleContent from '../content/TitleContent';
 
 // @withScroll
 class Timeline extends Component {
@@ -27,12 +26,7 @@ class Timeline extends Component {
 
 
     componentDidMount () {
-     // this.getposition()
-     //  this.manageScrollDisplay()
 
-   
-       
-    
 
          if (typeof this.props.timelineVals[0] !== 'undefined'){
         return (
@@ -60,26 +54,21 @@ class Timeline extends Component {
 
             }
 
-//       //let chartTop = document.querySelector('.rv-xy-plot__grid-lines')
-//       let chartTop = document.querySelector('.rv-xy-plot__grid-lines')
-//       let chartTopPos = chartTop.getBoundingClientRect() 
-//         console.log('clientHeight '+ chartTop.clientHeight )
-
 
 
 calYOffset = () => {
     const stickyTop = document.querySelector('#sticky')
     let stickyTopVals = stickyTop.getBoundingClientRect()
-    console.log(stickyTopVals)
+    // console.log(stickyTopVals)
 
     
     const girdPlotTop = document.querySelector('.rv-xy-plot__grid-lines')
     let girdPlotTopVals = girdPlotTop.getBoundingClientRect()
-    console.log(girdPlotTopVals)    
+    // console.log(girdPlotTopVals)    
 
     const girdPlotOuterTop = document.querySelector('.rv-xy-plot__inner')
     let girdPlotOuterTopVals = girdPlotOuterTop.getBoundingClientRect()
-    console.log(girdPlotOuterTopVals)
+    // console.log(girdPlotOuterTopVals)
     
     let valA = stickyTopVals.top
     let valB = girdPlotTopVals.top - girdPlotOuterTopVals.top
@@ -93,9 +82,9 @@ calYOffset = () => {
         const chartTop = document.querySelector('.rv-xy-plot__grid-lines')
        // console.log('clientHeight '+ chartTop.clientHeight )
        let height = chartTop.getBoundingClientRect()
-       console.log(height)
+    //    console.log(height)
         let output = (height.height / this.state.rawData.length)
-        console.log(output)
+        // console.log(output)
         return output
     }
     
@@ -106,7 +95,7 @@ calYOffset = () => {
         
         setTimeout(() => {
             let gap =this.chartGap()
-        console.log(gap)
+        // console.log(gap)
         let scrollPlots =  this.props.timelineVals.map((point, index) => {    
         
         let data = {time:`${this.parseDate(point.from, 'time')} ${this.parseDate(point.from, 'date')}`,
@@ -116,17 +105,7 @@ calYOffset = () => {
         this.setState({scrollPlots: scrollPlots})
     },400)
     }
-    // scrollPlots = () => {
-    //     this.calYOffset()
-    //     let gap =this.chartGap()
-    //     console.log(gap)
-    //    let scrollPlots =  this.state.rawData.map((point, index) => {    
-        
-    //     let data = {y: (gap * (index)), level: point.x}
-    //         return data
-    //     })
-    //     this.setState({scrollPlots: scrollPlots})
-    // }
+   
 
     getLevel = () => {
         
@@ -180,7 +159,7 @@ calYOffset = () => {
 
         lowCarbonLabel = (item) => {
             let output = ''
-            console.log(item.text)
+            // console.log(item.text)
             //if (item.text.split(' ')[0] === 'Low' || item.text.split(' ')[1] === 'Low' ) {
             if (item.text === 'Low' || item.text === 'Very Low' ) {
                 output = '★'
@@ -192,19 +171,19 @@ calYOffset = () => {
         let data = []
         let labelData = []
         let dayLabels = []
-        let middleVal = this.props.middle
+        //let middleVal = this.props.middle
         //let middle = this.props.timelineVals[this.props.timelineVals.length-1].level / 2 
 
         if (this.props.timelineVals !== [] ) {
 
         this.props.timelineVals.map((item, index) => {
             let bar = {x: item.level-10, y: -index, label: `${this.lowCarbonLabel(item)}`,style: {fill: '#00cc66'}, yOffset:-25}   
-            data = [...data, bar]
+          return  data = [...data, bar]
         })
 
         this.props.timelineVals.map((item, index) => {
             let barLabel = {x: 0, y: -index, label: `${this.parseDate(item.from, 'time')}`, xOffset:-60}  
-            labelData = [...labelData, barLabel]
+           return labelData = [...labelData, barLabel]
         })
         this.props.timelineVals.map((item, index) => {
             
@@ -216,14 +195,17 @@ calYOffset = () => {
             if (parseInt(`${this.parseDate(item.from, '24')}`) < 1 || index < 1 )
             {
                 day = `${this.parseDate(item.from, 'date')}`
-                console.log(day)   
+                // console.log(day)   
             }
             let dayLabel = {x: this.state.middle, y: -index, 
                 label: day,
                 xOffset: this.props.mobileUser ? 0 : -30,
                  yOffset:-15}  
             dayLabels = [...dayLabels, dayLabel]
+        
+        return null
         })
+
     }
        
         //console.log(data)
@@ -268,9 +250,9 @@ calYOffset = () => {
     
     render() {
         //const {value} = this.state
-        let scroll = window.scrollY;
+       // let scroll = window.scrollY;
         // console.log(scrolledDown)
-        const highlight = "highlight"
+       // const highlight = "highlight"
         
 
 
@@ -349,13 +331,12 @@ calYOffset = () => {
 <div
         
       style={{
-          // display: 'flex',
+        
           justifyContent: 'space-between',
           position: 'relative',
           width:  '100%',
           height: '800vh',
-        //   height: '800vh',
-          //height: `${this.state.height}vh`,
+    
            overflow: 'auto',
         }}
       
@@ -383,18 +364,7 @@ calYOffset = () => {
         animation={true}
         />
      
-        {/* <YAxis 
-        position="start"
-        tickTotal={2}
-        // top={40}
-        top={0}
-        //height={150}
-        //width={1}
-        style={{
-            text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
-          }}
-          //tickLabelAngle={-45}
-          /> */}
+
         
         
         <LineSeries 
@@ -409,13 +379,7 @@ calYOffset = () => {
         curve={'curveMonotoneX'}
         />
 
-        {/* <MarkSeries
-          onValueMouseOver={this._rememberValue}
-          onValueMouseOut={this._forgetValue}
-          data={this.state.rawData}
-          id="markSeries"
-        /> */}
-        {/* {value ? <Hint value={value} /> : null} */}
+
 
         <LabelSeries
         data={this.state.rawData}
@@ -433,61 +397,6 @@ calYOffset = () => {
         labelAnchorX={"end"}
         labelAnchorY={"middle"}
         />
-
-
-
-        {/* <HorizontalBarSeries 
-        data={this.state.rawData}
-        color={'url(#CoolGradient)'}
-        animation
-        /> */}
-
-         {/* <YAxis 
-         position="start"
-         tickValues={this.state.rawData.map(value => value.y)} 
-         tickSize={1}
-         />  */}
-
-{/*
-            //data={this.xlabelData('top')}
-                //return { ...obj, y: this.props.mobileUser ? -3 : -18, rotation: this.props.mobileUser ? 90 : 0, label: `${obj.y.split('|')[0]}` }
-            //animation
-            // labelAnchorX={this.props.mobileUser ? "start" : "middle"}
-            // //labelAnchorY="text-before-edge"
-            // labelAnchorY={this.props.mobileUser ? "text-after-edge" : "baseline"}
-            // labelAnchorX={"middle"}
-            // labelAnchorY={"text-before-edge"}
-            // style={{
-            //     text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
-            //   }}
-        {/* 
-        <LabelSeries
-                    data={this.state.rawData.map(obj => {
-                        return { ...obj, label: obj.y.toString() }
-                    })}
-                    
-                    animation
-                    labelAnchorX="middle"
-                    labelAnchorY="text-before-edge"
-                    
-                    />
-
-
-
-        <LabelSeries
-                    data={this.state.rawData.map(obj => {
-
-                        return { ...obj, y: this.props.mobileUser ? -3 :-34, rotation: this.props.mobileUser ? 90 : 0, label: `${obj.y.split('|')[1]}` }
-                    })}
-                    animation
-                    labelAnchorX={this.props.mobileUser ? "start" : "middle"}
-                    //labelAnchorY="text-before-edge"
-                    //labelAnchorY="baseline"
-                    labelAnchorY={this.props.mobileUser ? "text-before-edge" : "baseline"}
-                    style={{
-                        text: {stroke: 'none', fill: '#6b6b76', fontWeight: 800, fontSize: 10}
-                      }}
-                    /> */}
 
 
 

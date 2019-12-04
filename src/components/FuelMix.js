@@ -38,7 +38,7 @@ export class FuelMix extends Component {
 
         player = () => {
 
-            let timer = 0
+            //let timer = 0
             let counter = 0
             let timeA = Date.now()
             let timeB = Date.now()
@@ -226,7 +226,6 @@ export class FuelMix extends Component {
 
 <div className='bgPanel'>
 
-{/* <Segment textAlign='center'> */}
 <h2>Fuel Mix Breakdown</h2>
     <h3>The electricity supply will comes frome these sources</h3>
 
@@ -342,7 +341,6 @@ export class FuelMix extends Component {
 </Table>
 
 
-{/* </Segment> */}
 
 </div>
 

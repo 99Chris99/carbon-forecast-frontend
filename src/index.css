@@ -43,7 +43,9 @@ code {
 
 .ui.horizontal.segments {
   border: 0 !important;
+  border-left: 0 !important;
   box-shadow: 0 0 0 0!important;
+  background: transparent !important;
 }
 
 /* .ui.container, .ui.table{
@@ -70,21 +72,26 @@ code {
 
 #header-content {
   float:left;
+
 }
 
 #header-text {
-  font-size: 6em;
+  vertical-align: baseline !important;
+  
   color: #fff;
-  padding: 1em;
- 
+  padding: 1vw;
+  bottom: 0px;
+
 }
 
 .img-header {
   vertical-align: baseline !important;
+
 }
 
+
 .text-header {
-  margin-bottom: 30px !important;
+  margin-bottom: 6vw !important;
 }
 
 /* #header {

@@ -9,7 +9,7 @@ export class Start extends Component {
 
 
     componentDidMount () {
-        {setInterval(() => {this.countDownToDoom()},1000)}
+        setInterval(() => {this.countDownToDoom()},1000)
     }
 
 startMeterValueMaths = () => {

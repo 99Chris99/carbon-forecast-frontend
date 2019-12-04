@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import PostcodeJsLkp from '../content/PostcodeJsLkp';
 import React, { Component } from 'react'
-import { Search, Button, Table, Input, Grid, Header, Segment } from 'semantic-ui-react'
+import { Search, Button, Segment } from 'semantic-ui-react'
 
 const initialState = { isLoading: false, results: [{title:''}], value: '', confirmResult: ''}
 
@@ -11,7 +11,6 @@ const source = (
 )
 
 
-//handleResultSelect = (e, { result }) => this.setState({ value: result.title },this.confrimResult(result.title))
 
 export default class PostCodeSearch extends Component {
   state = initialState
@@ -46,7 +45,7 @@ export default class PostCodeSearch extends Component {
     if (typeof result !== 'undefined'){
       console.log(result)
       //this.setState({confirmResult: result})
-    this.props.updatePostCode(result)
+    this.props.updatepostcode(result)
     
     }
     }else{(console.log('Search error'))}
@@ -81,33 +80,3 @@ export default class PostCodeSearch extends Component {
     )
   }
 }
-//   render() {
-//     const { isLoading, value, results } = this.state
-
-//     return (
-//         <div>
-//  <Table fixed unstackable singleLine celled compact>
-// {/* <Table fixed unstackable singleLine celled > */}
-// <Table.Row>
-//   <Table.Cell textAlign='left' id="searchInputCell">
-//           <Search 
-//             loading={isLoading}
-//             onResultSelect={this.handleResultSelect}
-//             onSearchChange={_.debounce(this.handleSearchChange, 500, {
-//               leading: true,
-//             })}
-//             results={results}
-//             value={value}
-//             {...this.props} 
-//           />
-//           </Table.Cell>
-//           <Table.Cell textAlign='left' id="searchBtnCell">
-//           <Button id="searchBtn" onClick={event => this.confirmResult()}>Submit</Button>
-
-// </Table.Cell>
-//         </Table.Row>
-// </Table>
-//           </div>
-//     )
-//   }
-// }
