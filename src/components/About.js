@@ -1,4 +1,3 @@
-//import React, { Component } from 'react';
 import React from 'react';
 import AboutContent from '../content/AboutContent';
 import { Accordion } from 'semantic-ui-react'

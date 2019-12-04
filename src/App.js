@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,12 +13,10 @@ import Forecast from './components/Forecast';
 import Timeline from './components/Timeline';
 import Hero from './components/Hero';
 import About from './components/About';
-import Advice from './components/Advice';
 import FuelMix from './components/FuelMix';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
-import { ItemMeta, Header, Transition } from 'semantic-ui-react';
-import { cloneWithoutLoc } from '@babel/types';
+import { Transition } from 'semantic-ui-react';
 
 import { Container } from 'semantic-ui-react'
 
@@ -51,8 +49,7 @@ export class App extends Component {
   }
   
   
-//2017-08-25T12:35Z
-//[{id: 0, name: 'test'}]
+
 
 now = () => {
   let date = new Date();
@@ -114,7 +111,7 @@ plus30Mins = (dateTime) => {
 
 loading = () => {
   if (typeof this.state.forecastC[0] === 'undefined') {
-    console.log('loading check')
+    // console.log('loading check')
     this.setState({loading:true})
   }else {this.setState({loading:false})}
 }
@@ -171,7 +168,7 @@ loading = () => {
   }
 
   countEmmissions = () => {
-    let count = this.state.emissions += 0.0142
+    let count = this.state.emissions + 0.0142
     this.setState({emissions: count})
   }
   
@@ -188,7 +185,7 @@ get48hForecast = (start, useID) => {
 getForecastB = () => {
   const start = this.state.forecastA[this.state.forecastA.length - 1].to
   const startPlus30 = this.plus30Mins(start)
-  console.log(startPlus30)
+  // console.log(startPlus30)
   if (this.state.useId) {
     API.getRegionId48HrsData(this.state.setRegion, startPlus30).then(info => this.setState({forecastB: info.data.data}))
 }else{
@@ -226,7 +223,8 @@ getForecastC = () => {
           }
        }
       )
-    ).then(datainfo => console.log(datainfo))
+    )
+    // .then(datainfo => console.log(datainfo))
 }
   
 

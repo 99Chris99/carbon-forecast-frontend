@@ -98,13 +98,13 @@ componentDidUpdate (prevProps, prevState) {
         }
 
         setPeriod = (event, data) => {
-            console.log(data.value)
+            // console.log(data.value)
             this.setState({
                 period: data.value
             })
         }
         setRegion = (event, data) => {
-            console.log(data.value)
+            // console.log(data.value)
             this.setState({
                 region: data.value
             })
@@ -112,7 +112,7 @@ componentDidUpdate (prevProps, prevState) {
 
         controlSort = () => {
             let newProps = this.props.aggedVals
-          if (this.state.sortByLevel ==! true){
+          if (this.state.sortByLevel !== true){
            newProps = this.props.aggedVals.sort((a,b) => (Date.parse(a.from) > Date.parse(b.from)? 1 : -1))
             }
             else if (this.state.sortByLevel === true){
@@ -210,10 +210,6 @@ componentDidUpdate (prevProps, prevState) {
       </div>
 
             <div>
-                {/* <h1> Hi, it's me forecast! Hows things?</h1> */}
-
-            {/* <Divider horizontal>Lowest Levels</Divider> */}
-    {/* <button class="ui button" onClick={this.handleDayNightButton}>Show {this.state.bestPeriodDisplayDay ? 'Daytime' : 'Night-time'}</button> */}
                 <div className="bgPanel">
     <h2><span className="textHighlight">Top 3 Periods</span></h2>
     
@@ -221,10 +217,7 @@ componentDidUpdate (prevProps, prevState) {
     </p>
  <Card.Group itemsPerRow={3} items={this.state.bestPeriodDisplayDay ? this.state.bestPeriodsDay : this.state.bestPeriodsNight} />
     
-    {/* <p onClick={this.handleDayNightButton}>
-     {this.state.bestPeriodDisplayDay ?  <b>Show Daytime</b> : `Show Daytime | `}   
-     {this.state.bestPeriodDisplayDay ?  ` | Show Night-time` : <b>Show Night-time</b>} 
-     </p> */}
+   
 <br></br>
         <Button size='small'  attached='left'
         active={this.state.bestPeriodDisplayDay}
@@ -240,11 +233,8 @@ componentDidUpdate (prevProps, prevState) {
 </div>
 
 
-{/* <Divider horizontal>Options</Divider> */}
 <div className="bgPanel">
-{/* <Dimmer active={this.props.loading}>
-        <Loader>Loading</Loader>
-    </Dimmer> */}
+
 
     <h2>Options</h2>
     <h4>Selected: Period: {this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}  |  Region: {this.props.useId ? this.props.regionName : this.props.setPostCode} </h4>
@@ -255,6 +245,7 @@ componentDidUpdate (prevProps, prevState) {
     </Dimmer> 
 
 <Table   columns={2}>
+    <Table.Body>
 <Table.Row>
 <Table.Cell>
     Period:
@@ -262,15 +253,14 @@ componentDidUpdate (prevProps, prevState) {
     <Dropdown
          compact={this.props.mobileUser ? true : false}
          placeholder={this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}
-         selection='2'
+         selection
          options={this.periodOptions}
          onChange={(event, data) => this.props.updatePeriod(data.value)}
          />
-    </Table.Cell>
+</Table.Cell>
 
             <Table.Cell>
-    {/* <h3>Period: {this.props.setPeriod <= 48 ? `+${this.props.setPeriod/2} hrs` : 'Max'}</h3>
-    <h3>Region: {this.props.useId ? this.props.regionName : this.props.setPostCode}</h3> */}
+  
    </Table.Cell>
    </Table.Row>
 
@@ -288,41 +278,13 @@ componentDidUpdate (prevProps, prevState) {
     </Table.Cell>
         <Table.Cell>
            
-   <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
+   <PostCodeSearch updatepostcode={this.props.updatePostCode}/>
     </Table.Cell>
     </Table.Row>
+    </Table.Body>
  </Table>
 
  </div>
-{/* <Grid columns='2' >
-<Grid.Row>
-   <Grid.Column floated='left'>      
-    <Dropdown
-         placeholder='Period'
-         selection='2'
-         options={this.periodOptions}
-         onChange={(event, data) => this.props.updatePeriod(data.value)}
-         />
-       </Grid.Column>
-       <Grid.Column floated='left'>
-   <PostCodeSearch updatePostCode={this.props.updatePostCode}/>
-   </Grid.Column>
-</Grid.Row>
-<Grid.Row>
-    <Grid.Column floated='left'>      
-    <Dropdown
-          placeholder='Region'
-          selection
-          options={this.genRegionOptions()}
-          onChange={(event, data) => this.props.updateRegion(data.value)}
-        />
-        </Grid.Column>
-        <Grid.Column floated='left'>
-    <p>Yep thats right I'm some text!</p>
-    </Grid.Column>
- </Grid.Row>
- </Grid> */}
-
 
 
 </div>
@@ -333,7 +295,7 @@ componentDidUpdate (prevProps, prevState) {
 <div id="summary-chart" className="bgPanel">
 <h2>Summary Chart</h2>
 <SummaryChart aggedVals={this.controlSort()} sortTrigger={this.state.sortByLevel} mobileUser={this.props.mobileUser}/>
-<button class="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Time' : 'Intensity Level'}</button>
+<button className="ui button" onClick={this.handleSortButton}>Sort By {this.state.sortByLevel ? 'Time' : 'Intensity Level'}</button>
 </div>
 
 

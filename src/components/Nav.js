@@ -3,7 +3,7 @@ import {
     Link
 } from "react-router-dom";
 import { Menu } from 'semantic-ui-react';
-import { Container } from 'semantic-ui-react'
+
 
 export class Nav extends Component {
 
@@ -44,26 +44,7 @@ setTimeout(() => this.setState({ disabled: false }), 700);
             About
           </Menu.Item>
       </Menu>
-          {/* </Container> */}
-      
-
-    
-    {/* <nav>
-        <ul>
-          <li>
-            <Link to="/start">Start</Link>
-          </li>
-          <li>
-            <Link to="/forecast">Forecast</Link>
-          </li>
-          <li>
-            <Link to="/advice">Advice</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-        </ul>
-    </nav> */}
+       
 
 
             </div>

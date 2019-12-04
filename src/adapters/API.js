@@ -2,7 +2,7 @@ const apiEndpoint = `https://api.carbonintensity.org.uk/`
 const nationalURL = `${apiEndpoint}intensity/`
 const allRegionsURL = `${apiEndpoint}regional/`
 const region48Hrs = `${allRegionsURL}intensity/`
-const id48Hrs = `${allRegionsURL}intensity/{from}/fw48h/regionid/`
+//const id48Hrs = `${allRegionsURL}intensity/{from}/fw48h/regionid/`
 
 const handleErrors = (response) => {
     if (!response.ok) {
@@ -11,7 +11,7 @@ const handleErrors = (response) => {
         alert('Error retrieving forecast data, please reload.')
         // throw Error(response.statusText, reload());
     }
-    console.log('All good')
+    //console.log('All good')
     return response;
 }
 
