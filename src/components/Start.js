@@ -79,7 +79,7 @@ countDownToDoom = () => {
             <h1> <span className="textHighlight"> Carbon Forecast </span> </h1>
       <Accordion defaultActiveIndex={[0]} panels={TitleContent.startTitle} exclusive={false}/>
    
-
+  
             </div>
 
 
