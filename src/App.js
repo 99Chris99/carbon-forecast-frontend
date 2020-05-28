@@ -47,8 +47,6 @@ export class App extends Component {
     loading:true,
     currentRegionName: 'GB'
   }
-  
-  
 
 
 now = () => {
@@ -110,7 +108,7 @@ plus30Mins = (dateTime) => {
 }
 
 loading = () => {
-  if (typeof this.state.forecastC[0] === 'undefined') {
+  if (typeof this.state.forecastB[0] === 'undefined') {
     // console.log('loading check')
     this.setState({loading:true})
   }else {this.setState({loading:false})}
@@ -144,16 +142,22 @@ loading = () => {
     }
     else if (this.state.forecastB !== prevState.forecastB)
     {
-      return this.getForecastC(this.state.setRegion)
-    }
-    else if (this.state.forecastC !== prevState.forecastC)
-    {
       return (
         this.aggForecast(this.allForecast(), this.determinGran(), false),
         this.aggForecast(this.allForecast(), 2, true),
         this.loading()
         )
+
+      //return this.getForecastC(this.state.setRegion)
     }
+    // else if (this.state.forecastC !== prevState.forecastC)
+    // {
+    //   return (
+    //     this.aggForecast(this.allForecast(), this.determinGran(), false),
+    //     this.aggForecast(this.allForecast(), 2, true),
+    //     this.loading()
+    //     )
+    // }
     else if (this.state.setPeriod !== prevState.setPeriod)
     {
       return (
@@ -187,19 +191,19 @@ getForecastB = () => {
   const startPlus30 = this.plus30Mins(start)
   // console.log(startPlus30)
   if (this.state.useId) {
-    API.getRegionId48HrsData(this.state.setRegion, startPlus30).then(info => this.setState({forecastB: info.data.data}))
+    API.getRegionId48HrsData(this.state.setRegion, startPlus30).then(info => this.setState({forecastB: info.data.data, loding:false}))
 }else{
-    API.getRegionPostCode48HrsData(this.state.setPostCode, startPlus30).then(info => this.setState({forecastB: info.data.data}))
+    API.getRegionPostCode48HrsData(this.state.setPostCode, startPlus30).then(info => this.setState({forecastB: info.data.data, loding:false}))
   } 
 }
 getForecastC = () => {
-  const start = this.state.forecastB[this.state.forecastB.length - 1].to
-  const startPlus30 = this.plus30Mins(start)
-  if (this.state.useId) {
-    API.getRegionId48HrsData(this.state.setRegion, startPlus30).then(info => this.setState({forecastC: info.data.data, loding:false}))
-}else{
-    API.getRegionPostCode48HrsData(this.state.setPostCode, startPlus30).then(info => this.setState({forecastC: info.data.data, loading:false}))
-  } 
+//   const start = this.state.forecastA[this.state.forecastB.length - 1].to
+//   const startPlus30 = this.plus30Mins(start)
+//   if (this.state.useId) {
+//     API.getRegionId48HrsData(this.state.setRegion, startPlus30).then(info => this.setState({forecastC: info.data.data,loding:false}))
+// }else{
+//     API.getRegionPostCode48HrsData(this.state.setPostCode, startPlus30).then(info => this.setState({forecastC: info.data.data, loading:false}))
+//   } 
 }
 
 
@@ -229,7 +233,8 @@ getForecastC = () => {
   
 
 allForecast = () => {
-  const allForecast = [...this.state.forecastA, ...this.state.forecastB, ...this.state.forecastC]
+  //const allForecast = [...this.state.forecastA, ...this.state.forecastB, ...this.state.forecastC]
+  const allForecast = [...this.state.forecastA, ...this.state.forecastB]
   return allForecast
 }
 

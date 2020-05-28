@@ -162,7 +162,8 @@ calYOffset = () => {
             // console.log(item.text)
             //if (item.text.split(' ')[0] === 'Low' || item.text.split(' ')[1] === 'Low' ) {
             if (item.text === 'Low' || item.text === 'Very Low' ) {
-                output = '★'
+                output = ''
+                //output = '*'
             }
             return output
         }
