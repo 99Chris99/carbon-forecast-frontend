@@ -1,3 +1,3 @@
 Carbon Forecast
 
-Current and forecast carbon emissions of your electricity supply
+Current and forecast carbon emissions of your electricity supply.
